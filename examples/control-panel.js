@@ -7181,7 +7181,7 @@ var Calendar = function (_React$Component) {
         clearIcon = props.clearIcon,
         renderFooter = props.renderFooter,
         inputMode = props.inputMode,
-        showTimeAndHour = props.showTimeAndHour;
+        showHourAndMinute = props.showHourAndMinute;
     var value = state.value,
         selectedValue = state.selectedValue,
         mode = state.mode;
@@ -7299,7 +7299,7 @@ var Calendar = function (_React$Component) {
             onCloseTimePicker: this.closeTimePicker
           })
         ),
-        !showTimeAndHour && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__calendar_CalendarRightPanel__["a" /* default */], {
+        showHourAndMinute && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__calendar_CalendarRightPanel__["a" /* default */], {
           prefixCls: prefixCls,
           value: value,
           onSelect: this.onDateTableSelect
@@ -7330,7 +7330,7 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   showWeekNumber: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   showToday: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   showOk: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
-  showTimeAndHour: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  showHourAndMinute: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onOk: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onKeyDown: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
@@ -7352,7 +7352,7 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_13__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_14__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
   showDateInput: true,
-  showTimeAndHour: false,
+  showHourAndMinute: false,
   timePicker: null,
   onOk: noop,
   onPanelChange: noop,
