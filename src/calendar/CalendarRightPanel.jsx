@@ -45,7 +45,9 @@ export default class CalendarRightPanel extends React.Component {
     }
     return (
       <div className={`${prefixCls}-right-panel`}>
-        <div className={`${prefixCls}-right-panel-header`} onClick={this.scrollUp}><span></span></div>
+        <div className={`${prefixCls}-right-panel-header`} onClick={this.scrollUp}>
+          <span><i className="fas fa-chevron-up"></i></span>
+        </div>
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
             {times.map((time) => {
@@ -61,7 +63,9 @@ export default class CalendarRightPanel extends React.Component {
             })}
           </ul>
         </div>
-        <div className={`${prefixCls}-right-panel-footer`} onClick={this.scrollDown}><span></span></div>
+        <div className={`${prefixCls}-right-panel-footer`} onClick={this.scrollDown}>
+          <span><i className="fas fa-chevron-down"></i></span>
+        </div>
       </div>
     );
   }
