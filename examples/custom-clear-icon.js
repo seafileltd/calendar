@@ -2594,6 +2594,7 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   showWeekNumber: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   showToday: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   showOk: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  showTimeAndHour: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onOk: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onKeyDown: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
@@ -2615,6 +2616,7 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_13__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_14__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
   showDateInput: true,
+  showTimeAndHour: false,
   timePicker: null,
   onOk: noop,
   onPanelChange: noop,
@@ -2853,17 +2855,14 @@ var CalendarRightPanel = function (_React$Component) {
       times.push(str);
       times.push(str1);
     }
+    var highlightTime = this.state.highlightTime ? this.state.highlightTime.format().slice(11, 16) : null;
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-right-panel' },
       __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         'div',
         { className: prefixCls + '-right-panel-header', onClick: this.scrollUp },
-        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-          'span',
-          null,
-          __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('i', { className: 'fas fa-chevron-up' })
-        )
+        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('span', null)
       ),
       __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         'div',
@@ -2873,13 +2872,12 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           times.map(function (time) {
             var current = __WEBPACK_IMPORTED_MODULE_5_moment___default()(selectedDate + ' ' + time);
-            var isHightlight = current.isSame(_this2.state.highlightTime) ? 'highlight' : '';
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
                 key: time,
-                onClick: _this2.onSelect.bind(null, current),
-                className: '' + isHightlight
+                onClick: _this2.onSelect.bind(_this2, current),
+                className: '' + (highlightTime === time ? 'highlight' : '')
               },
               time
             );
@@ -2889,11 +2887,7 @@ var CalendarRightPanel = function (_React$Component) {
       __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         'div',
         { className: prefixCls + '-right-panel-footer', onClick: this.scrollDown },
-        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-          'span',
-          null,
-          __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('i', { className: 'fas fa-chevron-down' })
-        )
+        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('span', null)
       )
     );
   };

@@ -261,7 +261,7 @@
 }
 .rc-calendar-header > a:hover {
   cursor: pointer;
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-header .rc-calendar-prev-month-btn {
   position: absolute;
@@ -291,7 +291,7 @@
 .rc-calendar-month-select:hover,
 .rc-calendar-day-select:hover {
   cursor: pointer;
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-year-select.rc-calendar-time-status:hover,
 .rc-calendar-month-select.rc-calendar-time-status:hover,
@@ -317,7 +317,7 @@
 .rc-calendar-next-month-btn:hover,
 .rc-calendar-prev-year-btn:hover,
 .rc-calendar-next-year-btn:hover {
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-next-year-btn {
   right: 0;
@@ -342,6 +342,9 @@
 .rc-calendar-right-panel-header {
   height: 34px;
   line-height: 34px;
+}
+.rc-calendar-right-panel-header span {
+  transform: rotate(-90deg);
 }
 .rc-calendar-right-panel-body {
   height: 217px;
@@ -374,6 +377,9 @@
   line-height: 34px;
   border-left: 1px solid #ccc;
 }
+.rc-calendar-right-panel-footer span {
+  transform: rotate(90deg);
+}
 .rc-calendar-right-panel-header,
 .rc-calendar-right-panel-footer {
   display: -ms-flexbox;
@@ -383,6 +389,10 @@
   cursor: pointer;
   color: #999;
   font-size: 16px;
+}
+.rc-calendar-right-panel-header span:after,
+.rc-calendar-right-panel-footer span:after {
+  content: '\203A';
 }
 .rc-calendar table {
   border-collapse: collapse;
@@ -429,21 +439,21 @@
   text-align: center;
 }
 .rc-calendar-date:hover {
-  background: #ebfaff;
+  background: #fcecd9;
   cursor: pointer;
 }
 .rc-calendar-selected-day .rc-calendar-date {
-  background: #d9f4fe;
+  background: #fcecd9;
 }
 .rc-calendar-selected-date .rc-calendar-date {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-selected-date .rc-calendar-date:hover {
-  background: #3fc7fa;
+  background: #f09f3f;
 }
 .rc-calendar-today .rc-calendar-date {
-  border: 1px solid #3fc7fa;
+  border: 1px solid #f09f3f;
 }
 .rc-calendar-disabled-cell .rc-calendar-date {
   cursor: not-allowed;
@@ -517,7 +527,7 @@
 .rc-calendar-ok-btn:hover,
 .rc-calendar-time-picker-btn:hover {
   cursor: pointer;
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-today-btn-disabled,
 .rc-calendar-ok-btn-disabled,
@@ -547,11 +557,11 @@
   width: 40px;
 }
 .rc-calendar-time-input:hover {
-  border-color: #23c0fa;
+  border-color: #f09f4g;
 }
 .rc-calendar-time-input:focus {
-  border-color: #23c0fa;
-  box-shadow: 0 0 3px #23c0fa;
+  border-color: #f09f4g;
+  box-shadow: 0 0 3px #f09f4g;
 }
 .rc-calendar-time-panel {
   left: 0;
@@ -607,15 +617,15 @@
   margin: 0 auto;
 }
 .rc-calendar-time-panel-time:hover {
-  background: #ebfaff;
+  background: #fcecd9;
   cursor: pointer;
 }
 .rc-calendar-time-panel-selected-cell .rc-calendar-time-panel-time {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-time-panel-selected-cell .rc-calendar-time-panel-time:hover {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-month-panel {
@@ -659,7 +669,7 @@
 }
 .rc-calendar-month-panel-header > a:hover {
   cursor: pointer;
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-month-panel-prev-year-btn,
 .rc-calendar-month-panel-next-year-btn {
@@ -723,7 +733,7 @@
   text-align: center;
 }
 .rc-calendar-month-panel-cell .rc-calendar-month-panel-month:hover {
-  background: #ebfaff;
+  background: #fcecd9;
   cursor: pointer;
 }
 .rc-calendar-month-panel-cell-disabled .rc-calendar-month-panel-month {
@@ -734,11 +744,11 @@
   cursor: not-allowed;
 }
 .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month:hover {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-month-header-wrap {
@@ -786,7 +796,7 @@
 }
 .rc-calendar-year-panel-header > a:hover {
   cursor: pointer;
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-year-panel-prev-decade-btn,
 .rc-calendar-year-panel-next-decade-btn {
@@ -850,15 +860,15 @@
   text-align: center;
 }
 .rc-calendar-year-panel-year:hover {
-  background: #ebfaff;
+  background: #fcecd9;
   cursor: pointer;
 }
 .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year:hover {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-year-panel-last-decade-cell .rc-calendar-year-panel-year,
@@ -907,7 +917,7 @@
 }
 .rc-calendar-decade-panel-header > a:hover {
   cursor: pointer;
-  color: #23c0fa;
+  color: #f09f4g;
 }
 .rc-calendar-decade-panel-prev-century-btn,
 .rc-calendar-decade-panel-next-century-btn {
@@ -964,15 +974,15 @@
   text-align: center;
 }
 .rc-calendar-decade-panel-decade:hover {
-  background: #ebfaff;
+  background: #fcecd9;
   cursor: pointer;
 }
 .rc-calendar-decade-panel-selected-cell .rc-calendar-decade-panel-decade {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-decade-panel-selected-cell .rc-calendar-decade-panel-decade:hover {
-  background: #3fc7fa;
+  background: #f09f3f;
   color: #fff;
 }
 .rc-calendar-decade-panel-last-century-cell .rc-calendar-decade-panel-decade,
@@ -1112,13 +1122,13 @@
   display: inline-block;
 }
 .rc-calendar-full-header-switcher-normal:hover {
-  border-color: #23c0fa;
+  border-color: #f09f4g;
   box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
   cursor: pointer;
 }
 .rc-calendar-full-header-switcher-focus {
-  border-color: #3fc7fa;
-  background-color: #3fc7fa;
+  border-color: #f09f3f;
+  background-color: #f09f3f;
   color: #fff;
 }
 .rc-calendar-full-header-switcher > span {
@@ -1166,13 +1176,13 @@
 }
 .rc-calendar-fullscreen .rc-calendar-selected-day .rc-calendar-date,
 .rc-calendar-fullscreen .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month {
-  background-color: #ebfaff;
+  background-color: #fcecd9;
   color: #666;
 }
 .rc-calendar-fullscreen .rc-calendar-today .rc-calendar-date,
 .rc-calendar-fullscreen .rc-calendar-month-panel-selected-cell .rc-calendar-month-panel-month {
-  border-top-color: #3FC7FA;
-  color: #3FC7FA;
+  border-top-color: #f09f3f;
+  color: #f09f3f;
 }
 
 /*# sourceMappingURL=common.css.map*/
