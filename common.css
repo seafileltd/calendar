@@ -210,7 +210,9 @@
   position: relative;
   outline: none;
   font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans-serif;
-  width: 253px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   list-style: none;
   font-size: 12px;
   text-align: left;
@@ -222,9 +224,15 @@
   line-height: 1.5;
 }
 .rc-calendar-date-panel,
+.rc-calendar-date-panel-container {
+  display: -ms-flexbox;
+  display: flex;
+}
+.rc-calendar-date-panel,
 .rc-calendar-panel {
   position: relative;
   outline: none;
+  display: block;
 }
 .rc-calendar-week-number {
   width: 286px;
@@ -326,6 +334,55 @@
 .rc-calendar-body {
   padding: 9px 10px 10px;
   height: 217px;
+}
+.rc-calendar-right-panel {
+  width: 68px;
+  height: inherit;
+}
+.rc-calendar-right-panel-header {
+  height: 34px;
+  line-height: 34px;
+}
+.rc-calendar-right-panel-body {
+  height: 217px;
+  border-left: 1px solid #ccc;
+  overflow-y: scroll;
+}
+.rc-calendar-right-panel-body ul {
+  list-style: none;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.rc-calendar-right-panel-body ul li {
+  text-align: center;
+  padding: 8px 0;
+  cursor: pointer;
+}
+.rc-calendar-right-panel-body ul li:hover {
+  color: #e8bf6a;
+}
+.rc-calendar-right-panel-body ul li.highlight {
+  color: #f09f3f;
+}
+.rc-calendar-right-panel-body::-webkit-scrollbar {
+  width: 0;
+}
+.rc-calendar-right-panel-footer {
+  height: 39px;
+  line-height: 34px;
+  border-left: 1px solid #ccc;
+}
+.rc-calendar-right-panel-header,
+.rc-calendar-right-panel-footer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  cursor: pointer;
+  color: #999;
+  font-size: 16px;
 }
 .rc-calendar table {
   border-collapse: collapse;
