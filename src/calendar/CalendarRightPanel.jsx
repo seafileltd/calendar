@@ -33,6 +33,11 @@ export default class CalendarRightPanel extends React.Component {
     this.timeRef.current.scrollBy(0, 200);
   }
 
+  componentDidMount() {
+    // The default time is 8, page scroll to 08:00
+    this.timeRef.current.scrollTo(0, 34 * 16);
+  }
+
   render() {
     const { value, prefixCls } = this.props;
     const selectedDate = value.format().slice(0, 10);
