@@ -8005,6 +8005,11 @@ var CalendarRightPanel = function (_React$Component) {
     return _this;
   }
 
+  CalendarRightPanel.prototype.componentDidMount = function componentDidMount() {
+    // The default time is 8, page scroll to 08:00
+    this.timeRef.current.scrollTo(0, 34 * 16);
+  };
+
   CalendarRightPanel.prototype.render = function render() {
     var _this2 = this;
 
@@ -9760,6 +9765,7 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
         onChange: onStandaloneChange,
         disabledDate: disabledDate,
         onSelect: onStandaloneSelect,
+        showHourAndMinute: true,
         renderFooter: function renderFooter(mode) {
           return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
             'span',

@@ -7575,6 +7575,11 @@ var CalendarRightPanel = function (_React$Component) {
     return _this;
   }
 
+  CalendarRightPanel.prototype.componentDidMount = function componentDidMount() {
+    // The default time is 8, page scroll to 08:00
+    this.timeRef.current.scrollTo(0, 34 * 16);
+  };
+
   CalendarRightPanel.prototype.render = function render() {
     var _this2 = this;
 
