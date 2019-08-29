@@ -394,6 +394,7 @@ class Calendar extends React.Component {
         <CalendarRightPanel
           prefixCls={prefixCls}
           value={value}
+          locale={locale}
           onSelect={this.onDateTableSelect}
         />
       }
