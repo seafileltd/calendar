@@ -2880,7 +2880,7 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           times.map(function (time) {
             var current = __WEBPACK_IMPORTED_MODULE_5_moment___default()(selectedDate + ' ' + time);
-            current = isEnGb ? current.locale('en-gb').utcOffset(0) : current.locale('zh-cn').utcOffset(8);
+            current = isEnGb ? current.locale('en-gb') : current.locale('zh-cn');
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
