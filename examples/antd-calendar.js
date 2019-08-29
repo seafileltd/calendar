@@ -7732,6 +7732,7 @@ var Calendar = function (_React$Component) {
         showHourAndMinute && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__calendar_CalendarRightPanel__["a" /* default */], {
           prefixCls: prefixCls,
           value: value,
+          locale: locale,
           onSelect: this.onDateTableSelect
         })
       )
@@ -8015,7 +8016,8 @@ var CalendarRightPanel = function (_React$Component) {
 
     var _props = this.props,
         value = _props.value,
-        prefixCls = _props.prefixCls;
+        prefixCls = _props.prefixCls,
+        locale = _props.locale;
 
     var selectedDate = value.format().slice(0, 10);
     var times = [];
@@ -8026,6 +8028,7 @@ var CalendarRightPanel = function (_React$Component) {
       times.push(str1);
     }
     var highlightTime = this.state.highlightTime ? this.state.highlightTime.format().slice(11, 16) : null;
+    var isEnGb = locale && locale.year === 'Year';
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-right-panel' },
@@ -8042,6 +8045,7 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           times.map(function (time) {
             var current = __WEBPACK_IMPORTED_MODULE_5_moment___default()(selectedDate + ' ' + time);
+            current = isEnGb ? current.locale('en-gb').utcOffset(0) : current.locale('zh-cn').utcOffset(8);
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
@@ -8068,7 +8072,8 @@ var CalendarRightPanel = function (_React$Component) {
 CalendarRightPanel.propTypes = {
   prefixCls: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
   value: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object,
-  onSelect: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func
+  onSelect: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
+  locale: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object
 };
 /* harmony default export */ __webpack_exports__["a"] = (CalendarRightPanel);
 
@@ -8267,8 +8272,13 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Header__ = __webpack_require__(97);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Combobox__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Header__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Combobox__ = __webpack_require__(98);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -8286,6 +8296,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -8327,12 +8338,20 @@ var Panel =
 function (_Component) {
   _inherits(Panel, _Component);
 
-  function Panel(props) {
+  function Panel() {
+    var _getPrototypeOf2;
+
     var _this;
 
     _classCallCheck(this, Panel);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Panel).call(this, props));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Panel)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _defineProperty(_assertThisInitialized(_this), "state", {});
 
     _defineProperty(_assertThisInitialized(_this), "onChange", function (newValue) {
       var onChange = _this.props.onChange;
@@ -8378,24 +8397,10 @@ function (_Component) {
       return disabledOptions;
     });
 
-    _this.state = {
-      value: props.value
-    };
     return _this;
   }
 
   _createClass(Panel, [{
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
-      var value = nextProps.value;
-
-      if (value) {
-        this.setState({
-          value: value
-        });
-      }
-    }
-  }, {
     key: "close",
     // https://github.com/ant-design/ant-design/issues/5829
     value: function close() {
@@ -8448,7 +8453,7 @@ function (_Component) {
       var validDefaultOpenValue = toNearestValidTime(defaultOpenValue, hourOptions, minuteOptions, secondOptions);
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: __WEBPACK_IMPORTED_MODULE_3_classnames___default()(className, "".concat(prefixCls, "-inner"))
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Header__["a" /* default */], {
+      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Header__["a" /* default */], {
         clearText: clearText,
         prefixCls: prefixCls,
         defaultOpenValue: validDefaultOpenValue,
@@ -8468,7 +8473,7 @@ function (_Component) {
         onKeyDown: onKeyDown,
         inputReadOnly: inputReadOnly,
         clearIcon: clearIcon
-      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__Combobox__["a" /* default */], {
+      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__Combobox__["a" /* default */], {
         prefixCls: prefixCls,
         value: value,
         defaultOpenValue: validDefaultOpenValue,
@@ -8489,6 +8494,17 @@ function (_Component) {
         onEsc: onEsc,
         isAM: this.isAM()
       }), addon(this));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if ('value' in props) {
+        return _objectSpread({}, state, {
+          value: props.value
+        });
+      }
+
+      return null;
     }
   }]);
 
@@ -8538,6 +8554,7 @@ _defineProperty(Panel, "defaultProps", {
   inputReadOnly: false
 });
 
+Object(__WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__["polyfill"])(Panel);
 /* harmony default export */ __webpack_exports__["a"] = (Panel);
 
 /***/ }),
@@ -8703,21 +8720,26 @@ function (_Component) {
       }
     }
   }, {
-    key: "componentWillReceiveProps",
-    value: function componentWillReceiveProps(nextProps) {
-      var value = nextProps.value,
-          format = nextProps.format;
-      this.setState({
-        str: value && value.format(format) || '',
-        invalid: false
-      });
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps) {
+      var _this$props3 = this.props,
+          value = _this$props3.value,
+          format = _this$props3.format;
+
+      if (value !== prevProps.value) {
+        // eslint-disable-next-line react/no-did-update-set-state
+        this.setState({
+          str: value && value.format(format) || '',
+          invalid: false
+        });
+      }
     }
   }, {
     key: "getProtoValue",
     value: function getProtoValue() {
-      var _this$props3 = this.props,
-          value = _this$props3.value,
-          defaultOpenValue = _this$props3.defaultOpenValue;
+      var _this$props4 = this.props,
+          value = _this$props4.value,
+          defaultOpenValue = _this$props4.defaultOpenValue;
       return value || defaultOpenValue;
     }
   }, {
@@ -8725,10 +8747,10 @@ function (_Component) {
     value: function getInput() {
       var _this3 = this;
 
-      var _this$props4 = this.props,
-          prefixCls = _this$props4.prefixCls,
-          placeholder = _this$props4.placeholder,
-          inputReadOnly = _this$props4.inputReadOnly;
+      var _this$props5 = this.props,
+          prefixCls = _this$props5.prefixCls,
+          placeholder = _this$props5.placeholder,
+          inputReadOnly = _this$props5.inputReadOnly;
       var _this$state = this.state,
           invalid = _this$state.invalid,
           str = _this$state.str;
@@ -9765,7 +9787,6 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
         onChange: onStandaloneChange,
         disabledDate: disabledDate,
         onSelect: onStandaloneSelect,
-        showHourAndMinute: true,
         renderFooter: function renderFooter(mode) {
           return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
             'span',

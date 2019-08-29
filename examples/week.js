@@ -7984,6 +7984,7 @@ var Calendar = function (_React$Component) {
         showHourAndMinute && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_12__calendar_CalendarRightPanel__["a" /* default */], {
           prefixCls: prefixCls,
           value: value,
+          locale: locale,
           onSelect: this.onDateTableSelect
         })
       )
@@ -8268,7 +8269,8 @@ var CalendarRightPanel = function (_React$Component) {
 
     var _props = this.props,
         value = _props.value,
-        prefixCls = _props.prefixCls;
+        prefixCls = _props.prefixCls,
+        locale = _props.locale;
 
     var selectedDate = value.format().slice(0, 10);
     var times = [];
@@ -8279,6 +8281,7 @@ var CalendarRightPanel = function (_React$Component) {
       times.push(str1);
     }
     var highlightTime = this.state.highlightTime ? this.state.highlightTime.format().slice(11, 16) : null;
+    var isEnGb = locale && locale.year === 'Year';
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-right-panel' },
@@ -8295,6 +8298,7 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           times.map(function (time) {
             var current = __WEBPACK_IMPORTED_MODULE_5_moment___default()(selectedDate + ' ' + time);
+            current = isEnGb ? current.locale('en-gb').utcOffset(0) : current.locale('zh-cn').utcOffset(8);
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
@@ -8321,7 +8325,8 @@ var CalendarRightPanel = function (_React$Component) {
 CalendarRightPanel.propTypes = {
   prefixCls: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
   value: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object,
-  onSelect: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func
+  onSelect: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
+  locale: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object
 };
 /* harmony default export */ __webpack_exports__["a"] = (CalendarRightPanel);
 
