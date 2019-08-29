@@ -8,6 +8,7 @@ export default class CalendarRightPanel extends React.Component {
     prefixCls: PropTypes.string,
     value: PropTypes.object,
     onSelect: PropTypes.func,
+    locale: PropTypes.object,
   }
 
   constructor(props) {
@@ -39,7 +40,7 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   render() {
-    const { value, prefixCls } = this.props;
+    const { value, prefixCls, locale } = this.props;
     const selectedDate = value.format().slice(0, 10);
     const times = [];
     for (let i = 0; i < 24; i++) {
@@ -49,6 +50,7 @@ export default class CalendarRightPanel extends React.Component {
       times.push(str1);
     }
     const highlightTime = this.state.highlightTime ? this.state.highlightTime.format().slice(11, 16) : null;
+    const isEnGb = (locale && locale.year === 'Year');
     return (
       <div className={`${prefixCls}-right-panel`}>
         <div className={`${prefixCls}-right-panel-header`} onClick={this.scrollUp}>
@@ -57,7 +59,8 @@ export default class CalendarRightPanel extends React.Component {
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
             {times.map((time) => {
-              const current = moment(selectedDate + ' ' + time);
+              let current = moment(selectedDate + ' ' + time);
+              current = isEnGb ? current.locale('en-gb').utcOffset(0) : current.locale('zh-cn').utcOffset(8);
               return (
                 <li
                   key={time}
