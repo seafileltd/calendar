@@ -60,7 +60,7 @@ export default class CalendarRightPanel extends React.Component {
           <ul>
             {times.map((time) => {
               let current = moment(selectedDate + ' ' + time);
-              current = isEnGb ? current.locale('en-gb').utcOffset(0) : current.locale('zh-cn').utcOffset(8);
+              current = isEnGb ? current.locale('en-gb') : current.locale('zh-cn');
               return (
                 <li
                   key={time}
