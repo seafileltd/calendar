@@ -10,7 +10,9 @@ export default class DateTHead extends React.Component {
     const prefixCls = props.prefixCls;
     const veryShortWeekdays = [];
     const weekDays = [];
-    const firstDayOfWeek = localeData.firstDayOfWeek();
+    // const firstDayOfWeek = localeData.firstDayOfWeek();
+    // We set Sunday(7) as the first day of the week in seafile-calendar.
+    const firstDayOfWeek = 7;
     let showWeekNumberEl;
     const now = moment();
     for (let dateColIndex = 0; dateColIndex < DateConstants.DATE_COL_COUNT; dateColIndex++) {

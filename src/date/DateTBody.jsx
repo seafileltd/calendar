@@ -74,7 +74,10 @@ export default class DateTBody extends React.Component {
     const month1 = value.clone();
     month1.date(1);
     const day = month1.day();
-    const lastMonthDiffDay = (day + 7 - value.localeData().firstDayOfWeek()) % 7;
+    // const firstDayOfWeek = value.localeData().firstDayOfWeek();
+    // We set Sunday(7) as the first day of the week in seafile-calendar.
+    const firstDayOfWeek = 7;
+    const lastMonthDiffDay = (day + 7 - firstDayOfWeek) % 7;
     // calculate last month
     const lastMonth1 = month1.clone();
     lastMonth1.add(0 - lastMonthDiffDay, 'days');

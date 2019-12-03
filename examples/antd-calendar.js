@@ -150,6 +150,7 @@ class Demo extends React.Component {
       showDateInput={state.showDateInput}
       disabledDate={disabledDate}
       focusablePanel={false}
+      showHourAndMinute
     />);
     return (<div style={{ width: 400, margin: 20 }}>
       <div style={{ marginBottom: 10 }}>

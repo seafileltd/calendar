@@ -19,6 +19,11 @@ export default class CalendarRightPanel extends React.Component {
     this.timeRef = React.createRef();
   }
 
+  componentDidMount() {
+    // The default time is 8, page scroll to 08:00
+    this.timeRef.current.scrollTo(0, 34 * 16);
+  }
+
   onSelect = (value) => {
     this.setState({
       highlightTime: value,
@@ -34,22 +39,18 @@ export default class CalendarRightPanel extends React.Component {
     this.timeRef.current.scrollBy(0, 200);
   }
 
-  componentDidMount() {
-    // The default time is 8, page scroll to 08:00
-    this.timeRef.current.scrollTo(0, 34 * 16);
-  }
-
   render() {
     const { value, prefixCls, locale } = this.props;
     const selectedDate = value.format().slice(0, 10);
     const times = [];
     for (let i = 0; i < 24; i++) {
-      const str = (String(i) + ':00').padStart(5, '0');
-      const str1 = (String(i) + ':30').padStart(5, '0');
+      const str = (`${String(i)}:00`).padStart(5, '0');
+      const str1 = (`${String(i)}:30`).padStart(5, '0');
       times.push(str);
       times.push(str1);
     }
-    const highlightTime = this.state.highlightTime ? this.state.highlightTime.format().slice(11, 16) : null;
+    const highlight = this.state.highlightTime;
+    const highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     const isEnGb = (locale && locale.year === 'Year');
     return (
       <div className={`${prefixCls}-right-panel`}>
@@ -59,7 +60,7 @@ export default class CalendarRightPanel extends React.Component {
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
             {times.map((time) => {
-              let current = moment(selectedDate + ' ' + time);
+              let current = moment(`${selectedDate} ${time}`);
               current = isEnGb ? current.locale('en-gb') : current.locale('zh-cn');
               return (
                 <li
