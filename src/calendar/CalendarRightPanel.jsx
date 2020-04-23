@@ -51,7 +51,7 @@ export default class CalendarRightPanel extends React.Component {
     }
     const highlight = this.state.highlightTime;
     const highlightTime = highlight ? highlight.format().slice(11, 16) : null;
-    const isEnGb = (locale && locale.year === 'Year');
+    const isZhcn = (locale && locale.today === '今天');
     return (
       <div className={`${prefixCls}-right-panel`}>
         <div className={`${prefixCls}-right-panel-header`} onClick={this.scrollUp}>
@@ -61,7 +61,7 @@ export default class CalendarRightPanel extends React.Component {
           <ul>
             {times.map((time) => {
               let current = moment(`${selectedDate} ${time}`);
-              current = isEnGb ? current.locale('en-gb') : current.locale('zh-cn');
+              current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
               return (
                 <li
                   key={time}
