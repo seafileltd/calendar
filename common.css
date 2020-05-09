@@ -366,7 +366,7 @@
 .rc-calendar-right-panel-body ul li:hover {
   color: #e8bf6a;
 }
-.rc-calendar-right-panel-body ul li.highlight {
+.rc-calendar-right-panel-body .rc-calendar-selected-time {
   color: #f09f3f;
 }
 .rc-calendar-right-panel-body::-webkit-scrollbar {
