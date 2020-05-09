@@ -66,7 +66,7 @@ export default class CalendarRightPanel extends React.Component {
                 <li
                   key={time}
                   onClick={this.onSelect.bind(this, current)}
-                  className={`${highlightTime === time ? 'highlight' : ''}`}
+                  className={`${highlightTime === time ? `${prefixCls}-selected-time`: ''}`}
                 >{time}</li>
               );
             })}
