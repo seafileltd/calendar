@@ -7758,6 +7758,7 @@ var Calendar = function (_React$Component) {
         disabledDate = props.disabledDate,
         dateInputPlaceholder = props.dateInputPlaceholder,
         timePicker = props.timePicker,
+        onClickRightPanelTime = props.onClickRightPanelTime,
         disabledTime = props.disabledTime,
         clearIcon = props.clearIcon,
         renderFooter = props.renderFooter,
@@ -7884,7 +7885,8 @@ var Calendar = function (_React$Component) {
           prefixCls: prefixCls,
           value: value,
           locale: locale,
-          onSelect: this.onDateTableSelect
+          onSelect: this.onDateTableSelect,
+          onClickRightPanelTime: onClickRightPanelTime
         })
       )
     ));
@@ -7929,7 +7931,8 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   clearIcon: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.node,
   focusablePanel: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
   inputMode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  onBlur: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
+  onBlur: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
+  onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func
 });
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_13__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_14__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
@@ -7938,6 +7941,7 @@ Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extend
   timePicker: null,
   onOk: noop,
   onPanelChange: noop,
+  onClickRightPanelTime: noop,
   focusablePanel: true
 });
 
@@ -8140,6 +8144,7 @@ var CalendarRightPanel = function (_React$Component) {
         highlightTime: value
       });
       _this.props.onSelect(value);
+      _this.props.onClickRightPanelTime();
     };
 
     _this.scrollUp = function () {
@@ -8225,6 +8230,7 @@ CalendarRightPanel.propTypes = {
   prefixCls: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
   value: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object,
   onSelect: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
+  onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
   locale: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object
 };
 /* harmony default export */ __webpack_exports__["a"] = (CalendarRightPanel);
@@ -9640,6 +9646,10 @@ var Demo = function (_React$Component) {
       });
     };
 
+    _this.onClickRightPanelTime = function () {
+      _this.onOpenChange(false);
+    };
+
     _this.getCalendarContainer = function () {
       return _this.calendarContainerRef.current;
     };
@@ -9677,7 +9687,8 @@ var Demo = function (_React$Component) {
       showDateInput: state.showDateInput,
       disabledDate: disabledDate,
       focusablePanel: false,
-      showHourAndMinute: true
+      showHourAndMinute: true,
+      onClickRightPanelTime: this.onClickRightPanelTime
     });
     return __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(
       'div',
