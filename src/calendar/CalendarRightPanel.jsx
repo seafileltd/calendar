@@ -8,6 +8,7 @@ export default class CalendarRightPanel extends React.Component {
     prefixCls: PropTypes.string,
     value: PropTypes.object,
     onSelect: PropTypes.func,
+    onClickRightPanelTime: PropTypes.func,
     locale: PropTypes.object,
   }
 
@@ -29,6 +30,7 @@ export default class CalendarRightPanel extends React.Component {
       highlightTime: value,
     });
     this.props.onSelect(value);
+    this.props.onClickRightPanelTime();
   }
 
   scrollUp = () => {
@@ -66,7 +68,7 @@ export default class CalendarRightPanel extends React.Component {
                 <li
                   key={time}
                   onClick={this.onSelect.bind(this, current)}
-                  className={`${highlightTime === time ? `${prefixCls}-selected-time`: ''}`}
+                  className={`${highlightTime === time ? `${prefixCls}-selected-time` : ''}`}
                 >{time}</li>
               );
             })}

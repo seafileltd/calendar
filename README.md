@@ -232,6 +232,12 @@ http://react-component.github.io/calendar/examples/index.html
           <td>called when ok button is pressed, only if it's visible</td>
         </tr>
         <tr>
+          <td>onClickRightPanelTime</td>
+          <td>Function()</td>
+          <td></td>
+          <td>called when right panel hour and minute is clicked, only prop showHourAndMinute is true</td>
+        </tr>
+        <tr>
           <td>dateInputPlaceholder</td>
           <td>String</td>
           <td></td>

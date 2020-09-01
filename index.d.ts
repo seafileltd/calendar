@@ -25,6 +25,7 @@ export interface Props {
   onSelect?: (date: Moment) => void;
   onOk?: () => void;
   onKeyDown?: () => void;
+  onClickRightPanelTime?: () => void;
   timePicker?: React.ReactNode;
   dateInputPlaceholder?: string;
   onClear?: () => void;
@@ -35,7 +36,7 @@ export interface Props {
   dateRender?: (current: Moment, value: Moment) => React.ReactNode;
   renderFooter?: () => React.ReactNode;
   renderSidebar?: () => React.ReactNode;
-  inputMode?:String
+  inputMode?: string;
 }
 
 export default class ReactCalendar extends React.Component<Props> {}

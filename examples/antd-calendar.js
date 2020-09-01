@@ -129,6 +129,10 @@ class Demo extends React.Component {
     });
   }
 
+  onClickRightPanelTime = () => {
+    this.onOpenChange(false);
+  }
+
   getCalendarContainer = () => this.calendarContainerRef.current;
 
   toggleDisabled = () => {
@@ -151,6 +155,7 @@ class Demo extends React.Component {
       disabledDate={disabledDate}
       focusablePanel={false}
       showHourAndMinute
+      onClickRightPanelTime={this.onClickRightPanelTime}
     />);
     return (<div style={{ width: 400, margin: 20 }}>
       <div style={{ marginBottom: 10 }}>

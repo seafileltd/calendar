@@ -64,6 +64,7 @@ class Calendar extends React.Component {
     focusablePanel: PropTypes.bool,
     inputMode: PropTypes.string,
     onBlur: PropTypes.func,
+    onClickRightPanelTime: PropTypes.func,
   }
 
   static defaultProps = {
@@ -75,6 +76,7 @@ class Calendar extends React.Component {
     timePicker: null,
     onOk: noop,
     onPanelChange: noop,
+    onClickRightPanelTime: noop,
     focusablePanel: true,
   }
 
@@ -276,7 +278,7 @@ class Calendar extends React.Component {
     const { props, state } = this;
     const {
       locale, prefixCls, disabledDate,
-      dateInputPlaceholder, timePicker,
+      dateInputPlaceholder, timePicker, onClickRightPanelTime,
       disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
     } = props;
     const { value, selectedValue, mode } = state;
@@ -396,6 +398,7 @@ class Calendar extends React.Component {
           value={value}
           locale={locale}
           onSelect={this.onDateTableSelect}
+          onClickRightPanelTime={onClickRightPanelTime}
         />
       }
     </div>
