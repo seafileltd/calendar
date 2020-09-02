@@ -4,8 +4,7 @@ sudo: false
 
 notifications:
   email:
-  - yiminghe@gmail.com
-  - hust2012jiangkai@gmail.com
+  - bing.an@seafile.com
 
 node_js:
 - 10
