@@ -47,6 +47,7 @@ class Calendar extends React.Component {
     showToday: PropTypes.bool,
     showOk: PropTypes.bool,
     showHourAndMinute: PropTypes.bool,
+    defaultMinutesTime: PropTypes.string,
     onSelect: PropTypes.func,
     onOk: PropTypes.func,
     onKeyDown: PropTypes.func,
@@ -399,6 +400,7 @@ class Calendar extends React.Component {
           locale={locale}
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
+          defaultMinutesTime={this.props.defaultMinutesTime}
         />
       }
     </div>

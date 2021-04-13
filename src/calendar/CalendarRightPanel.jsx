@@ -10,6 +10,7 @@ export default class CalendarRightPanel extends React.Component {
     onSelect: PropTypes.func,
     onClickRightPanelTime: PropTypes.func,
     locale: PropTypes.object,
+    defaultMinutesTime: PropTypes.string,
   }
 
   constructor(props) {
@@ -18,11 +19,14 @@ export default class CalendarRightPanel extends React.Component {
       highlightTime: this.props.value || null,
     };
     this.timeRef = React.createRef();
+    this.times = this.getTimes();
   }
 
   componentDidMount() {
-    // The default time is 8, page scroll to 08:00
-    this.timeRef.current.scrollTo(0, 34 * 16);
+    const { defaultMinutesTime } = this.props;
+    const showTimeIndex = this.times.findIndex(item => item === defaultMinutesTime);
+    const scrollTimeIndex = showTimeIndex > -1 ? showTimeIndex : 16;
+    this.timeRef.current.scrollTo(0, 34 * scrollTimeIndex);
   }
 
   onSelect = (value) => {
@@ -31,6 +35,17 @@ export default class CalendarRightPanel extends React.Component {
     });
     this.props.onSelect(value);
     this.props.onClickRightPanelTime();
+  }
+
+  getTimes = () => {
+    const times = [];
+    for (let i = 0; i < 24; i++) {
+      const str = (`${String(i)}:00`).padStart(5, '0');
+      const str1 = (`${String(i)}:30`).padStart(5, '0');
+      times.push(str);
+      times.push(str1);
+    }
+    return times;
   }
 
   scrollUp = () => {
@@ -44,13 +59,6 @@ export default class CalendarRightPanel extends React.Component {
   render() {
     const { value, prefixCls, locale } = this.props;
     const selectedDate = value.format().slice(0, 10);
-    const times = [];
-    for (let i = 0; i < 24; i++) {
-      const str = (`${String(i)}:00`).padStart(5, '0');
-      const str1 = (`${String(i)}:30`).padStart(5, '0');
-      times.push(str);
-      times.push(str1);
-    }
     const highlight = this.state.highlightTime;
     const highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     const isZhcn = (locale && locale.today === '今天');
@@ -61,7 +69,7 @@ export default class CalendarRightPanel extends React.Component {
         </div>
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
-            {times.map((time) => {
+            {this.times.map((time) => {
               let current = moment(`${selectedDate} ${time}`);
               current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
               return (
