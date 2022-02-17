@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
+import dayjs from 'dayjs';
 import DateTable from './date/DateTable';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
@@ -17,13 +18,18 @@ import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
 import { getTimeConfig, getTodayTime, syncTime } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
-import moment from 'moment';
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
 
 function noop() {
 }
 
 const getMomentObjectIfValid = date => {
-  if (moment.isMoment(date) && date.isValid()) {
+  if (dayjs.isDayjs(date) && date.isValid()) {
     return date;
   }
   return false;
@@ -88,7 +94,7 @@ class Calendar extends React.Component {
       value:
           getMomentObjectIfValid(props.value) ||
           getMomentObjectIfValid(props.defaultValue) ||
-          moment(),
+          dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   }

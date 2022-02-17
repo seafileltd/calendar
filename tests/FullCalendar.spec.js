@@ -2,8 +2,19 @@
 import React from 'react';
 import Select from 'rc-select';
 import { render, mount } from 'enzyme';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import FullCalendar from '../src/FullCalendar';
+
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+dayjs.extend(advancedFormat);
 
 describe('FullCalendar', () => {
   it('renders month mode correctly', () => {
@@ -82,7 +93,7 @@ describe('FullCalendar', () => {
   });
 
   it('select month', () => {
-    const selected = moment().add(1, 'month');
+    const selected = dayjs().add(1, 'month');
     const wrapper = mount(
       <FullCalendar
         type="month"

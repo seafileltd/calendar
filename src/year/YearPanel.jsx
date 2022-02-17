@@ -5,17 +5,17 @@ const ROW = 4;
 const COL = 3;
 
 function goYear(direction) {
-  const value = this.state.value.clone();
-  value.add(direction, 'year');
+  let value = this.state.value.clone();
+  value = value.add(direction, 'year');
   this.setState({
     value,
   });
 }
 
 function chooseYear(year) {
-  const value = this.state.value.clone();
-  value.year(year);
-  value.month(this.state.value.month());
+  let value = this.state.value.clone();
+  value = value.year(year);
+  value = value.month(this.state.value.month());
   this.setState({
     value,
   });

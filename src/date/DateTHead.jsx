@@ -1,6 +1,4 @@
 import React from 'react';
-import DateConstants from './DateConstants';
-import moment from 'moment';
 
 export default class DateTHead extends React.Component {
   render() {
@@ -8,20 +6,19 @@ export default class DateTHead extends React.Component {
     const value = props.value;
     const localeData = value.localeData();
     const prefixCls = props.prefixCls;
-    const veryShortWeekdays = [];
-    const weekDays = [];
+    // const veryShortWeekdays = [];
+    // const weekDays = [];
     // const firstDayOfWeek = localeData.firstDayOfWeek();
     // We set Sunday(7) as the first day of the week in seafile-calendar.
-    const firstDayOfWeek = 7;
     let showWeekNumberEl;
-    const now = moment();
-    for (let dateColIndex = 0; dateColIndex < DateConstants.DATE_COL_COUNT; dateColIndex++) {
-      const index = (firstDayOfWeek + dateColIndex) % DateConstants.DATE_COL_COUNT;
-      now.day(index);
-      veryShortWeekdays[dateColIndex] = localeData.weekdaysMin(now);
-      weekDays[dateColIndex] = localeData.weekdaysShort(now);
-    }
-
+    // for (let dateColIndex = 0; dateColIndex < DateConstants.DATE_COL_COUNT; dateColIndex++) {
+    //   const index = (firstDayOfWeek + dateColIndex) % DateConstants.DATE_COL_COUNT;
+    //   now.day(index);
+    //   veryShortWeekdays[dateColIndex] = localeData.weekdaysMin();
+    //   weekDays[dateColIndex] = localeData.weekdaysShort();
+    // }
+    const veryShortWeekdays = localeData.weekdaysMin();
+    const weekDays = localeData.weekdaysShort();
     if (props.showWeekNumber) {
       showWeekNumberEl = (
         <th

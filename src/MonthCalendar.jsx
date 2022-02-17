@@ -10,7 +10,7 @@ import {
   calendarMixinDefaultProps,
 } from './mixin/CalendarMixin';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 class MonthCalendar extends React.Component {
   static propTypes = {
@@ -31,7 +31,7 @@ class MonthCalendar extends React.Component {
 
     this.state = {
       mode: 'month',
-      value: props.value || props.defaultValue || moment(),
+      value: props.value || props.defaultValue || dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   }
@@ -45,26 +45,26 @@ class MonthCalendar extends React.Component {
     switch (keyCode) {
       case KeyCode.DOWN:
         value = stateValue.clone();
-        value.add(3, 'months');
+        value = value.add(3, 'months');
         break;
       case KeyCode.UP:
         value = stateValue.clone();
-        value.add(-3, 'months');
+        value = value.add(-3, 'months');
         break;
       case KeyCode.LEFT:
         value = stateValue.clone();
         if (ctrlKey) {
-          value.add(-1, 'years');
+          value = value.add(-1, 'years');
         } else {
-          value.add(-1, 'months');
+          value = value.add(-1, 'months');
         }
         break;
       case KeyCode.RIGHT:
         value = stateValue.clone();
         if (ctrlKey) {
-          value.add(1, 'years');
+          value = value.add(1, 'years');
         } else {
-          value.add(1, 'months');
+          value = value.add(1, 'months');
         }
         break;
       case KeyCode.ENTER:

@@ -6,14 +6,14 @@ import YearPanel from '../year/YearPanel';
 import DecadePanel from '../decade/DecadePanel';
 
 function goMonth(direction) {
-  const next = this.props.value.clone();
-  next.add(direction, 'months');
+  let next = this.props.value.clone();
+  next = next.add(direction, 'months');
   this.props.onValueChange(next);
 }
 
 function goYear(direction) {
-  const next = this.props.value.clone();
-  next.add(direction, 'years');
+  let next = this.props.value.clone();
+  next = next.add(direction, 'years');
   this.props.onValueChange(next);
 }
 

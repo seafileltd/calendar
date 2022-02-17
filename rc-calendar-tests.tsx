@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as moment from 'moment';
+import * as dayjs from 'dayjs';
 import Calendar from './';
 
-const action = (date: moment.Moment) => {
+const action = (date: dayjs.Dayjs) => {
   date.subtract(1);
 };
 
@@ -10,11 +10,11 @@ export default () => (
   <Calendar
     showWeekNumber={false}
     locale={{}}
-    defaultValue={moment()}
+    defaultValue={dayjs()}
     showToday
     showOk={false}
     onChange={action}
-    disabledDate={(now: moment.Moment) => false}
+    disabledDate={(now: dayjs.Dayjs) => false}
     onSelect={action}
     inputMode="numeric"
   />

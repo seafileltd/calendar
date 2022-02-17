@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { formatDate } from '../util';
+
 
 let cachedSelectionStart;
 let cachedSelectionEnd;
@@ -68,7 +69,7 @@ class DateInput extends React.Component {
     }
 
     // 不合法直接退出
-    const parsed = moment(str, format, true);
+    const parsed = dayjs(str, format, true);
     if (!parsed.isValid()) {
       this.setState({
         invalid: true,
@@ -77,8 +78,8 @@ class DateInput extends React.Component {
       return;
     }
 
-    const value = this.props.value.clone();
-    value
+    let value = this.props.value.clone();
+    value = value
       .year(parsed.year())
       .month(parsed.month())
       .date(parsed.date())

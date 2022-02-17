@@ -11,18 +11,24 @@ import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 import 'rc-time-picker/assets/index.css';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
 
 const format = 'YYYY-MM-DD HH:mm:ss';
-const cn = location.search.indexOf('cn') !== -1;
+const cn = true;
 
-const now = moment();
+dayjs.extend(utc);
+dayjs.extend(localeData);
+
+let now = dayjs();
 if (cn) {
-  now.locale('zh-cn').utcOffset(8);
+  now = now.locale('zh-cn');
 } else {
-  now.locale('en-gb').utcOffset(0);
+  now = now.locale('en-gb');
 }
 
 function getFormat(time) {
@@ -33,7 +39,7 @@ function getFormat(time) {
 const defaultCalendarValue = now.clone();
 defaultCalendarValue.add(-1, 'month');
 
-const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+const timePickerElement = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
 
 function disabledTime(date) {
   console.log('disabledTime', date);
@@ -57,10 +63,10 @@ function disabledDate(current) {
     // allow empty select
     return false;
   }
-  const date = moment();
-  date.hour(0);
-  date.minute(0);
-  date.second(0);
+  let date = dayjs().locale('zh-cn');
+  date = date.hour(0);
+  date = date.minute(0);
+  date = date.second(0);
   return current.valueOf() < date.valueOf();  // can not select days before today
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import classnames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
 import KeyCode from 'rc-util/lib/KeyCode';
@@ -50,7 +50,7 @@ function normalizeAnchor(props, init) {
     getValueFromSelectedValue(value) :
     getValueFromSelectedValue(selectedValue);
   return !isEmptyArray(normalizedValue) ?
-    normalizedValue : init && [moment(), moment().add(1, 'months')];
+    normalizedValue : init && [dayjs(), dayjs().add(1, 'months')];
 }
 
 function generateOptions(length, extraOptionGen) {
@@ -210,7 +210,7 @@ class RangeCalendar extends React.Component {
       let nextHoverValue;
 
       if (!firstSelectedValue) {
-        currentHoverTime = hoverValue[0] || selectedValue[0] || value[0] || moment();
+        currentHoverTime = hoverValue[0] || selectedValue[0] || value[0] || dayjs();
         nextHoverTime = func(currentHoverTime);
         nextHoverValue = [nextHoverTime];
         this.fireHoverValueChange(nextHoverValue);
@@ -571,7 +571,7 @@ class RangeCalendar extends React.Component {
 
     // 尚未选择过时间，直接输入的话
     if (!this.state.selectedValue[0] || !this.state.selectedValue[1]) {
-      const startValue = selectedValue[0] || moment();
+      const startValue = selectedValue[0] || dayjs();
       const endValue = selectedValue[1] || startValue.clone().add(1, 'months');
       this.setState({
         selectedValue,

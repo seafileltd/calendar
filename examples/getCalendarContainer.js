@@ -9,14 +9,20 @@ import 'rc-dialog/assets/index.css';
 import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
 
 const format = 'YYYY-MM-DD';
 const cn = location.search.indexOf('cn') !== -1;
 
-const now = moment();
+const now = dayjs();
 if (cn) {
   now.locale('zh-cn').utcOffset(8);
 } else {

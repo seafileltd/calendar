@@ -10,19 +10,26 @@ import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import '@seafile/seafile-calendar/assets/index.less';
 import 'rc-time-picker/assets/index.css';
 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+
 
 const cn = location.search.indexOf('cn') !== -1;
 
 if (cn) {
-  moment.locale('zh-cn');
+  dayjs.locale('zh-cn');
 } else {
-  moment.locale('en-gb');
+  dayjs.locale('en-gb');
 }
 
-const now = moment();
+const now = dayjs();
 if (cn) {
   now.utcOffset(8);
 } else {
@@ -34,7 +41,7 @@ defaultCalendarValue.add(-1, 'month');
 
 const timePickerElement = (
   <TimePickerPanel
-    defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]}
+    defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]}
   />
 );
 
@@ -47,10 +54,10 @@ function newArray(start, end) {
 }
 
 function disabledDate(current) {
-  const date = moment();
-  date.hour(0);
-  date.minute(0);
-  date.second(0);
+  let date = dayjs();
+  date = date.hour(0);
+  date = date.minute(0);
+  date = date.second(0);
   return current.isBefore(date);  // can not select days before today
 }
 

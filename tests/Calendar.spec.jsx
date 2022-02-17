@@ -1,12 +1,27 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import keyCode from 'rc-util/lib/KeyCode';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { mount, render } from 'enzyme';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import Calendar from '../src/Calendar';
 import zhCN from '../src/locale/zh_CN';
 import enUS from '../src/locale/en_US';
+
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import badMutable from 'dayjs/plugin/badMutable';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+dayjs.extend(advancedFormat);
+dayjs.extend(customParseFormat);
+dayjs.extend(badMutable);
 
 const format = ('YYYY-MM-DD');
 
@@ -14,12 +29,12 @@ describe('Calendar', () => {
   describe('render', () => {
     it('render correctly', () => {
       const zhWrapper = render(
-        <Calendar locale={zhCN} defaultValue={moment('2017-03-29').locale('zh-cn')} />
+        <Calendar locale={zhCN} defaultValue={dayjs('2017-03-29').locale('zh-cn')} />
       );
       expect(zhWrapper).toMatchSnapshot();
 
       const enWrapper = render(
-        <Calendar locale={enUS} defaultValue={moment('2017-03-29').locale('en')} />
+        <Calendar locale={enUS} defaultValue={dayjs('2017-03-29').locale('en')} />
       );
       expect(enWrapper).toMatchSnapshot();
 
@@ -27,15 +42,15 @@ describe('Calendar', () => {
       const enWrapperWithMonthFormatWrapper = render(
         <Calendar
           locale={customEnUSLocalWithMonthFormat}
-          defaultValue={moment('2017-03-29').local('en')}
+          defaultValue={dayjs('2017-03-29').local('en')}
         />
       );
       expect(enWrapperWithMonthFormatWrapper).toMatchSnapshot();
     });
 
-    it('render correctly with invalid moment object', () => {
+    it('render correctly with invalid dayjs object', () => {
       const enWrapper = render(
-          <Calendar locale={enUS} defaultValue={moment('invalid').locale('en')} />
+          <Calendar locale={enUS} defaultValue={dayjs('invalid').locale('en')} />
       );
       expect(enWrapper).toMatchSnapshot();
     });
@@ -48,7 +63,7 @@ describe('Calendar', () => {
 
   describe('timePicker', () => {
     it('set defaultOpenValue if timePicker.props.defaultValue is set', () => {
-      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(<Calendar timePicker={timePicker} />);
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const selectedValues = wrapper.find('.rc-time-picker-panel-select-option-selected');
@@ -58,9 +73,9 @@ describe('Calendar', () => {
     });
 
     it('follow Calendar[selectedValue|defaultSelectedValue] when it is set', () => {
-      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(
-        <Calendar timePicker={timePicker} defaultSelectedValue={moment('01:01:01', 'HH:mm:ss')} />
+        <Calendar timePicker={timePicker} defaultSelectedValue={dayjs('01:01:01', 'HH:mm:ss')} />
       );
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const selectedValues = wrapper.find('.rc-time-picker-panel-select-option-selected');
@@ -70,7 +85,7 @@ describe('Calendar', () => {
     });
 
     it('use timePicker\'s time', () => {
-      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(<Calendar timePicker={timePicker} />);
 
       wrapper.find('.rc-calendar-today').simulate('click');
@@ -93,7 +108,7 @@ describe('Calendar', () => {
       ).toBe('3/8/2017 06:00:00');
     });
     it('timePicker date have no changes when hover', () => {
-      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(<Calendar timePicker={timePicker} />);
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const dateBtns = wrapper.find('.rc-calendar-my-select a');
@@ -122,7 +137,7 @@ describe('Calendar', () => {
     });
 
     it('support controlled mode', () => {
-      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
       let value = null;
       class ControlledCalendar extends React.Component {
         state = { mode: 'date' };
@@ -155,14 +170,14 @@ describe('Calendar', () => {
       expect(wrapper.find('.rc-calendar-year-panel').length).toBe(1);
       wrapper.find('.rc-calendar-year-panel-decade-select').simulate('click');
       expect(wrapper.find('.rc-calendar-decade-panel').length).toBe(1);
-      expect(value.isSame(moment(), 'day'));
+      expect(value.isSame(dayjs(), 'day'));
       wrapper.find('.rc-calendar-decade-panel-selected-cell').simulate('click');
       expect(wrapper.find('.rc-calendar-decade-panel').length).toBe(0);
       wrapper.find('.rc-calendar-year-panel-selected-cell').simulate('click');
       expect(wrapper.find('.rc-calendar-year-panel').length).toBe(0);
       wrapper.find('.rc-calendar-month-panel-selected-cell').simulate('click');
       expect(wrapper.find('.rc-calendar-month-panel').length).toBe(0);
-      expect(value.isSame(moment('2010-03-29'), 'day'));
+      expect(value.isSame(dayjs('2010-03-29'), 'day'));
 
       wrapper.find('.rc-calendar-year-select').simulate('click');
       expect(wrapper.find('.rc-calendar-year-panel').length).toBe(1);
@@ -203,8 +218,8 @@ describe('Calendar', () => {
 
       it('left works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(-1, 'day');
+        let expected = original.clone();
+        expected = expected.add(-1, 'day');
 
         calendar.simulate('keyDown', { keyCode: keyCode.LEFT });
         expect(calendar.state().value.date()).toBe(expected.date());
@@ -214,8 +229,8 @@ describe('Calendar', () => {
 
       it('right works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(1, 'day');
+        let expected = original.clone();
+        expected = expected.add(1, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.RIGHT });
         expect(calendar.state().value.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
@@ -223,14 +238,14 @@ describe('Calendar', () => {
 
       it('up works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(-7, 'day');
+        let expected = original.clone();
+        expected = expected.add(-7, 'day');
       });
 
       it('left works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(-1, 'day');
+        let expected = original.clone();
+        expected = expected.add(-1, 'day');
 
         calendar.simulate('keyDown', { keyCode: keyCode.LEFT });
         expect(calendar.state().value.date()).toBe(expected.date());
@@ -240,8 +255,8 @@ describe('Calendar', () => {
 
       it('right works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(1, 'day');
+        let expected = original.clone();
+        expected = expected.add(1, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.RIGHT });
         expect(calendar.state().value.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
@@ -249,8 +264,8 @@ describe('Calendar', () => {
 
       it('up works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(-7, 'day');
+        let expected = original.clone();
+        expected = expected.add(-7, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.UP });
         expect(calendar.state().value.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
@@ -258,8 +273,8 @@ describe('Calendar', () => {
 
       it('down works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(7, 'day');
+        let expected = original.clone();
+        expected = expected.add(7, 'day');
         calendar.simulate('keyDown', { keyCode: keyCode.DOWN });
         expect(calendar.state().value.date()).toBe(expected.date());
         expect(input.getDOMNode().value).toBe('');
@@ -267,8 +282,8 @@ describe('Calendar', () => {
 
       it('pageDown works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(1, 'month');
+        let expected = original.clone();
+        expected = expected.add(1, 'month');
         calendar.simulate('keyDown', { keyCode: keyCode.PAGE_DOWN });
         expect(calendar.state().value.month()).toBe(expected.month());
         expect(input.getDOMNode().value).toBe('');
@@ -276,8 +291,8 @@ describe('Calendar', () => {
 
       it('pageUp works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(-1, 'month');
+        let expected = original.clone();
+        expected = expected.add(-1, 'month');
         calendar.simulate('keyDown', { keyCode: keyCode.PAGE_UP });
         expect(calendar.state().value.month()).toBe(expected.month());
         expect(input.getDOMNode().value).toBe('');
@@ -285,8 +300,8 @@ describe('Calendar', () => {
 
       it('ctrl left works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(-1, 'year');
+        let expected = original.clone();
+        expected = expected.add(-1, 'year');
         calendar.simulate('keyDown', {
           keyCode: keyCode.LEFT,
           ctrlKey: 1,
@@ -297,8 +312,8 @@ describe('Calendar', () => {
 
       it('ctrl right works', () => {
         const original = calendar.state().value;
-        const expected = original.clone();
-        expected.add(1, 'year');
+        let expected = original.clone();
+        expected = expected.add(1, 'year');
         calendar.simulate('keyDown', {
           keyCode: keyCode.RIGHT,
           ctrlKey: 1,
@@ -351,10 +366,10 @@ describe('Calendar', () => {
           if (!current) {
             return false;
           }
-          const date = moment();
-          date.hour(0);
-          date.minute(0);
-          date.second(0);
+          let date = dayjs();
+          date = date.hour(0);
+          date = date.minute(0);
+          date = date.second(0);
           return current.valueOf() < date.valueOf();
         }
 
@@ -587,7 +602,7 @@ describe('Calendar', () => {
   });
 
   it('handle clear', () => {
-    const now = moment();
+    const now = dayjs();
     const calendar = mount(
       <Calendar defaultSelectedValue={now} />
     );
@@ -598,7 +613,7 @@ describe('Calendar', () => {
 
   describe('onOk', () => {
     it('triggers onOk', () => {
-      const selected = moment().add(1, 'day');
+      const selected = dayjs().add(1, 'day');
       const handleOk = jest.fn();
       const calendar = mount(
         <Calendar showOk defaultSelectedValue={selected} onOk={handleOk} />
@@ -618,7 +633,7 @@ describe('Calendar', () => {
     });
 
     it('does not triggers onOk if selected date is disabled', () => {
-      const selected = moment().add(1, 'day');
+      const selected = dayjs().add(1, 'day');
       const handleOk = jest.fn();
       const calendar = mount(
         <Calendar
@@ -634,11 +649,11 @@ describe('Calendar', () => {
   });
 
   it('today button', () => {
-    const selected = moment().add(1, 'day').utcOffset(480);
+    const selected = dayjs().add(1, 'day').utcOffset(480);
     const calendar = mount(
       <Calendar defaultSelectedValue={selected} />
     );
     calendar.find('.rc-calendar-today-btn').simulate('click');
-    expect(moment().isSame(calendar.state().selectedValue)).toBe(true);
+    expect(dayjs().isSame(calendar.state().selectedValue)).toBe(true);
   });
 });

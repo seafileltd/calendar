@@ -2,8 +2,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import keyCode from 'rc-util/lib/KeyCode';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import MonthCalendar from '../src/MonthCalendar';
+
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+dayjs.extend(advancedFormat);
 
 describe('MonthCalendar', () => {
   it('year or decade panel work correctly', () => {
@@ -19,7 +30,7 @@ describe('MonthCalendar', () => {
   describe('keyboard', () => {
     let wrapper;
     beforeEach(() => {
-      const selected = moment().add(2, 'month');
+      const selected = dayjs().add(2, 'month');
       wrapper = mount(<MonthCalendar defaultValue={selected} />);
     });
 
@@ -38,7 +49,7 @@ describe('MonthCalendar', () => {
         if (!current) {
           return false;
         }
-        const date = moment();
+        const date = dayjs();
         return current.month() < date.month();
       }
 
@@ -114,10 +125,10 @@ describe('MonthCalendar', () => {
   });
 
   it('controlled value should work', () => {
-    const wrapper = mount(<MonthCalendar value={moment('2000-01-01 00:00:00')} />);
+    const wrapper = mount(<MonthCalendar value={dayjs('2000-01-01 00:00:00')} />);
     expect(wrapper.state().value.format('YYYY-MM-DD')).toBe('2000-01-01');
 
-    wrapper.setProps({ value: moment('2049-09-03 00:00:00') });
+    wrapper.setProps({ value: dayjs('2049-09-03 00:00:00') });
     expect(wrapper.state().value.format('YYYY-MM-DD')).toBe('2049-09-03');
   });
 });

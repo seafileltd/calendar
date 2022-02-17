@@ -7,8 +7,8 @@ const ROW = 4;
 const COL = 3;
 
 function chooseMonth(month) {
-  const next = this.state.value.clone();
-  next.month(month);
+  let next = this.state.value.clone();
+  next = next.month(month);
   this.setAndSelectValue(next);
 }
 
@@ -42,13 +42,13 @@ class MonthTable extends Component {
 
   months() {
     const value = this.state.value;
-    const current = value.clone();
+    let current = value.clone();
     const months = [];
     let index = 0;
     for (let rowIndex = 0; rowIndex < ROW; rowIndex++) {
       months[rowIndex] = [];
       for (let colIndex = 0; colIndex < COL; colIndex++) {
-        current.month(index);
+        current = current.month(index);
         const content = getMonthName(current);
         months[rowIndex][colIndex] = {
           value: index,
@@ -72,8 +72,8 @@ class MonthTable extends Component {
       const tds = month.map(monthData => {
         let disabled = false;
         if (props.disabledDate) {
-          const testValue = value.clone();
-          testValue.month(monthData.value);
+          let testValue = value.clone();
+          testValue = testValue.month(monthData.value);
           disabled = props.disabledDate(testValue);
         }
         const classNameMap = {
@@ -85,14 +85,14 @@ class MonthTable extends Component {
         };
         let cellEl;
         if (cellRender) {
-          const currentValue = value.clone();
-          currentValue.month(monthData.value);
+          let currentValue = value.clone();
+          currentValue = currentValue.month(monthData.value);
           cellEl = cellRender(currentValue, locale);
         } else {
           let content;
           if (contentRender) {
-            const currentValue = value.clone();
-            currentValue.month(monthData.value);
+            let currentValue = value.clone();
+            currentValue = currentValue.month(monthData.value);
             content = contentRender(currentValue, locale);
           } else {
             content = monthData.content;
