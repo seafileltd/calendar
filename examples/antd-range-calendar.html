@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>antd-range-calendar.js - example - @seafile/seafile-calendar@0.0.13</title>
+  <title>antd-range-calendar.js - example - @seafile/seafile-calendar@0.0.17beta</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>@seafile/seafile-calendar@0.0.13</h1>
+      <h1>@seafile/seafile-calendar@0.0.17beta</h1>
 
       <p>React Calendar</p>
     </div>
@@ -281,19 +281,26 @@ import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import '@seafile/seafile-calendar/assets/index.css';
 import 'rc-time-picker/assets/index.css';
 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import dayjs from 'dayjs';
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+dayjs.extend(utc);
+dayjs.extend(localeData);
+dayjs.extend(weekOfYear);
+
 
 const cn = location.search.indexOf('cn') !== -1;
 
 if (cn) {
-  moment.locale('zh-cn');
+  dayjs.locale('zh-cn');
 } else {
-  moment.locale('en-gb');
+  dayjs.locale('en-gb');
 }
 
-const now = moment();
+const now = dayjs();
 if (cn) {
   now.utcOffset(8);
 } else {
@@ -305,7 +312,7 @@ defaultCalendarValue.add(-1, 'month');
 
 const timePickerElement = (
   &lt;TimePickerPanel
-    defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]}
+    defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]}
   /&gt;
 );
 
@@ -318,10 +325,10 @@ function newArray(start, end) {
 }
 
 function disabledDate(current) {
-  const date = moment();
-  date.hour(0);
-  date.minute(0);
-  date.second(0);
+  let date = dayjs();
+  date = date.hour(0);
+  date = date.minute(0);
+  date = date.second(0);
   return current.isBefore(date);  // can not select days before today
 }
 

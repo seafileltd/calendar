@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>antd-calendar.js - example - @seafile/seafile-calendar@0.0.13</title>
+  <title>antd-calendar.js - example - @seafile/seafile-calendar@0.0.17beta</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>@seafile/seafile-calendar@0.0.13</h1>
+      <h1>@seafile/seafile-calendar@0.0.17beta</h1>
 
       <p>React Calendar</p>
     </div>
@@ -282,18 +282,24 @@ import enUS from '@seafile/seafile-calendar/lib/locale/en_US';
 import 'rc-time-picker/assets/index.css';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
+
+import localeData from 'dayjs/plugin/localeData';
+import utc from 'dayjs/plugin/utc';
 
 const format = 'YYYY-MM-DD HH:mm:ss';
-const cn = location.search.indexOf('cn') !== -1;
+const cn = true;
 
-const now = moment();
+dayjs.extend(utc);
+dayjs.extend(localeData);
+
+let now = dayjs();
 if (cn) {
-  now.locale('zh-cn').utcOffset(8);
+  now = now.locale('zh-cn');
 } else {
-  now.locale('en-gb').utcOffset(0);
+  now = now.locale('en-gb');
 }
 
 function getFormat(time) {
@@ -304,7 +310,7 @@ function getFormat(time) {
 const defaultCalendarValue = now.clone();
 defaultCalendarValue.add(-1, 'month');
 
-const timePickerElement = &lt;TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} /&gt;;
+const timePickerElement = &lt;TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} /&gt;;
 
 function disabledTime(date) {
   console.log('disabledTime', date);
@@ -328,10 +334,10 @@ function disabledDate(current) {
     // allow empty select
     return false;
   }
-  const date = moment();
-  date.hour(0);
-  date.minute(0);
-  date.second(0);
+  let date = dayjs().locale('zh-cn');
+  date = date.hour(0);
+  date = date.minute(0);
+  date = date.second(0);
   return current.valueOf() &lt; date.valueOf();  // can not select days before today
 }
 
