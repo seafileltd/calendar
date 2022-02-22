@@ -10,19 +10,10 @@ import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 import 'rc-time-picker/assets/index.css';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
-
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
+import dayjs from '../src/util/dayjs';
 
 const format = 'YYYY-MM-DD HH:mm:ss';
-const cn = true;
-
-dayjs.extend(utc);
-dayjs.extend(localeData);
+const cn = location.search.indexOf('cn') !== -1;
 
 let now = dayjs();
 if (cn) {

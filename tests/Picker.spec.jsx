@@ -1,26 +1,11 @@
 import React from 'react';
-import dayjs from 'dayjs';
 import { mount } from 'enzyme';
 import keyCode from 'rc-util/lib/KeyCode';
 import Calendar from '../index';
 import DatePicker from '../src/Picker';
 import RangeCalendar from '../src/RangeCalendar';
 import CalendarLocale from '../src/locale/en_US';
-
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import badMutable from 'dayjs/plugin/badMutable';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
-dayjs.extend(advancedFormat);
-dayjs.extend(customParseFormat);
-dayjs.extend(badMutable);
+import dayjs from '../src/util/dayjs';
 
 const format = ('YYYY-MM-DD');
 const VALUE = dayjs([2015, 5, 1]);

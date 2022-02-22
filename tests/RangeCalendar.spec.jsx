@@ -1,25 +1,10 @@
 /* eslint-disable no-undef, max-len, react/no-multi-comp */
 import React from 'react';
-import dayjs from 'dayjs';
 import { mount, render } from 'enzyme';
 import keyCode from 'rc-util/lib/KeyCode';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import RangeCalendar from '../src/RangeCalendar';
-
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import badMutable from 'dayjs/plugin/badMutable';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
-dayjs.extend(advancedFormat);
-dayjs.extend(customParseFormat);
-dayjs.extend(badMutable);
+import dayjs from '../src/util/dayjs';
 
 const format = ('YYYY-MM-DD');
 

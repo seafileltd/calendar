@@ -2,19 +2,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import keyCode from 'rc-util/lib/KeyCode';
-import dayjs from 'dayjs';
 import MonthCalendar from '../src/MonthCalendar';
-
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
-dayjs.extend(advancedFormat);
+import dayjs from '../src/util/dayjs';
 
 describe('MonthCalendar', () => {
   it('year or decade panel work correctly', () => {

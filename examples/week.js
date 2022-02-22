@@ -9,17 +9,7 @@ import DatePicker from '@seafile/seafile-calendar/src/Picker';
 import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 
-import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import advancedFormat from 'dayjs/plugin/advancedFormat';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
-dayjs.extend(advancedFormat);
+import dayjs from '../src/util/dayjs';
 
 const format = 'YYYY-wo';
 const cn = location.search.indexOf('cn') !== -1;

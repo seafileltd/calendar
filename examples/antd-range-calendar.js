@@ -10,16 +10,7 @@ import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import '@seafile/seafile-calendar/assets/index.less';
 import 'rc-time-picker/assets/index.css';
 
-import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
-
+import dayjs from '../src/util/dayjs';
 
 const cn = location.search.indexOf('cn') !== -1;
 

@@ -11,15 +11,7 @@ import Select from 'rc-select';
 import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 
-import dayjs from 'dayjs';
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/en-gb';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
+import dayjs from '../src/util/dayjs';
 
 const format = 'YYYY-MM-DD';
 const cn = location.search.indexOf('cn') !== -1;
