@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>full-calendar.js - example - @seafile/seafile-calendar@0.0.17beta</title>
+  <title>full-calendar.js - example - @seafile/seafile-calendar@0.0.18</title>
   <meta name="viewport"
         content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <meta charset="utf-8"/>
@@ -263,7 +263,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <body>
   <div class="container">
     <div class="header">
-      <h1>@seafile/seafile-calendar@0.0.17beta</h1>
+      <h1>@seafile/seafile-calendar@0.0.18</h1>
 
       <p>React Calendar</p>
     </div>
@@ -282,15 +282,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 <span class="hljs-keyword">import</span> zhCN <span class="hljs-keyword">from</span> <span class="hljs-string">'@seafile/seafile-calendar/lib/locale/zh_CN'</span>;
 <span class="hljs-keyword">import</span> enUS <span class="hljs-keyword">from</span> <span class="hljs-string">'@seafile/seafile-calendar/lib/locale/en_US'</span>;
 
-<span class="hljs-keyword">import</span> dayjs <span class="hljs-keyword">from</span> <span class="hljs-string">'dayjs'</span>;
-<span class="hljs-keyword">import</span> localeData <span class="hljs-keyword">from</span> <span class="hljs-string">'dayjs/plugin/localeData'</span>;
-<span class="hljs-keyword">import</span> utc <span class="hljs-keyword">from</span> <span class="hljs-string">'dayjs/plugin/utc'</span>;
-<span class="hljs-keyword">import</span> weekOfYear <span class="hljs-keyword">from</span> <span class="hljs-string">'dayjs/plugin/weekOfYear'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'dayjs/locale/zh-cn'</span>;
-<span class="hljs-keyword">import</span> <span class="hljs-string">'dayjs/locale/en-gb'</span>;
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
+<span class="hljs-keyword">import</span> dayjs <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/util/dayjs'</span>;
 
 <span class="hljs-keyword">const</span> format = <span class="hljs-string">'YYYY-MM-DD'</span>;
 <span class="hljs-keyword">const</span> cn = location.search.indexOf(<span class="hljs-string">'cn'</span>) !== -<span class="hljs-number">1</span>;
