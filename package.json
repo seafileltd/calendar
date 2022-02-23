@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-calendar",
-  "version": "0.0.15",
+  "version": "0.0.18",
   "description": "React Calendar",
   "keywords": [
     "react",
@@ -91,7 +91,7 @@
   "dependencies": {
     "babel-runtime": "6.x",
     "classnames": "2.x",
-    "moment": "2.x",
+    "dayjs": "1.10.7",
     "prop-types": "^15.5.8",
     "rc-trigger": "^2.2.0",
     "rc-util": "^4.1.1",

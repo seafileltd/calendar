@@ -71,16 +71,16 @@ export default class DateTBody extends React.Component {
     const firstDisableClass = `${prefixCls}-disabled-cell-first-of-row`;
     const lastDisableClass = `${prefixCls}-disabled-cell-last-of-row`;
     const lastDayOfMonthClass = `${prefixCls}-last-day-of-month`;
-    const month1 = value.clone();
-    month1.date(1);
+    let month1 = value.clone();
+    month1 = month1.date(1);
     const day = month1.day();
     // const firstDayOfWeek = value.localeData().firstDayOfWeek();
     // We set Sunday(7) as the first day of the week in seafile-calendar.
     const firstDayOfWeek = 7;
     const lastMonthDiffDay = (day + 7 - firstDayOfWeek) % 7;
     // calculate last month
-    const lastMonth1 = month1.clone();
-    lastMonth1.add(0 - lastMonthDiffDay, 'days');
+    let lastMonth1 = month1.clone();
+    lastMonth1 = lastMonth1.add(0 - lastMonthDiffDay, 'days');
     let passed = 0;
 
     for (iIndex = 0; iIndex < DateConstants.DATE_ROW_COUNT; iIndex++) {
@@ -88,7 +88,7 @@ export default class DateTBody extends React.Component {
         current = lastMonth1;
         if (passed) {
           current = current.clone();
-          current.add(passed, 'days');
+          current = current.add(passed, 'days');
         }
         dateTable.push(current);
         passed++;

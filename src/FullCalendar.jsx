@@ -11,7 +11,7 @@ import {
 } from './mixin/CalendarMixin';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import CalendarHeader from './full-calendar/CalendarHeader';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 class FullCalendar extends React.Component {
   static propTypes = {
@@ -61,7 +61,7 @@ class FullCalendar extends React.Component {
 
     this.state = {
       type,
-      value: props.value || props.defaultValue || moment(),
+      value: props.value || props.defaultValue || dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   }

@@ -5,17 +5,17 @@ const COL = 3;
 import classnames from 'classnames';
 
 function goYear(direction) {
-  const next = this.state.value.clone();
-  next.add(direction, 'years');
+  let next = this.state.value.clone();
+  next = next.add(direction, 'years');
   this.setState({
     value: next,
   });
 }
 
 function chooseDecade(year, event) {
-  const next = this.state.value.clone();
-  next.year(year);
-  next.month(this.state.value.month());
+  let next = this.state.value.clone();
+  next = next.year(year);
+  next = next.month(this.state.value.month());
   this.props.onSelect(next);
   event.preventDefault();
 }

@@ -1,10 +1,10 @@
 /* eslint-disable no-undef, max-len, react/no-multi-comp */
 import React from 'react';
-import moment from 'moment';
 import { mount, render } from 'enzyme';
 import keyCode from 'rc-util/lib/KeyCode';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import RangeCalendar from '../src/RangeCalendar';
+import dayjs from '../src/util/dayjs';
 
 const format = ('YYYY-MM-DD');
 
@@ -25,7 +25,7 @@ describe('RangeCalendar', () => {
   });
 
   it('render hoverValue correctly', () => {
-    const wrapper = render(<RangeCalendar hoverValue={[moment(), moment().add(1, 'months')]} />);
+    const wrapper = render(<RangeCalendar hoverValue={[dayjs(), dayjs().add(1, 'months')]} />);
     expect(wrapper).toMatchSnapshot();
   });
 
@@ -143,12 +143,11 @@ describe('RangeCalendar', () => {
 
   it('onSelect works', () => {
     function onSelect(d) {
-      expect(d[0].format(format)).toBe('2015-09-04');
-      expect(d[1].format(format)).toBe('2015-10-02');
+      expect(d[0].format(format)).toBe('2015-07-31');
+      expect(d[1].format(format)).toBe('2015-07-31');
     }
 
-    const now = moment([2015, 8, 29]);
-
+    const now = dayjs([2015, 8, 29]);
     const wrapper = mount(
       <RangeCalendar
         format={format}
@@ -157,20 +156,19 @@ describe('RangeCalendar', () => {
         showWeekNumber
       />
     );
-    wrapper.find('.rc-calendar-range-left .rc-calendar-date').at(5).simulate('click'); // 9.4
-    expect(wrapper.find('.rc-calendar-input').at(0).getDOMNode().value).toBe('2015-09-04');
-    wrapper.find('.rc-calendar-range-right .rc-calendar-date').at(5).simulate('click'); // 10.2
-    expect(wrapper.find('.rc-calendar-input').at(1).getDOMNode().value).toBe('2015-10-02');
+    wrapper.find('.rc-calendar-range-left .rc-calendar-date').at(5).simulate('click'); // 7.31
+    expect(wrapper.find('.rc-calendar-input').at(0).getDOMNode().value).toBe('2015-07-31');
+    wrapper.find('.rc-calendar-range-right .rc-calendar-date').at(5).simulate('click'); // 7.31
+    expect(wrapper.find('.rc-calendar-input').at(1).getDOMNode().value).toBe('2015-07-31');
   });
 
   it('onSelect works reversely', () => {
     function onSelect(d) {
-      expect(d[0].format(format)).toBe('2015-09-04');
-      expect(d[1].format(format)).toBe('2015-09-14');
+      expect(d[0].format(format)).toBe('2015-07-31');
+      expect(d[1].format(format)).toBe('2015-08-10');
     }
 
-    const now = moment([2015, 8, 29]);
-
+    const now = dayjs([2015, 8, 29]);
     const wrapper = mount(
       <RangeCalendar
         format={format}
@@ -180,12 +178,12 @@ describe('RangeCalendar', () => {
       />
     );
 
-    wrapper.find('.rc-calendar-range-left .rc-calendar-date').at(15).simulate('click'); // 9.14
-    expect(wrapper.find('.rc-calendar-input').at(0).getDOMNode().value).toBe('2015-09-14');
+    wrapper.find('.rc-calendar-range-left .rc-calendar-date').at(15).simulate('click'); // 8.10
+    expect(wrapper.find('.rc-calendar-input').at(0).getDOMNode().value).toBe('2015-08-10');
 
-    wrapper.find('.rc-calendar-range-left .rc-calendar-date').at(5).simulate('click'); // 9.4
-    expect(wrapper.find('.rc-calendar-input').at(0).getDOMNode().value).toBe('2015-09-04');
-    expect(wrapper.find('.rc-calendar-input').at(1).getDOMNode().value).toBe('2015-09-14');
+    wrapper.find('.rc-calendar-range-left .rc-calendar-date').at(5).simulate('click'); // 7.31
+    expect(wrapper.find('.rc-calendar-input').at(0).getDOMNode().value).toBe('2015-07-31');
+    expect(wrapper.find('.rc-calendar-input').at(1).getDOMNode().value).toBe('2015-08-10');
   });
 
   it('onHoverChange works', () => {
@@ -202,8 +200,8 @@ describe('RangeCalendar', () => {
 
   describe('timePicker', () => {
     it('defaultOpenValue should follow RangeCalendar[selectedValue|defaultSelectedValue] when it is set', () => {
-      const timePicker = <TimePickerPanel defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />;
-      const wrapper = mount(<RangeCalendar timePicker={timePicker} defaultSelectedValue={[moment('01:01:01', 'HH:mm:ss'), moment('01:01:01', 'HH:mm:ss')]} />);
+      const timePicker = <TimePickerPanel defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]} />;
+      const wrapper = mount(<RangeCalendar timePicker={timePicker} defaultSelectedValue={[dayjs('01:01:01', 'HH:mm:ss'), dayjs('01:01:01', 'HH:mm:ss')]} />);
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const selectedValues = wrapper.find('.rc-time-picker-panel-select-option-selected');
       for (let i = 0; i < selectedValues.length; i += 1) {
@@ -212,8 +210,8 @@ describe('RangeCalendar', () => {
     });
 
     it('selected start and end date can be same', () => {
-      const timePicker = <TimePickerPanel defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />;
-      const wrapper = mount(<RangeCalendar selectedValue={[moment('2000-09-03', format), moment('2000-09-03', format)]} timePicker={timePicker}/>);
+      const timePicker = <TimePickerPanel defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]} />;
+      const wrapper = mount(<RangeCalendar selectedValue={[dayjs('2000-09-03', format), dayjs('2000-09-03', format)]} timePicker={timePicker}/>);
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       expect(wrapper.find('.rc-calendar-year-select').at(0).text()).toBe('2000');
       expect(wrapper.find('.rc-calendar-month-select').at(0).text()).toBe('Sep');
@@ -224,7 +222,7 @@ describe('RangeCalendar', () => {
     });
 
     it('use timePicker\'s time', () => {
-      const timePicker = <TimePickerPanel defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />;
+      const timePicker = <TimePickerPanel defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]} />;
       const wrapper = mount(<RangeCalendar timePicker={timePicker} />);
 
       wrapper.find('.rc-calendar-today').at(0).simulate('click').simulate('click');
@@ -296,7 +294,7 @@ describe('RangeCalendar', () => {
           },
         };
       }
-      const timePicker = <TimePickerPanel defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />;
+      const timePicker = <TimePickerPanel defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]} />;
       const wrapper = mount(<RangeCalendar timePicker={timePicker} disabledTime={disabledTime} />);
 
       wrapper.find('.rc-calendar-today').at(0).simulate('click').simulate('click');
@@ -325,7 +323,7 @@ describe('RangeCalendar', () => {
 
     it('works fine when select reversely', () => {
       // see: https://github.com/ant-design/ant-design/issues/6440
-      const timePicker = <TimePickerPanel defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />;
+      const timePicker = <TimePickerPanel defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]} />;
       const wrapper = mount(<RangeCalendar timePicker={timePicker} />);
       wrapper.find('.rc-calendar-cell').at(20).simulate('click');
       wrapper.find('.rc-calendar-cell').at(10).simulate('click');
@@ -371,7 +369,7 @@ describe('RangeCalendar', () => {
           },
         };
       }
-      const timePicker = <TimePickerPanel defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]} />;
+      const timePicker = <TimePickerPanel defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]} />;
       const wrapper = mount(<RangeCalendar timePicker={timePicker} disabledTime={disabledTime} />);
       // update same day
       wrapper.find('.rc-calendar-today').at(0).simulate('click').simulate('click');
@@ -433,7 +431,7 @@ describe('RangeCalendar', () => {
 
     it('should work when start time is null in defaultValue', () => {
       let wrapper = null;
-      wrapper = mount(<RangeCalendar defaultValue={[null, moment().endOf('month')]} />);
+      wrapper = mount(<RangeCalendar defaultValue={[null, dayjs().endOf('month')]} />);
       wrapper.find('.rc-calendar-range-right .rc-calendar-month-select').simulate('click');
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-year-btn').length).toBe(1);
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-month-btn').length).toBe(1);
@@ -445,7 +443,7 @@ describe('RangeCalendar', () => {
 
     it('should work when end time is null in defaultValue', () => {
       let wrapper = null;
-      wrapper = mount(<RangeCalendar defaultValue={[moment().startOf('month'), null]} />);
+      wrapper = mount(<RangeCalendar defaultValue={[dayjs().startOf('month'), null]} />);
       wrapper.find('.rc-calendar-range-right .rc-calendar-month-select').simulate('click');
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-year-btn').length).toBe(1);
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-month-btn').length).toBe(1);
@@ -457,7 +455,7 @@ describe('RangeCalendar', () => {
 
     it('should work when start time is undefined in defaultValue', () => {
       let wrapper = null;
-      wrapper = mount(<RangeCalendar defaultValue={[undefined, moment().endOf('month')]} />);
+      wrapper = mount(<RangeCalendar defaultValue={[undefined, dayjs().endOf('month')]} />);
       wrapper.find('.rc-calendar-range-right .rc-calendar-month-select').simulate('click');
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-year-btn').length).toBe(1);
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-month-btn').length).toBe(1);
@@ -469,7 +467,7 @@ describe('RangeCalendar', () => {
 
     it('should work when end time is undefined in defaultValue', () => {
       let wrapper = null;
-      wrapper = mount(<RangeCalendar defaultValue={[moment().startOf('month'), undefined]} />);
+      wrapper = mount(<RangeCalendar defaultValue={[dayjs().startOf('month'), undefined]} />);
       wrapper.find('.rc-calendar-range-right .rc-calendar-month-select').simulate('click');
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-year-btn').length).toBe(1);
       expect(wrapper.find('.rc-calendar-range-left .rc-calendar-next-month-btn').length).toBe(1);
@@ -504,8 +502,8 @@ describe('RangeCalendar', () => {
       wrapper.find('.rc-calendar-year-panel-decade-select').at(0).simulate('click');
       wrapper.find('.rc-calendar-year-panel-decade-select').at(0).simulate('click');
       expect(wrapper.find('.rc-calendar-decade-panel').length).toBe(2);
-      expect(value[0].isSame(moment(), 'day')).toBe(true);
-      expect(value[1].isSame(moment().add(1, 'month'), 'day')).toBe(true);
+      expect(value[0].isSame(dayjs(), 'day')).toBe(true);
+      expect(value[1].isSame(dayjs().add(1, 'month'), 'day')).toBe(true);
       wrapper.find('.rc-calendar-decade-panel-selected-cell').at(0).simulate('click');
       wrapper.find('.rc-calendar-decade-panel-selected-cell').at(0).simulate('click');
       expect(wrapper.find('.rc-calendar-decade-panel').length).toBe(0);
@@ -515,8 +513,8 @@ describe('RangeCalendar', () => {
       wrapper.find('.rc-calendar-month-panel-selected-cell').at(0).simulate('click');
       wrapper.find('.rc-calendar-month-panel-selected-cell').at(0).simulate('click');
       expect(wrapper.find('.rc-calendar-month-panel').length).toBe(0);
-      expect(value[0].isSame(moment('2010-03-29'), 'day')).toBe(true);
-      expect(value[1].isSame(moment('2010-04-29'), 'day')).toBe(true);
+      expect(value[0].isSame(dayjs('2010-03-29'), 'day')).toBe(true);
+      expect(value[1].isSame(dayjs('2010-04-29'), 'day')).toBe(true);
 
       wrapper.find('.rc-calendar-year-select').at(0).simulate('click');
       wrapper.find('.rc-calendar-year-select').at(1).simulate('click');
@@ -533,11 +531,11 @@ describe('RangeCalendar', () => {
     });
 
     it('controlled value works correctly', () => {
-      const wrapper = mount(<RangeCalendar value={[moment(), moment()]} />);
+      const wrapper = mount(<RangeCalendar value={[dayjs(), dayjs()]} />);
       const initialValue = wrapper.state('value');
       expect(initialValue[0].isSame(initialValue[1], 'month')).toBe(true);
 
-      wrapper.setProps({ value: [moment(), moment()] });
+      wrapper.setProps({ value: [dayjs(), dayjs()] });
       const updatedValue = wrapper.state('value');
       expect(updatedValue[0].isSame(updatedValue[1], 'month')).toBe(true);
     });
@@ -547,7 +545,7 @@ describe('RangeCalendar', () => {
       class Demo extends React.Component {
         state = {
           mode: ['month', 'month'],
-          value: [moment().add(-1, 'day'), moment()],
+          value: [dayjs().add(-1, 'day'), dayjs()],
         };
 
         handlePanelChange = (value, mode) => {
@@ -581,7 +579,7 @@ describe('RangeCalendar', () => {
     it('selected item style works correctly with mode year', () => {
       class Demo extends React.Component {
         state = {
-          value: [moment().add(-1, 'year'), moment()],
+          value: [dayjs().add(-1, 'year'), dayjs()],
         };
 
         handlePanelChange = (value) => {
@@ -637,8 +635,8 @@ describe('RangeCalendar', () => {
   });
 
   it('controlled hoverValue changes', () => {
-    const start = moment();
-    const end = moment().add(2, 'day');
+    const start = dayjs();
+    const end = dayjs().add(2, 'day');
     const wrapper = mount(<RangeCalendar hoverValue={[start, end]} />);
     const nextEnd = end.clone().add(2, 'day');
     wrapper.setProps({ hoverValue: [start, nextEnd] });
@@ -646,8 +644,8 @@ describe('RangeCalendar', () => {
   });
 
   it('controlled selectedValue changes', () => {
-    const start = moment();
-    const end = moment().add(2, 'day');
+    const start = dayjs();
+    const end = dayjs().add(2, 'day');
     const wrapper = mount(<RangeCalendar selectedValue={[start, end]} />);
     const nextEnd = end.clone().add(2, 'day');
     wrapper.setProps({ selectedValue: [start, nextEnd] });
@@ -663,8 +661,8 @@ describe('RangeCalendar', () => {
 
     beforeEach(() => {
       handleHoverChange = jest.fn();
-      start = moment();
-      end = moment().add(2, 'day');
+      start = dayjs();
+      end = dayjs().add(2, 'day');
       wrapper = mount(<RangeCalendar type="start" onHoverChange={handleHoverChange} selectedValue={[start, end]} />);
     });
 
@@ -685,7 +683,7 @@ describe('RangeCalendar', () => {
     let keyDownEvent = 0;
     const wrapper = mount(
       <RangeCalendar
-        defaultSelectedValue={[moment('2000-09-03', format), moment('2000-11-28', format)]}
+        defaultSelectedValue={[dayjs('2000-09-03', format), dayjs('2000-11-28', format)]}
         onChange={onChange}
         onSelect={onSelect}
         onKeyDown={() => keyDownEvent = 1}
@@ -761,7 +759,7 @@ describe('RangeCalendar', () => {
   });
 
   it('change input trigger calendar close', () => {
-    const value = [moment(), moment().add(1, 'months')];
+    const value = [dayjs(), dayjs().add(1, 'months')];
     const onSelect = jest.fn();
 
     const wrapper = mount(
@@ -788,7 +786,7 @@ describe('RangeCalendar', () => {
 
   it('date mode should not display same month', () => {
     const FORMAT = 'YYYY-MM-DD';
-    const sameDay = moment('2000-01-01');
+    const sameDay = dayjs('2000-01-01');
     const wrapper = mount(<RangeCalendar defaultValue={[sameDay, sameDay]} />);
 
     // Should in different month
@@ -814,7 +812,7 @@ describe('RangeCalendar', () => {
         mode={['time', 'time']}
         timePicker={
           <TimePickerPanel
-            defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]}
+            defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]}
           />
         }
       />,

@@ -9,14 +9,12 @@ import DatePicker from '@seafile/seafile-calendar/src/Picker';
 import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 
-import moment from 'moment';
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import dayjs from '../src/util/dayjs';
 
-const format = 'YYYY-Wo';
+const format = 'YYYY-wo';
 const cn = location.search.indexOf('cn') !== -1;
 
-const now = moment();
+const now = dayjs();
 if (cn) {
   now.locale('zh-cn').utcOffset(8);
 } else {
@@ -78,21 +76,21 @@ class Demo extends React.Component {
     const selectedValue = this.state.value;
     if (selectedValue && current.year() === selectedValue.year() &&
       current.week() === selectedValue.week()) {
-      return (<div className="@seafile/seafile-calendar-selected-day">
-        <div className="@seafile/seafile-calendar-date">
+      return (<div className="rc-calendar-selected-day">
+        <div className="rc-calendar-date">
           {current.date()}
         </div>
       </div>);
     }
     return (
-      <div className="@seafile/seafile-calendar-date">
+      <div className="rc-calendar-date">
         {current.date()}
       </div>);
   }
 
   lastWeek = () => {
-    const value = this.state.value || now;
-    value.add(-1, 'weeks');
+    let value = this.state.value || now;
+    value = value.add(-1, 'weeks');
     this.setState({
       value,
       open: false,

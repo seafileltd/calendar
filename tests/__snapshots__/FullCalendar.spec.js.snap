@@ -109,7 +109,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -122,7 +122,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -135,7 +135,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="February 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -148,7 +148,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -161,7 +161,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -174,7 +174,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -187,7 +187,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -205,7 +205,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -218,7 +218,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -231,7 +231,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -244,7 +244,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -257,7 +257,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 9, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -270,7 +270,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 10, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -283,7 +283,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 11, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -301,7 +301,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 12, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -314,7 +314,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 13, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -327,7 +327,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 14, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -340,7 +340,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 15, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -353,7 +353,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 16, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -366,7 +366,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 17, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -379,7 +379,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 18, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -397,7 +397,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 19, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -410,7 +410,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 20, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -423,7 +423,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 21, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -436,7 +436,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 22, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -449,7 +449,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 23, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -462,7 +462,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 24, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -475,7 +475,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 25, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -493,7 +493,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -506,7 +506,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -519,7 +519,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -532,7 +532,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-today rc-calendar-selected-day"
             role="gridcell"
-            title="March 29, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -545,7 +545,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 30, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -558,7 +558,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="March 31, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -571,7 +571,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -589,7 +589,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -602,7 +602,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -615,7 +615,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -628,7 +628,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -641,7 +641,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -654,7 +654,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -667,7 +667,7 @@ exports[`FullCalendar renders custom header correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -878,7 +878,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -891,7 +891,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -904,7 +904,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="February 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -917,7 +917,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -930,7 +930,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -943,7 +943,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -956,7 +956,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -974,7 +974,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -987,7 +987,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1000,7 +1000,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1013,7 +1013,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1026,7 +1026,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 9, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1039,7 +1039,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 10, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1052,7 +1052,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 11, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1070,7 +1070,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 12, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1083,7 +1083,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 13, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1096,7 +1096,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 14, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1109,7 +1109,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 15, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1122,7 +1122,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 16, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1135,7 +1135,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 17, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1148,7 +1148,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 18, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1166,7 +1166,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 19, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1179,7 +1179,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 20, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1192,7 +1192,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 21, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1205,7 +1205,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 22, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1218,7 +1218,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 23, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1231,7 +1231,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 24, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1244,7 +1244,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 25, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1262,7 +1262,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1275,7 +1275,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1288,7 +1288,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1301,7 +1301,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-today rc-calendar-selected-day"
             role="gridcell"
-            title="March 29, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1314,7 +1314,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 30, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1327,7 +1327,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="March 31, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1340,7 +1340,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1358,7 +1358,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1371,7 +1371,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1384,7 +1384,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1397,7 +1397,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1410,7 +1410,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1423,7 +1423,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1436,7 +1436,7 @@ exports[`FullCalendar renders date mode correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1647,7 +1647,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1660,7 +1660,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1673,7 +1673,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="February 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1686,7 +1686,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1699,7 +1699,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1712,7 +1712,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1725,7 +1725,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1743,7 +1743,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1756,7 +1756,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1769,7 +1769,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1782,7 +1782,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1795,7 +1795,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 9, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1808,7 +1808,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 10, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1821,7 +1821,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 11, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1839,7 +1839,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 12, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1852,7 +1852,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 13, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1865,7 +1865,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 14, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1878,7 +1878,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 15, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1891,7 +1891,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 16, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1904,7 +1904,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 17, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1917,7 +1917,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 18, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1935,7 +1935,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 19, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1948,7 +1948,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 20, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1961,7 +1961,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 21, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1974,7 +1974,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 22, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -1987,7 +1987,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 23, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2000,7 +2000,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 24, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2013,7 +2013,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 25, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2031,7 +2031,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2044,7 +2044,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2057,7 +2057,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2070,7 +2070,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-today rc-calendar-selected-day"
             role="gridcell"
-            title="March 29, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2083,7 +2083,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 30, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2096,7 +2096,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="March 31, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2109,7 +2109,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2127,7 +2127,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2140,7 +2140,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2153,7 +2153,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2166,7 +2166,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2179,7 +2179,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2192,7 +2192,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2205,7 +2205,7 @@ exports[`FullCalendar renders fullscreen correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2639,7 +2639,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2652,7 +2652,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell"
             role="gridcell"
-            title="February 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2665,7 +2665,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-month-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="February 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2678,7 +2678,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2691,7 +2691,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2704,7 +2704,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2717,7 +2717,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2735,7 +2735,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2748,7 +2748,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2761,7 +2761,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2774,7 +2774,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2787,7 +2787,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 9, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2800,7 +2800,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 10, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2813,7 +2813,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 11, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2831,7 +2831,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 12, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2844,7 +2844,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 13, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2857,7 +2857,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 14, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2870,7 +2870,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 15, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2883,7 +2883,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 16, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2896,7 +2896,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 17, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2909,7 +2909,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 18, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2927,7 +2927,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 19, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2940,7 +2940,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 20, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2953,7 +2953,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 21, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2966,7 +2966,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 22, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2979,7 +2979,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 23, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -2992,7 +2992,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 24, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3005,7 +3005,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 25, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3023,7 +3023,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 26, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3036,7 +3036,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 27, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3049,7 +3049,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 28, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3062,7 +3062,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-today rc-calendar-selected-day"
             role="gridcell"
-            title="March 29, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3075,7 +3075,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell"
             role="gridcell"
-            title="March 30, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3088,7 +3088,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-last-day-of-month"
             role="gridcell"
-            title="March 31, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3101,7 +3101,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 1, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3119,7 +3119,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 2, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3132,7 +3132,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 3, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3145,7 +3145,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 4, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3158,7 +3158,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 5, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3171,7 +3171,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 6, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3184,7 +3184,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 7, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"
@@ -3197,7 +3197,7 @@ exports[`FullCalendar type renders defaultType correctly 1`] = `
           <td
             class="rc-calendar-cell rc-calendar-next-month-btn-day"
             role="gridcell"
-            title="April 8, 2017"
+            title="LL"
           >
             <div
               aria-disabled="false"

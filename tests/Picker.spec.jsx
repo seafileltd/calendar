@@ -1,14 +1,14 @@
 import React from 'react';
-import moment from 'moment';
 import { mount } from 'enzyme';
 import keyCode from 'rc-util/lib/KeyCode';
 import Calendar from '../index';
 import DatePicker from '../src/Picker';
 import RangeCalendar from '../src/RangeCalendar';
 import CalendarLocale from '../src/locale/en_US';
+import dayjs from '../src/util/dayjs';
 
 const format = ('YYYY-MM-DD');
-const VALUE = moment([2015, 5, 1]);
+const VALUE = dayjs([2015, 5, 1]);
 
 describe('DatePicker', () => {
   function noop() {
@@ -83,9 +83,9 @@ describe('DatePicker', () => {
     day.simulate('click');
     expect(change).not.toBeFalsy();
     expect(change.year()).toEqual(2015);
-    expect(change.month()).toEqual(5);
-    expect(change.date()).toEqual(2);
-    expect(input.getDOMNode().value).toEqual('2015-06-02');
+    expect(change.month()).toEqual(3);
+    expect(change.date()).toEqual(28);
+    expect(input.getDOMNode().value).toEqual('2015-04-28');
     expect(picker.state().open).toBeFalsy();
   });
 
@@ -108,12 +108,12 @@ describe('DatePicker', () => {
     expect(change).not.toBeFalsy();
     expect(change.length).toEqual(2);
     expect(change[0].year()).toEqual(2015);
-    expect(change[0].month()).toEqual(5);
-    expect(change[0].date()).toEqual(2);
+    expect(change[0].month()).toEqual(3);
+    expect(change[0].date()).toEqual(28);
     expect(change[1].year()).toEqual(2015);
-    expect(change[1].month()).toEqual(5);
-    expect(change[1].date()).toEqual(3);
-    expect(input.getDOMNode().value).toEqual('2015-06-02 - 2015-06-03');
+    expect(change[1].month()).toEqual(3);
+    expect(change[1].date()).toEqual(29);
+    expect(input.getDOMNode().value).toEqual('2015-04-28 - 2015-04-29');
     expect(picker.state().open).toBeFalsy();
   });
 
@@ -134,7 +134,7 @@ describe('DatePicker', () => {
   });
 
   it('controlled value', () => {
-    const value = moment().add(1, 'day');
+    const value = dayjs().add(1, 'day');
     const picker = renderPicker({ value });
     expect(picker.state().value).toBe(value);
     const nextValue = value.clone().add(1, 'day');
@@ -181,14 +181,14 @@ describe('DatePicker', () => {
   });
 
   it('close on ok', () => {
-    const picker = renderPicker({ value: moment() });
+    const picker = renderPicker({ value: dayjs() });
     picker.find('.rc-calendar-picker-input').simulate('click');
     picker.find('.rc-calendar-ok-btn').simulate('click');
     expect(picker.state().open).toBe(false);
   });
 
   it('close on clear', () => {
-    const picker = renderPicker({ value: moment() });
+    const picker = renderPicker({ value: dayjs() });
     picker.find('.rc-calendar-picker-input').simulate('click');
     picker.find('.rc-calendar-clear-btn').simulate('click');
     expect(picker.state().open).toBe(false);
@@ -196,7 +196,7 @@ describe('DatePicker', () => {
 
   describe('DateInput', () => {
     it('close on enter', () => {
-      const picker = renderPicker({ value: moment() });
+      const picker = renderPicker({ value: dayjs() });
       picker.find('.rc-calendar-picker-input').simulate('click');
       picker.find('.rc-calendar-input').simulate('keyDown', {
         keyCode: keyCode.ENTER,
@@ -205,7 +205,7 @@ describe('DatePicker', () => {
     });
 
     it('not close on enter if disabled date', () => {
-      const picker = renderPicker({ value: moment() }, { disabledDate: () => true });
+      const picker = renderPicker({ value: dayjs() }, { disabledDate: () => true });
       picker.find('.rc-calendar-picker-input').simulate('click');
       picker.find('.rc-calendar-input').simulate('keyDown', {
         keyCode: keyCode.ENTER,
@@ -229,7 +229,7 @@ describe('DatePicker', () => {
     });
 
     it('close panel when focus is outside of picker', () => {
-      const picker = renderPicker({ value: moment() }, undefined, {
+      const picker = renderPicker({ value: dayjs() }, undefined, {
         attachTo: container,
       });
       picker.find('.rc-calendar-picker-input').simulate('click');
@@ -242,7 +242,7 @@ describe('DatePicker', () => {
 
     it('call onBlur when focus is outside of picker', () => {
       const handleOnBlur = jest.fn();
-      const picker = renderPicker({ value: moment() }, { onBlur: handleOnBlur }, {
+      const picker = renderPicker({ value: dayjs() }, { onBlur: handleOnBlur }, {
         attachTo: container,
       });
 
@@ -254,7 +254,7 @@ describe('DatePicker', () => {
     });
 
     it('keep panel opened when clicking on calendar next month', () => {
-      const picker = renderPicker({ value: moment() }, undefined, {
+      const picker = renderPicker({ value: dayjs() }, undefined, {
         attachTo: container,
       });
 
@@ -270,7 +270,7 @@ describe('DatePicker', () => {
 
     it('does not call onBlur when clicking on calendar next month', () => {
       const handleOnBlur = jest.fn();
-      const picker = renderPicker({ value: moment() }, { onBlur: handleOnBlur }, {
+      const picker = renderPicker({ value: dayjs() }, { onBlur: handleOnBlur }, {
         attachTo: container,
       });
 
@@ -287,7 +287,7 @@ describe('DatePicker', () => {
 
   it('auto focuses the calendar input when opening', () => {
     jest.useFakeTimers();
-    const picker = renderPicker({ value: moment() });
+    const picker = renderPicker({ value: dayjs() });
     picker.find('.rc-calendar-picker-input').simulate('click');
     jest.runAllTimers();
     expect(document.activeElement).toBeDefined();
@@ -296,7 +296,7 @@ describe('DatePicker', () => {
 
   it('auto focuses the calendar div when date input is not shown', () => {
     jest.useFakeTimers();
-    const picker = renderPicker({ value: moment() }, { showDateInput: false });
+    const picker = renderPicker({ value: dayjs() }, { showDateInput: false });
     picker.find('.rc-calendar-picker-input').simulate('click');
     jest.runAllTimers();
     expect(document.activeElement).toBeDefined();

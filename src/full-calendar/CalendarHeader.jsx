@@ -7,14 +7,14 @@ function noop() {
 
 class CalendarHeader extends Component {
   onYearChange(year) {
-    const newValue = this.props.value.clone();
-    newValue.year(parseInt(year, 10));
+    let newValue = this.props.value.clone();
+    newValue = newValue.year(parseInt(year, 10));
     this.props.onValueChange(newValue);
   }
 
   onMonthChange(month) {
-    const newValue = this.props.value.clone();
-    newValue.month(parseInt(month, 10));
+    let newValue = this.props.value.clone();
+    newValue = newValue.month(parseInt(month, 10));
     this.props.onValueChange(newValue);
   }
 
@@ -44,13 +44,13 @@ class CalendarHeader extends Component {
 
   monthSelectElement(month) {
     const props = this.props;
-    const t = props.value.clone();
+    let t = props.value.clone();
     const { prefixCls } = props;
     const options = [];
     const Select = props.Select;
 
     for (let index = 0; index < 12; index++) {
-      t.month(index);
+      t = t.month(index);
       options.push(
         <Select.Option key={`${index}`}>
           {getMonthName(t)}

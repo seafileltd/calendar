@@ -1,4 +1,7 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 const defaultDisabledTime = {
   disabledHours() {
@@ -13,8 +16,8 @@ const defaultDisabledTime = {
 };
 
 export function getTodayTime(value) {
-  const today = moment();
-  today.locale(value.locale()).utcOffset(value.utcOffset());
+  let today = dayjs();
+  today = today.locale(value.locale()).utcOffset(value.utcOffset());
   return today;
 }
 
@@ -34,11 +37,11 @@ export function getMonthName(month) {
 }
 
 export function syncTime(from, to) {
-  if (!moment.isMoment(from) || !moment.isMoment(to)) return;
-  to.hour(from.hour());
-  to.minute(from.minute());
-  to.second(from.second());
-  to.millisecond(from.millisecond());
+  if (!dayjs.isDayjs(from) || !dayjs.isDayjs(to)) return;
+  to = to.hour(from.hour());
+  to = to.minute(from.minute());
+  to = to.second(from.second());
+  to = to.millisecond(from.millisecond());
 }
 
 export function getTimeConfig(value, disabledTime) {

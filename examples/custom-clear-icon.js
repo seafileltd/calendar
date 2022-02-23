@@ -7,8 +7,8 @@ import Calendar from '@seafile/seafile-calendar';
 import RangeCalendar from '@seafile/seafile-calendar/src/RangeCalendar';
 import 'rc-time-picker/assets/index.css';
 
-import 'moment/locale/zh-cn';
-import 'moment/locale/en-gb';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/en-gb';
 
 const clearPath = 'M909.1 209.3l-56.4 44.1C775.8 155.1 656.2 92 521.9 92 ' +
   '290 92 102.3 279.5 102 511.5 101.7 743.7 289.8 932 521.9 932c181.3 0' +
