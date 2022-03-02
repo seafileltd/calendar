@@ -210,7 +210,9 @@
   position: relative;
   outline: none;
   font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans-serif;
-  width: 253px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   list-style: none;
   font-size: 12px;
   text-align: left;
