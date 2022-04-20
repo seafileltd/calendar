@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
 import classnames from 'classnames';
 import { polyfill } from 'react-lifecycles-compat';
 import KeyCode from 'rc-util/lib/KeyCode';
@@ -11,6 +10,7 @@ import TimePickerButton from './calendar/TimePickerButton';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import { syncTime, getTodayTime, isAllowedDate } from './util';
 import { goTime, goStartMonth, goEndMonth, includesTime } from './util/toTime';
+import dayjs from './util/dayjs';
 
 function noop() { }
 
