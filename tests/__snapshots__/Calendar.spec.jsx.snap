@@ -1098,7 +1098,7 @@ exports[`Calendar controlled panels render controlled panels correctly 2`] = `
                       role="row"
                     >
                       <td
-                        class="rc-calendar-year-panel-cell rc-calendar-year-panel-last-decade-cell"
+                        class="rc-calendar-year-panel-cell"
                         role="gridcell"
                         title="2009"
                       >
@@ -1231,7 +1231,7 @@ exports[`Calendar controlled panels render controlled panels correctly 2`] = `
                         </a>
                       </td>
                       <td
-                        class="rc-calendar-year-panel-cell rc-calendar-year-panel-next-decade-cell"
+                        class="rc-calendar-year-panel-cell"
                         role="gridcell"
                         title="2020"
                       >
