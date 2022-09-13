@@ -210,7 +210,6 @@
   position: relative;
   outline: none;
   font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans-serif;
-  width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   list-style: none;
@@ -870,14 +869,6 @@
 .rc-calendar-year-panel-selected-cell .rc-calendar-year-panel-year:hover {
   background: #f09f3f;
   color: #fff;
-}
-.rc-calendar-year-panel-last-decade-cell .rc-calendar-year-panel-year,
-.rc-calendar-year-panel-next-decade-cell .rc-calendar-year-panel-year {
-  -moz-user-select: none;
-   -ms-user-select: none;
-       user-select: none;
-  -webkit-user-select: none;
-  color: rgba(0, 0, 0, 0.25);
 }
 .rc-calendar-decade-panel {
   left: 0;

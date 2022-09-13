@@ -2999,22 +2999,14 @@ var YearPanel = function (_React$Component) {
       var tds = row.map(function (yearData) {
         var _classNameMap;
 
-        var classNameMap = (_classNameMap = {}, _classNameMap[prefixCls + '-cell'] = 1, _classNameMap[prefixCls + '-selected-cell'] = yearData.year === currentYear, _classNameMap[prefixCls + '-last-decade-cell'] = yearData.year < startYear, _classNameMap[prefixCls + '-next-decade-cell'] = yearData.year > endYear, _classNameMap);
-        var clickHandler = void 0;
-        if (yearData.year < startYear) {
-          clickHandler = _this2.previousDecade;
-        } else if (yearData.year > endYear) {
-          clickHandler = _this2.nextDecade;
-        } else {
-          clickHandler = chooseYear.bind(_this2, yearData.year);
-        }
+        var classNameMap = (_classNameMap = {}, _classNameMap[prefixCls + '-cell'] = 1, _classNameMap[prefixCls + '-selected-cell'] = yearData.year === currentYear, _classNameMap);
         return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
           'td',
           {
             role: 'gridcell',
             title: yearData.title,
             key: yearData.content,
-            onClick: clickHandler,
+            onClick: chooseYear.bind(_this2, yearData.year),
             className: __WEBPACK_IMPORTED_MODULE_5_classnames___default()(classNameMap)
           },
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
@@ -4672,7 +4664,47 @@ $export($export.S + $export.F * !__webpack_require__(60), 'Object', { defineProp
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alignElement; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return alignPoint; });
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -4699,40 +4731,6 @@ function _defineProperty(obj, key, value) {
   }
 
   return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(source).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
 }
 
 var vendorPrefix;
@@ -4893,8 +4891,8 @@ function getClientPosition(elem) {
   // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
   // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-  x = box.left;
-  y = box.top; // In IE, most of the time, 2 extra pixels are added to the top and left
+  x = Math.floor(box.left);
+  y = Math.floor(box.top); // In IE, most of the time, 2 extra pixels are added to the top and left
   // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
   // IE6 standards mode, this border can be overridden by setting the
   // document element's border to zero -- thus, we cannot rely on the
@@ -5301,8 +5299,7 @@ function getWH(elem, name, ex) {
   }
 
   var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-  var borderBoxValue = name === 'width' ? elem.getBoundingClientRect().width : elem.getBoundingClientRect().height;
-  var computedStyle = getComputedStyleX(elem);
+  var borderBoxValue = name === 'width' ? Math.floor(elem.getBoundingClientRect().width) : Math.floor(elem.getBoundingClientRect().height);
   var isBorderBox = isBorderBoxFn(elem);
   var cssBoxValue = 0;
 
@@ -5383,7 +5380,6 @@ each(['width', 'height'], function (name) {
 
     if (val !== undefined) {
       if (elem) {
-        var computedStyle = getComputedStyleX(elem);
         var isBorderBox = isBorderBoxFn(elem);
 
         if (isBorderBox) {
@@ -5531,7 +5527,8 @@ function isAncestorFixed(element) {
   var body = doc.body;
   var parent = null;
 
-  for (parent = getParent$1(element); parent && parent !== body; parent = getParent$1(parent)) {
+  for (parent = getParent$1(element); // 修复元素位于 document.documentElement 下导致崩溃问题
+  parent && parent !== body && parent !== doc; parent = getParent$1(parent)) {
     var positionStyle = utils.css(parent, 'position');
 
     if (positionStyle === 'fixed') {
@@ -6001,7 +5998,7 @@ function alignPoint(el, tgtPoint, align) {
   var pointInView = pageX >= 0 && pageX <= scrollX + viewportWidth && pageY >= 0 && pageY <= scrollY + viewportHeight; // Provide default target point
 
   var points = [align.points[0], 'cc'];
-  return doAlign(el, tgtRegion, _objectSpread2({}, align, {
+  return doAlign(el, tgtRegion, _objectSpread2(_objectSpread2({}, align), {}, {
     points: points
   }), pointInView);
 }
@@ -8156,7 +8153,7 @@ module.exports = g;
 /***/ (function(module, exports) {
 
 //! moment.js
-//! version : 2.29.1
+//! version : 2.29.4
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -8233,8 +8230,9 @@ module.exports = g;
 
     function map(arr, fn) {
         var res = [],
-            i;
-        for (i = 0; i < arr.length; ++i) {
+            i,
+            arrLen = arr.length;
+        for (i = 0; i < arrLen; ++i) {
             res.push(fn(arr[i], i));
         }
         return res;
@@ -8363,7 +8361,10 @@ module.exports = g;
         updateInProgress = false;
 
     function copyConfig(to, from) {
-        var i, prop, val;
+        var i,
+            prop,
+            val,
+            momentPropertiesLen = momentProperties.length;
 
         if (!isUndefined(from._isAMomentObject)) {
             to._isAMomentObject = from._isAMomentObject;
@@ -8396,8 +8397,8 @@ module.exports = g;
             to._locale = from._locale;
         }
 
-        if (momentProperties.length > 0) {
-            for (i = 0; i < momentProperties.length; i++) {
+        if (momentPropertiesLen > 0) {
+            for (i = 0; i < momentPropertiesLen; i++) {
                 prop = momentProperties[i];
                 val = from[prop];
                 if (!isUndefined(val)) {
@@ -8452,8 +8453,9 @@ module.exports = g;
                 var args = [],
                     arg,
                     i,
-                    key;
-                for (i = 0; i < arguments.length; i++) {
+                    key,
+                    argLen = arguments.length;
+                for (i = 0; i < argLen; i++) {
                     arg = '';
                     if (typeof arguments[i] === 'object') {
                         arg += '\n[' + i + '] ';
@@ -8603,7 +8605,8 @@ module.exports = g;
         );
     }
 
-    var formattingTokens = /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|N{1,5}|YYYYYY|YYYYY|YYYY|YY|y{2,4}|yo?|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g,
+    var formattingTokens =
+            /(\[[^\[]*\])|(\\)?([Hh]mm(ss)?|Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Qo?|N{1,5}|YYYYYY|YYYYY|YYYY|YY|y{2,4}|yo?|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|kk?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g,
         localFormattingTokens = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g,
         formatFunctions = {},
         formatTokenFunctions = {};
@@ -8907,8 +8910,9 @@ module.exports = g;
         if (typeof units === 'object') {
             units = normalizeObjectUnits(units);
             var prioritized = getPrioritizedUnits(units),
-                i;
-            for (i = 0; i < prioritized.length; i++) {
+                i,
+                prioritizedLen = prioritized.length;
+            for (i = 0; i < prioritizedLen; i++) {
                 this[prioritized[i].unit](units[prioritized[i].unit]);
             }
         } else {
@@ -8938,7 +8942,8 @@ module.exports = g;
         matchTimestamp = /[+-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
         // any word (or two) characters or numbers including two/three word month in arabic.
         // includes scottish gaelic two word and hyphenated months
-        matchWord = /[0-9]{0,256}['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFF07\uFF10-\uFFEF]{1,256}|[\u0600-\u06FF\/]{1,256}(\s*?[\u0600-\u06FF]{1,256}){1,2}/i,
+        matchWord =
+            /[0-9]{0,256}['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFF07\uFF10-\uFFEF]{1,256}|[\u0600-\u06FF\/]{1,256}(\s*?[\u0600-\u06FF]{1,256}){1,2}/i,
         regexes;
 
     regexes = {};
@@ -8964,15 +8969,12 @@ module.exports = g;
         return regexEscape(
             s
                 .replace('\\', '')
-                .replace(/\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g, function (
-                    matched,
-                    p1,
-                    p2,
-                    p3,
-                    p4
-                ) {
-                    return p1 || p2 || p3 || p4;
-                })
+                .replace(
+                    /\\(\[)|\\(\])|\[([^\]\[]*)\]|\\(.)/g,
+                    function (matched, p1, p2, p3, p4) {
+                        return p1 || p2 || p3 || p4;
+                    }
+                )
         );
     }
 
@@ -8984,7 +8986,8 @@ module.exports = g;
 
     function addParseToken(token, callback) {
         var i,
-            func = callback;
+            func = callback,
+            tokenLen;
         if (typeof token === 'string') {
             token = [token];
         }
@@ -8993,7 +8996,8 @@ module.exports = g;
                 array[callback] = toInt(input);
             };
         }
-        for (i = 0; i < token.length; i++) {
+        tokenLen = token.length;
+        for (i = 0; i < tokenLen; i++) {
             tokens[token[i]] = func;
         }
     }
@@ -9104,12 +9108,12 @@ module.exports = g;
 
     // LOCALES
 
-    var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split(
-            '_'
-        ),
-        defaultLocaleMonthsShort = 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split(
-            '_'
-        ),
+    var defaultLocaleMonths =
+            'January_February_March_April_May_June_July_August_September_October_November_December'.split(
+                '_'
+            ),
+        defaultLocaleMonthsShort =
+            'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_'),
         MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/,
         defaultMonthsShortRegex = matchWord,
         defaultMonthsRegex = matchWord;
@@ -9551,14 +9555,12 @@ module.exports = g;
     addRegexToken('W', match1to2);
     addRegexToken('WW', match1to2, match2);
 
-    addWeekParseToken(['w', 'ww', 'W', 'WW'], function (
-        input,
-        week,
-        config,
-        token
-    ) {
-        week[token.substr(0, 1)] = toInt(input);
-    });
+    addWeekParseToken(
+        ['w', 'ww', 'W', 'WW'],
+        function (input, week, config, token) {
+            week[token.substr(0, 1)] = toInt(input);
+        }
+    );
 
     // HELPERS
 
@@ -9683,9 +9685,8 @@ module.exports = g;
         return ws.slice(n, 7).concat(ws.slice(0, n));
     }
 
-    var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split(
-            '_'
-        ),
+    var defaultLocaleWeekdays =
+            'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_'),
         defaultLocaleWeekdaysShort = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_'),
         defaultLocaleWeekdaysMin = 'Su_Mo_Tu_We_Th_Fr_Sa'.split('_'),
         defaultWeekdaysRegex = matchWord,
@@ -10233,6 +10234,11 @@ module.exports = g;
         return globalLocale;
     }
 
+    function isLocaleNameSane(name) {
+        // Prevent names that look like filesystem paths, i.e contain '/' or '\'
+        return name.match('^[^/\\\\]*$') != null;
+    }
+
     function loadLocale(name) {
         var oldLocale = null,
             aliasedRequire;
@@ -10241,7 +10247,8 @@ module.exports = g;
             locales[name] === undefined &&
             typeof module !== 'undefined' &&
             module &&
-            module.exports
+            module.exports &&
+            isLocaleNameSane(name)
         ) {
             try {
                 oldLocale = globalLocale._abbr;
@@ -10458,8 +10465,10 @@ module.exports = g;
 
     // iso 8601 regex
     // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
-    var extendedIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([+-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
-        basicIsoRegex = /^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d|))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([+-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
+    var extendedIsoRegex =
+            /^\s*((?:[+-]\d{6}|\d{4})-(?:\d\d-\d\d|W\d\d-\d|W\d\d|\d\d\d|\d\d))(?:(T| )(\d\d(?::\d\d(?::\d\d(?:[.,]\d+)?)?)?)([+-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
+        basicIsoRegex =
+            /^\s*((?:[+-]\d{6}|\d{4})(?:\d\d\d\d|W\d\d\d|W\d\d|\d\d\d|\d\d|))(?:(T| )(\d\d(?:\d\d(?:\d\d(?:[.,]\d+)?)?)?)([+-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
         tzRegex = /Z|[+-]\d\d(?::?\d\d)?/,
         isoDates = [
             ['YYYYYY-MM-DD', /[+-]\d{6}-\d\d-\d\d/],
@@ -10490,7 +10499,8 @@ module.exports = g;
         ],
         aspNetJsonRegex = /^\/?Date\((-?\d+)/i,
         // RFC 2822 regex: For details see https://tools.ietf.org/html/rfc2822#section-3.3
-        rfc2822 = /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/,
+        rfc2822 =
+            /^(?:(Mon|Tue|Wed|Thu|Fri|Sat|Sun),?\s)?(\d{1,2})\s(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s(\d{2,4})\s(\d\d):(\d\d)(?::(\d\d))?\s(?:(UT|GMT|[ECMP][SD]T)|([Zz])|([+-]\d{4}))$/,
         obsOffsets = {
             UT: 0,
             GMT: 0,
@@ -10513,12 +10523,13 @@ module.exports = g;
             allowTime,
             dateFormat,
             timeFormat,
-            tzFormat;
+            tzFormat,
+            isoDatesLen = isoDates.length,
+            isoTimesLen = isoTimes.length;
 
         if (match) {
             getParsingFlags(config).iso = true;
-
-            for (i = 0, l = isoDates.length; i < l; i++) {
+            for (i = 0, l = isoDatesLen; i < l; i++) {
                 if (isoDates[i][1].exec(match[1])) {
                     dateFormat = isoDates[i][0];
                     allowTime = isoDates[i][2] !== false;
@@ -10530,7 +10541,7 @@ module.exports = g;
                 return;
             }
             if (match[3]) {
-                for (i = 0, l = isoTimes.length; i < l; i++) {
+                for (i = 0, l = isoTimesLen; i < l; i++) {
                     if (isoTimes[i][1].exec(match[3])) {
                         // match[2] should be 'T' or space
                         timeFormat = (match[2] || ' ') + isoTimes[i][0];
@@ -10597,7 +10608,7 @@ module.exports = g;
     function preprocessRFC2822(s) {
         // Remove comments and folding whitespace and replace multiple-spaces with a single space
         return s
-            .replace(/\([^)]*\)|[\n\t]/g, ' ')
+            .replace(/\([^()]*\)|[\n\t]/g, ' ')
             .replace(/(\s\s+)/g, ' ')
             .replace(/^\s\s*/, '')
             .replace(/\s\s*$/, '');
@@ -10910,12 +10921,13 @@ module.exports = g;
             skipped,
             stringLength = string.length,
             totalParsedInputLength = 0,
-            era;
+            era,
+            tokenLen;
 
         tokens =
             expandFormat(config._f, config._locale).match(formattingTokens) || [];
-
-        for (i = 0; i < tokens.length; i++) {
+        tokenLen = tokens.length;
+        for (i = 0; i < tokenLen; i++) {
             token = tokens[i];
             parsedInput = (string.match(getParseRegexForToken(token, config)) ||
                 [])[0];
@@ -11010,15 +11022,16 @@ module.exports = g;
             i,
             currentScore,
             validFormatFound,
-            bestFormatIsValid = false;
+            bestFormatIsValid = false,
+            configfLen = config._f.length;
 
-        if (config._f.length === 0) {
+        if (configfLen === 0) {
             getParsingFlags(config).invalidFormat = true;
             config._d = new Date(NaN);
             return;
         }
 
-        for (i = 0; i < config._f.length; i++) {
+        for (i = 0; i < configfLen; i++) {
             currentScore = 0;
             validFormatFound = false;
             tempConfig = copyConfig({}, config);
@@ -11259,7 +11272,8 @@ module.exports = g;
     function isDurationValid(m) {
         var key,
             unitHasDecimal = false,
-            i;
+            i,
+            orderLen = ordering.length;
         for (key in m) {
             if (
                 hasOwnProp(m, key) &&
@@ -11272,7 +11286,7 @@ module.exports = g;
             }
         }
 
-        for (i = 0; i < ordering.length; ++i) {
+        for (i = 0; i < orderLen; ++i) {
             if (m[ordering[i]]) {
                 if (unitHasDecimal) {
                     return false; // only allow non-integers for smallest unit
@@ -11597,7 +11611,8 @@ module.exports = g;
         // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
         // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
         // and further modified to allow for strings containing both week and day
-        isoRegex = /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
+        isoRegex =
+            /^(-|\+)?P(?:([-+]?[0-9,.]*)Y)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)W)?(?:([-+]?[0-9,.]*)D)?(?:T(?:([-+]?[0-9,.]*)H)?(?:([-+]?[0-9,.]*)M)?(?:([-+]?[0-9,.]*)S)?)?$/;
 
     function createDuration(input, key) {
         var duration = input,
@@ -11818,9 +11833,10 @@ module.exports = g;
                 'ms',
             ],
             i,
-            property;
+            property,
+            propertyLen = properties.length;
 
-        for (i = 0; i < properties.length; i += 1) {
+        for (i = 0; i < propertyLen; i += 1) {
             property = properties[i];
             propertyTest = propertyTest || hasOwnProp(input, property);
         }
@@ -12443,19 +12459,17 @@ module.exports = g;
     addRegexToken('NNNN', matchEraName);
     addRegexToken('NNNNN', matchEraNarrow);
 
-    addParseToken(['N', 'NN', 'NNN', 'NNNN', 'NNNNN'], function (
-        input,
-        array,
-        config,
-        token
-    ) {
-        var era = config._locale.erasParse(input, token, config._strict);
-        if (era) {
-            getParsingFlags(config).era = era;
-        } else {
-            getParsingFlags(config).invalidEra = input;
+    addParseToken(
+        ['N', 'NN', 'NNN', 'NNNN', 'NNNNN'],
+        function (input, array, config, token) {
+            var era = config._locale.erasParse(input, token, config._strict);
+            if (era) {
+                getParsingFlags(config).era = era;
+            } else {
+                getParsingFlags(config).invalidEra = input;
+            }
         }
-    });
+    );
 
     addRegexToken('y', matchUnsigned);
     addRegexToken('yy', matchUnsigned);
@@ -12747,14 +12761,12 @@ module.exports = g;
     addRegexToken('GGGGG', match1to6, match6);
     addRegexToken('ggggg', match1to6, match6);
 
-    addWeekParseToken(['gggg', 'ggggg', 'GGGG', 'GGGGG'], function (
-        input,
-        week,
-        config,
-        token
-    ) {
-        week[token.substr(0, 2)] = toInt(input);
-    });
+    addWeekParseToken(
+        ['gggg', 'ggggg', 'GGGG', 'GGGGG'],
+        function (input, week, config, token) {
+            week[token.substr(0, 2)] = toInt(input);
+        }
+    );
 
     addWeekParseToken(['gg', 'GG'], function (input, week, config, token) {
         week[token] = hooks.parseTwoDigitYear(input);
@@ -13777,7 +13789,7 @@ module.exports = g;
 
     //! moment.js
 
-    hooks.version = '2.29.1';
+    hooks.version = '2.29.4';
 
     setHookCallback(createLocal);
 
@@ -15083,14 +15095,15 @@ _defineProperty(Select, "propTypes", {
 /* 257 */,
 /* 258 */,
 /* 259 */,
-/* 260 */
+/* 260 */,
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(261);
+module.exports = __webpack_require__(262);
 
 
 /***/ }),
-/* 261 */
+/* 262 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15285,5 +15298,5 @@ var Demo = function (_React$Component2) {
 __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ })
-],[260]);
+],[261]);
 //# sourceMappingURL=start-end.js.map

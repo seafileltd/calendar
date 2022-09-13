@@ -347,15 +347,54 @@ var _initialiseProps = function _initialiseProps() {
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(239);
+module.exports = __webpack_require__(240);
 
 
 /***/ }),
 
-/***/ 239:
+/***/ 24:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = TodayButton;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util___ = __webpack_require__(9);
+
+
+
+function TodayButton(_ref) {
+  var prefixCls = _ref.prefixCls,
+      locale = _ref.locale,
+      value = _ref.value,
+      timePicker = _ref.timePicker,
+      disabled = _ref.disabled,
+      disabledDate = _ref.disabledDate,
+      onToday = _ref.onToday,
+      text = _ref.text;
+
+  var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
+  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["g" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["e" /* getTodayTime */])(value), disabledDate);
+  var isDisabled = disabledToday || disabled;
+  var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    'a',
+    {
+      className: prefixCls + '-today-btn ' + disabledTodayClass,
+      role: 'button',
+      onClick: isDisabled ? null : onToday,
+      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["f" /* getTodayTimeStr */])(value)
+    },
+    localeNow
+  );
+}
+
+/***/ }),
+
+/***/ 240:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -370,9 +409,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__seafile_seafile_calendar_src_RangeCalendar__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__ = __webpack_require__(173);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__ = __webpack_require__(174);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__);
 /* eslint react/no-multi-comp:0, no-console:0 */
 
@@ -465,45 +504,6 @@ __WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
     })
   )
 ), document.getElementById('__react-content'));
-
-/***/ }),
-
-/***/ 24:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = TodayButton;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__util___ = __webpack_require__(9);
-
-
-
-function TodayButton(_ref) {
-  var prefixCls = _ref.prefixCls,
-      locale = _ref.locale,
-      value = _ref.value,
-      timePicker = _ref.timePicker,
-      disabled = _ref.disabled,
-      disabledDate = _ref.disabledDate,
-      onToday = _ref.onToday,
-      text = _ref.text;
-
-  var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
-  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["g" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["e" /* getTodayTime */])(value), disabledDate);
-  var isDisabled = disabledToday || disabled;
-  var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
-  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-    'a',
-    {
-      className: prefixCls + '-today-btn ' + disabledTodayClass,
-      role: 'button',
-      onClick: isDisabled ? null : onToday,
-      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["f" /* getTodayTimeStr */])(value)
-    },
-    localeNow
-  );
-}
 
 /***/ }),
 
@@ -1253,22 +1253,14 @@ var YearPanel = function (_React$Component) {
       var tds = row.map(function (yearData) {
         var _classNameMap;
 
-        var classNameMap = (_classNameMap = {}, _classNameMap[prefixCls + '-cell'] = 1, _classNameMap[prefixCls + '-selected-cell'] = yearData.year === currentYear, _classNameMap[prefixCls + '-last-decade-cell'] = yearData.year < startYear, _classNameMap[prefixCls + '-next-decade-cell'] = yearData.year > endYear, _classNameMap);
-        var clickHandler = void 0;
-        if (yearData.year < startYear) {
-          clickHandler = _this2.previousDecade;
-        } else if (yearData.year > endYear) {
-          clickHandler = _this2.nextDecade;
-        } else {
-          clickHandler = chooseYear.bind(_this2, yearData.year);
-        }
+        var classNameMap = (_classNameMap = {}, _classNameMap[prefixCls + '-cell'] = 1, _classNameMap[prefixCls + '-selected-cell'] = yearData.year === currentYear, _classNameMap);
         return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
           'td',
           {
             role: 'gridcell',
             title: yearData.title,
             key: yearData.content,
-            onClick: clickHandler,
+            onClick: chooseYear.bind(_this2, yearData.year),
             className: __WEBPACK_IMPORTED_MODULE_5_classnames___default()(classNameMap)
           },
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
@@ -3856,5 +3848,5 @@ CalendarPart.propTypes = {
 
 /***/ })
 
-},[238]);
+},[239]);
 //# sourceMappingURL=custom-clear-icon.js.map

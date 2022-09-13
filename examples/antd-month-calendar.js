@@ -529,15 +529,15 @@ var _initialiseProps = function _initialiseProps() {
 
 /***/ }),
 
-/***/ 231:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(232);
+module.exports = __webpack_require__(233);
 
 
 /***/ }),
 
-/***/ 232:
+/***/ 233:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -556,7 +556,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__seafile_seafile_calendar_src_MonthCalendar__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__seafile_seafile_calendar_src_MonthCalendar__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__seafile_seafile_calendar_src_Picker__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__seafile_seafile_calendar_src_locale_zh_CN__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__seafile_seafile_calendar_src_locale_en_US__ = __webpack_require__(81);
@@ -741,7 +741,7 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 
 /***/ }),
 
-/***/ 233:
+/***/ 234:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2936,22 +2936,14 @@ var YearPanel = function (_React$Component) {
       var tds = row.map(function (yearData) {
         var _classNameMap;
 
-        var classNameMap = (_classNameMap = {}, _classNameMap[prefixCls + '-cell'] = 1, _classNameMap[prefixCls + '-selected-cell'] = yearData.year === currentYear, _classNameMap[prefixCls + '-last-decade-cell'] = yearData.year < startYear, _classNameMap[prefixCls + '-next-decade-cell'] = yearData.year > endYear, _classNameMap);
-        var clickHandler = void 0;
-        if (yearData.year < startYear) {
-          clickHandler = _this2.previousDecade;
-        } else if (yearData.year > endYear) {
-          clickHandler = _this2.nextDecade;
-        } else {
-          clickHandler = chooseYear.bind(_this2, yearData.year);
-        }
+        var classNameMap = (_classNameMap = {}, _classNameMap[prefixCls + '-cell'] = 1, _classNameMap[prefixCls + '-selected-cell'] = yearData.year === currentYear, _classNameMap);
         return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
           'td',
           {
             role: 'gridcell',
             title: yearData.title,
             key: yearData.content,
-            onClick: clickHandler,
+            onClick: chooseYear.bind(_this2, yearData.year),
             className: __WEBPACK_IMPORTED_MODULE_5_classnames___default()(classNameMap)
           },
           __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
@@ -4333,7 +4325,47 @@ $export($export.S + $export.F * !__webpack_require__(60), 'Object', { defineProp
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alignElement; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return alignPoint; });
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -4360,40 +4392,6 @@ function _defineProperty(obj, key, value) {
   }
 
   return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(source).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
 }
 
 var vendorPrefix;
@@ -4554,8 +4552,8 @@ function getClientPosition(elem) {
   // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
   // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-  x = box.left;
-  y = box.top; // In IE, most of the time, 2 extra pixels are added to the top and left
+  x = Math.floor(box.left);
+  y = Math.floor(box.top); // In IE, most of the time, 2 extra pixels are added to the top and left
   // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
   // IE6 standards mode, this border can be overridden by setting the
   // document element's border to zero -- thus, we cannot rely on the
@@ -4962,8 +4960,7 @@ function getWH(elem, name, ex) {
   }
 
   var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-  var borderBoxValue = name === 'width' ? elem.getBoundingClientRect().width : elem.getBoundingClientRect().height;
-  var computedStyle = getComputedStyleX(elem);
+  var borderBoxValue = name === 'width' ? Math.floor(elem.getBoundingClientRect().width) : Math.floor(elem.getBoundingClientRect().height);
   var isBorderBox = isBorderBoxFn(elem);
   var cssBoxValue = 0;
 
@@ -5044,7 +5041,6 @@ each(['width', 'height'], function (name) {
 
     if (val !== undefined) {
       if (elem) {
-        var computedStyle = getComputedStyleX(elem);
         var isBorderBox = isBorderBoxFn(elem);
 
         if (isBorderBox) {
@@ -5192,7 +5188,8 @@ function isAncestorFixed(element) {
   var body = doc.body;
   var parent = null;
 
-  for (parent = getParent$1(element); parent && parent !== body; parent = getParent$1(parent)) {
+  for (parent = getParent$1(element); // 修复元素位于 document.documentElement 下导致崩溃问题
+  parent && parent !== body && parent !== doc; parent = getParent$1(parent)) {
     var positionStyle = utils.css(parent, 'position');
 
     if (positionStyle === 'fixed') {
@@ -5662,7 +5659,7 @@ function alignPoint(el, tgtPoint, align) {
   var pointInView = pageX >= 0 && pageX <= scrollX + viewportWidth && pageY >= 0 && pageY <= scrollY + viewportHeight; // Provide default target point
 
   var points = [align.points[0], 'cc'];
-  return doAlign(el, tgtRegion, _objectSpread2({}, align, {
+  return doAlign(el, tgtRegion, _objectSpread2(_objectSpread2({}, align), {}, {
     points: points
   }), pointInView);
 }
@@ -7026,5 +7023,5 @@ var placements = {
 
 /***/ })
 
-},[231]);
+},[232]);
 //# sourceMappingURL=antd-month-calendar.js.map

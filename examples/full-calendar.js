@@ -3400,7 +3400,47 @@ $export($export.S + $export.F * !__webpack_require__(60), 'Object', { defineProp
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alignElement; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return alignPoint; });
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+
+    if (enumerableOnly) {
+      symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    }
+
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
+}
+
 function _typeof(obj) {
+  "@babel/helpers - typeof";
+
   if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     _typeof = function (obj) {
       return typeof obj;
@@ -3427,40 +3467,6 @@ function _defineProperty(obj, key, value) {
   }
 
   return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(source, true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(source).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
 }
 
 var vendorPrefix;
@@ -3621,8 +3627,8 @@ function getClientPosition(elem) {
   // 但测试发现，这样反而会导致当 html 和 body 有边距/边框样式时，获取的值不正确
   // 此外，ie6 会忽略 html 的 margin 值，幸运地是没有谁会去设置 html 的 margin
 
-  x = box.left;
-  y = box.top; // In IE, most of the time, 2 extra pixels are added to the top and left
+  x = Math.floor(box.left);
+  y = Math.floor(box.top); // In IE, most of the time, 2 extra pixels are added to the top and left
   // due to the implicit 2-pixel inset border.  In IE6/7 quirks mode and
   // IE6 standards mode, this border can be overridden by setting the
   // document element's border to zero -- thus, we cannot rely on the
@@ -4029,8 +4035,7 @@ function getWH(elem, name, ex) {
   }
 
   var which = name === 'width' ? ['Left', 'Right'] : ['Top', 'Bottom'];
-  var borderBoxValue = name === 'width' ? elem.getBoundingClientRect().width : elem.getBoundingClientRect().height;
-  var computedStyle = getComputedStyleX(elem);
+  var borderBoxValue = name === 'width' ? Math.floor(elem.getBoundingClientRect().width) : Math.floor(elem.getBoundingClientRect().height);
   var isBorderBox = isBorderBoxFn(elem);
   var cssBoxValue = 0;
 
@@ -4111,7 +4116,6 @@ each(['width', 'height'], function (name) {
 
     if (val !== undefined) {
       if (elem) {
-        var computedStyle = getComputedStyleX(elem);
         var isBorderBox = isBorderBoxFn(elem);
 
         if (isBorderBox) {
@@ -4259,7 +4263,8 @@ function isAncestorFixed(element) {
   var body = doc.body;
   var parent = null;
 
-  for (parent = getParent$1(element); parent && parent !== body; parent = getParent$1(parent)) {
+  for (parent = getParent$1(element); // 修复元素位于 document.documentElement 下导致崩溃问题
+  parent && parent !== body && parent !== doc; parent = getParent$1(parent)) {
     var positionStyle = utils.css(parent, 'position');
 
     if (positionStyle === 'fixed') {
@@ -4729,7 +4734,7 @@ function alignPoint(el, tgtPoint, align) {
   var pointInView = pageX >= 0 && pageX <= scrollX + viewportWidth && pageY >= 0 && pageY <= scrollY + viewportHeight; // Provide default target point
 
   var points = [align.points[0], 'cc'];
-  return doAlign(el, tgtRegion, _objectSpread2({}, align, {
+  return doAlign(el, tgtRegion, _objectSpread2(_objectSpread2({}, align), {}, {
     points: points
   }), pointInView);
 }
@@ -13737,14 +13742,15 @@ DropdownMenu.propTypes = {
 /* 237 */,
 /* 238 */,
 /* 239 */,
-/* 240 */
+/* 240 */,
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(241);
+module.exports = __webpack_require__(242);
 
 
 /***/ }),
-/* 241 */
+/* 242 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13761,7 +13767,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__seafile_seafile_calendar_src_FullCalendar__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__seafile_seafile_calendar_src_FullCalendar__ = __webpack_require__(243);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_select_assets_index_css__ = __webpack_require__(160);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_select_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_rc_select_assets_index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_select__ = __webpack_require__(134);
@@ -13855,7 +13861,7 @@ var Demo = function (_React$Component) {
 __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(Demo, null), document.getElementById('__react-content'));
 
 /***/ }),
-/* 242 */
+/* 243 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13876,7 +13882,7 @@ __WEBPACK_IMPORTED_MODULE_5_react_dom___default.a.render(__WEBPACK_IMPORTED_MODU
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__month_MonthTable__ = __webpack_require__(79);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__mixin_CalendarMixin__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__mixin_CommonMixin__ = __webpack_require__(72);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__full_calendar_CalendarHeader__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__full_calendar_CalendarHeader__ = __webpack_require__(244);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__util_dayjs__ = __webpack_require__(66);
 
 
@@ -14062,7 +14068,7 @@ Object(__WEBPACK_IMPORTED_MODULE_6_react_lifecycles_compat__["polyfill"])(FullCa
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_9__mixin_CalendarMixin__["c" /* calendarMixinWrapper */])(Object(__WEBPACK_IMPORTED_MODULE_10__mixin_CommonMixin__["a" /* commonMixinWrapper */])(FullCalendar)));
 
 /***/ }),
-/* 243 */
+/* 244 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14259,5 +14265,5 @@ CalendarHeader.defaultProps = {
 /* harmony default export */ __webpack_exports__["a"] = (CalendarHeader);
 
 /***/ })
-],[240]);
+],[241]);
 //# sourceMappingURL=full-calendar.js.map
