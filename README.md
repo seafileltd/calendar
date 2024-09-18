@@ -758,4 +758,4 @@ open coverage/ dir
 rc-calendar is released under the MIT license.
 
 # node version
-18.20.4
+>= 18.20.4
