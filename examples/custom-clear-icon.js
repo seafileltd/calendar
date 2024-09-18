@@ -20,7 +20,7 @@ function mapSelf(children) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 24:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69,7 +69,128 @@ var DateTable = function (_React$Component) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 243:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(244);
+
+
+/***/ }),
+
+/***/ 244:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__seafile_seafile_calendar_assets_index_less__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__seafile_seafile_calendar_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__seafile_seafile_calendar_assets_index_less__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__seafile_seafile_calendar__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__seafile_seafile_calendar_src_RangeCalendar__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__);
+/* eslint react/no-multi-comp:0, no-console:0 */
+
+
+
+
+
+
+
+
+
+
+
+var clearPath = 'M909.1 209.3l-56.4 44.1C775.8 155.1 656.2 92 521.9 92 ' + '290 92 102.3 279.5 102 511.5 101.7 743.7 289.8 932 521.9 932c181.3 0' + ' 335.8-115 394.6-276.1 1.5-4.2-0.7-8.9-4.9-10.3l-56.7-19.5c-4.1-1.4-8.6' + ' 0.7-10.1 4.8-1.8 5-3.8 10-5.9 14.9-17.3 41-42.1 77.8-73.7 109.4-31.6' + ' 31.6-68.4 56.4-109.3 73.8-42.3 17.9-87.4 27-133.8 27-46.5 0-91.5-9.1-133' + '.8-27-40.9-17.3-77.7-42.1-109.3-73.8-31.6-31.6-56.4-68.4-73.7-109.4-17.9-42' + '.4-27-87.4-27-133.9s9.1-91.5 27-133.9c17.3-41 42.1-77.8 73.7-109.4 31.6-31.6' + ' 68.4-56.4 109.3-73.8 42.3-17.9 87.4-27 133.8-27 46.5 0 91.5' + ' 9.1 133.8 27 40.9 17.3 77.7 42.1 109.3 73.8 9.9 9.9 19.2 20.4 27.8' + ' 31.4l-60.2 47c-5.3 4.1-3.5 12.5 3 14.1l175.6 43c5 1.2 9.9-2.6 9.9' + '-7.7l0.8-180.9c-0.1-6.6-7.8-10.3-13-6.2z';
+
+var svg = __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+  'i',
+  { style: {
+      fontStyle: 'normal',
+      zIndex: '9999',
+      position: 'absolute',
+      right: '6px',
+      cursor: 'pointer',
+      overflow: 'hidden',
+      width: '20px',
+      height: '20px',
+      textAlign: 'center',
+      lineHeight: '1',
+      top: '10px',
+      margin: '0',
+      fontSize: '12px',
+      color: '#aaa',
+      display: 'inline-block'
+    }
+  },
+  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+    'svg',
+    {
+      viewBox: '0 0 1024 1024',
+      width: '1em',
+      height: '1em',
+      fill: 'currentColor',
+      style: { verticalAlign: '-.125em' }
+    },
+    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('path', { d: clearPath, 'p-id': '5827' })
+  )
+);
+
+var calendars = ['time', 'date', 'month', 'year', 'decade'].map(function (mode) {
+  return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+    'div',
+    { key: mode, style: { marginBottom: '1rem' } },
+    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      'div',
+      null,
+      mode
+    ),
+    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__seafile_seafile_calendar__["a" /* default */], {
+      mode: mode,
+      clearIcon: svg
+    })
+  );
+});
+
+__WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+  'div',
+  {
+    style: {
+      zIndex: 1000,
+      position: 'relative',
+      width: 900,
+      margin: '20px auto'
+    }
+  },
+  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+    'div',
+    null,
+    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
+      'div',
+      { style: { margin: 10 } },
+      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__seafile_seafile_calendar__["a" /* default */], {
+        clearIcon: svg
+      })
+    ),
+    calendars,
+    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('div', { style: { clear: 'both' } }),
+    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__seafile_seafile_calendar_src_RangeCalendar__["a" /* default */], {
+      showClear: true,
+      clearIcon: svg
+    })
+  )
+), document.getElementById('__react-content'));
+
+/***/ }),
+
+/***/ 25:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -347,15 +468,7 @@ var _initialiseProps = function _initialiseProps() {
 
 /***/ }),
 
-/***/ 239:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(240);
-
-
-/***/ }),
-
-/***/ 24:
+/***/ 26:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -394,120 +507,7 @@ function TodayButton(_ref) {
 
 /***/ }),
 
-/***/ 240:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__seafile_seafile_calendar_assets_index_less__ = __webpack_require__(78);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__seafile_seafile_calendar_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__seafile_seafile_calendar_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__seafile_seafile_calendar__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__seafile_seafile_calendar_src_RangeCalendar__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rc_time_picker_assets_index_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__ = __webpack_require__(173);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_dayjs_locale_zh_cn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__ = __webpack_require__(174);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_dayjs_locale_en_gb__);
-/* eslint react/no-multi-comp:0, no-console:0 */
-
-
-
-
-
-
-
-
-
-
-
-var clearPath = 'M909.1 209.3l-56.4 44.1C775.8 155.1 656.2 92 521.9 92 ' + '290 92 102.3 279.5 102 511.5 101.7 743.7 289.8 932 521.9 932c181.3 0' + ' 335.8-115 394.6-276.1 1.5-4.2-0.7-8.9-4.9-10.3l-56.7-19.5c-4.1-1.4-8.6' + ' 0.7-10.1 4.8-1.8 5-3.8 10-5.9 14.9-17.3 41-42.1 77.8-73.7 109.4-31.6' + ' 31.6-68.4 56.4-109.3 73.8-42.3 17.9-87.4 27-133.8 27-46.5 0-91.5-9.1-133' + '.8-27-40.9-17.3-77.7-42.1-109.3-73.8-31.6-31.6-56.4-68.4-73.7-109.4-17.9-42' + '.4-27-87.4-27-133.9s9.1-91.5 27-133.9c17.3-41 42.1-77.8 73.7-109.4 31.6-31.6' + ' 68.4-56.4 109.3-73.8 42.3-17.9 87.4-27 133.8-27 46.5 0 91.5' + ' 9.1 133.8 27 40.9 17.3 77.7 42.1 109.3 73.8 9.9 9.9 19.2 20.4 27.8' + ' 31.4l-60.2 47c-5.3 4.1-3.5 12.5 3 14.1l175.6 43c5 1.2 9.9-2.6 9.9' + '-7.7l0.8-180.9c-0.1-6.6-7.8-10.3-13-6.2z';
-
-var svg = __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-  'i',
-  { style: {
-      fontStyle: 'normal',
-      zIndex: '9999',
-      position: 'absolute',
-      right: '6px',
-      cursor: 'pointer',
-      overflow: 'hidden',
-      width: '20px',
-      height: '20px',
-      textAlign: 'center',
-      lineHeight: '1',
-      top: '10px',
-      margin: '0',
-      fontSize: '12px',
-      color: '#aaa',
-      display: 'inline-block'
-    }
-  },
-  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-    'svg',
-    {
-      viewBox: '0 0 1024 1024',
-      width: '1em',
-      height: '1em',
-      fill: 'currentColor',
-      style: { verticalAlign: '-.125em' }
-    },
-    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('path', { d: clearPath, 'p-id': '5827' })
-  )
-);
-
-var calendars = ['time', 'date', 'month', 'year', 'decade'].map(function (mode) {
-  return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-    'div',
-    { key: mode, style: { marginBottom: '1rem' } },
-    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-      'div',
-      null,
-      mode
-    ),
-    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__seafile_seafile_calendar__["a" /* default */], {
-      mode: mode,
-      clearIcon: svg
-    })
-  );
-});
-
-__WEBPACK_IMPORTED_MODULE_2_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-  'div',
-  {
-    style: {
-      zIndex: 1000,
-      position: 'relative',
-      width: 900,
-      margin: '20px auto'
-    }
-  },
-  __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-    'div',
-    null,
-    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
-      'div',
-      { style: { margin: 10 } },
-      __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__seafile_seafile_calendar__["a" /* default */], {
-        clearIcon: svg
-      })
-    ),
-    calendars,
-    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('div', { style: { clear: 'both' } }),
-    __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__seafile_seafile_calendar_src_RangeCalendar__["a" /* default */], {
-      showClear: true,
-      clearIcon: svg
-    })
-  )
-), document.getElementById('__react-content'));
-
-/***/ }),
-
-/***/ 25:
+/***/ 27:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -539,7 +539,7 @@ function OkButton(_ref) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 28:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2024,9 +2024,9 @@ var calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_rc_util_es_Children_mapSelf__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_classnames__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__calendar_TodayButton__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calendar_OkButton__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_TimePickerButton__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__calendar_TodayButton__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calendar_OkButton__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_TimePickerButton__ = __webpack_require__(28);
 
 
 
@@ -2156,8 +2156,8 @@ CalendarFooter.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_lifecycles_compat__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_dayjs__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_dayjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_dayjs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__date_DateTable__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_CalendarHeader__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__date_DateTable__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_CalendarHeader__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__calendar_CalendarFooter__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__calendar_CalendarRightPanel__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__mixin_CalendarMixin__ = __webpack_require__(62);
@@ -2641,12 +2641,12 @@ var CalendarRightPanel = function (_React$Component) {
 
     var _this = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
 
-    _this.onSelect = function (value) {
+    _this.onSelect = function (value, event) {
       _this.setState({
         highlightTime: value
       });
       _this.props.onSelect(value);
-      _this.props.onClickRightPanelTime();
+      _this.props.onClickRightPanelTime(event);
     };
 
     _this.getTimes = function () {
@@ -2680,9 +2680,9 @@ var CalendarRightPanel = function (_React$Component) {
     var defaultMinutesTime = this.props.defaultMinutesTime;
 
     var showTimeIndex = this.times.findIndex(function (item) {
-      return item === defaultMinutesTime;
+      return item >= defaultMinutesTime;
     });
-    var scrollTimeIndex = showTimeIndex > -1 ? showTimeIndex : 16;
+    var scrollTimeIndex = showTimeIndex > -1 ? showTimeIndex - 1 : 16;
     this.timeRef.current.scrollTo(0, 34 * scrollTimeIndex);
   };
 
@@ -2788,9 +2788,9 @@ CalendarRightPanel.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_KeyCode__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__range_calendar_CalendarPart__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calendar_TodayButton__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_OkButton__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__calendar_TimePickerButton__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calendar_TodayButton__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_OkButton__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__calendar_TimePickerButton__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__mixin_CommonMixin__ = __webpack_require__(72);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__util__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__util_toTime__ = __webpack_require__(41);
@@ -3690,8 +3690,8 @@ Object(__WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__["polyfill"])(RangeC
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__calendar_CalendarHeader__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__date_DateTable__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__calendar_CalendarHeader__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__date_DateTable__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__date_DateInput__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_index__ = __webpack_require__(9);
 
@@ -3848,5 +3848,5 @@ CalendarPart.propTypes = {
 
 /***/ })
 
-},[239]);
+},[243]);
 //# sourceMappingURL=custom-clear-icon.js.map
