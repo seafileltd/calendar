@@ -29,12 +29,12 @@ export default class CalendarRightPanel extends React.Component {
     this.timeRef.current.scrollTo(0, 34 * scrollTimeIndex);
   }
 
-  onSelect = (value, event) => {
+  onSelect = (value) => {
     this.setState({
       highlightTime: value,
     });
     this.props.onSelect(value);
-    this.props.onClickRightPanelTime(event);
+    this.props.onClickRightPanelTime();
   }
 
   getTimes = () => {
