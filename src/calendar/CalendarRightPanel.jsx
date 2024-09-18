@@ -5,12 +5,13 @@ import dayjs from 'dayjs';
 export default class CalendarRightPanel extends React.Component {
 
   static propTypes = {
+    showSecond: PropTypes.bool,
     prefixCls: PropTypes.string,
     value: PropTypes.object,
+    locale: PropTypes.object,
+    defaultTime: PropTypes.string,
     onSelect: PropTypes.func,
     onClickRightPanelTime: PropTypes.func,
-    locale: PropTypes.object,
-    defaultMinutesTime: PropTypes.string,
   }
 
   constructor(props) {
@@ -23,8 +24,8 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   componentDidMount() {
-    const { defaultMinutesTime } = this.props;
-    const showTimeIndex = this.times.findIndex(item => item === defaultMinutesTime);
+    const { defaultTime } = this.props;
+    const showTimeIndex = defaultTime ? this.times.findIndex(item => item >= defaultTime) : -1;
     const scrollTimeIndex = showTimeIndex > -1 ? showTimeIndex : 16;
     this.timeRef.current.scrollTo(0, 34 * scrollTimeIndex);
   }
@@ -38,12 +39,27 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   getTimes = () => {
+    const { showSecond } = this.props;
     const times = [];
     for (let i = 0; i < 24; i++) {
-      const str = (`${String(i)}:00`).padStart(5, '0');
-      const str1 = (`${String(i)}:30`).padStart(5, '0');
-      times.push(str);
-      times.push(str1);
+      const minute0 = (`${String(i)}:00`).padStart(5, '0');
+      if (showSecond) {
+        const second0 = `${minute0}:00`;
+        const second30 = `${minute0}:30`;
+        times.push(second0);
+        times.push(second30);
+      } else {
+        times.push(minute0);
+      }
+      const minute30 = (`${String(i)}:30`).padStart(5, '0');
+      if (showSecond) {
+        const second0 = `${minute30}:00`;
+        const second30 = `${minute30}:30`;
+        times.push(second0);
+        times.push(second30);
+      } else {
+        times.push(minute30);
+      }
     }
     return times;
   }

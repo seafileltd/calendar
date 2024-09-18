@@ -53,7 +53,8 @@ class Calendar extends React.Component {
     showToday: PropTypes.bool,
     showOk: PropTypes.bool,
     showHourAndMinute: PropTypes.bool,
-    defaultMinutesTime: PropTypes.string,
+    showSecond: PropTypes.bool,
+    defaultTime: PropTypes.string,
     onSelect: PropTypes.func,
     onOk: PropTypes.func,
     onKeyDown: PropTypes.func,
@@ -284,9 +285,9 @@ class Calendar extends React.Component {
   render() {
     const { props, state } = this;
     const {
-      locale, prefixCls, disabledDate,
+      locale, prefixCls, disabledDate, showSecond, showHourAndMinute,
       dateInputPlaceholder, timePicker, onClickRightPanelTime,
-      disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
+      disabledTime, clearIcon, renderFooter, inputMode, defaultTime,
     } = props;
     const { value, selectedValue, mode } = state;
     const showTimePicker = mode === 'time';
@@ -399,16 +400,17 @@ class Calendar extends React.Component {
           onCloseTimePicker={this.closeTimePicker}
         />
       </div>
-      {showHourAndMinute &&
+      {(showHourAndMinute || showSecond) && (
         <CalendarRightPanel
+          showSecond={showSecond}
           prefixCls={prefixCls}
           value={value}
           locale={locale}
+          defaultTime={defaultTime}
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
-          defaultMinutesTime={this.props.defaultMinutesTime}
         />
-      }
+      )}
     </div>
     </div>);
 
