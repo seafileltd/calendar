@@ -40,6 +40,7 @@
     }
   },
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "build": "rc-tools run build",
     "gh-pages": "rc-tools run gh-pages",
     "start": "rc-tools run server",
@@ -50,6 +51,10 @@
     "types": "tslint *.ts{,x} && tsc",
     "coverage": "jest --coverage"
   },
+  "overrides": {
+    "graceful-fs": "^4.2.11"
+  },
+  "reference": "https://stackoverflow.com/questions/55921442/how-to-fix-referenceerror-primordials-is-not-defined-in-node-js",
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"

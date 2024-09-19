@@ -28,4 +28,3 @@ es
 coverage
 yarn.lock
 .vscode
-package-lock.json
