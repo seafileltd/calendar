@@ -24,8 +24,8 @@ export default class CalendarRightPanel extends React.Component {
 
   componentDidMount() {
     const { defaultMinutesTime } = this.props;
-    const showTimeIndex = this.times.findIndex(item => item === defaultMinutesTime);
-    const scrollTimeIndex = showTimeIndex > -1 ? showTimeIndex : 16;
+    const showTimeIndex = this.times.findIndex(item => item >= defaultMinutesTime);
+    const scrollTimeIndex = showTimeIndex > -1 ? showTimeIndex - 1 : 16;
     this.timeRef.current.scrollTo(0, 34 * scrollTimeIndex);
   }
 
