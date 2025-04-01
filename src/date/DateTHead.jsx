@@ -1,7 +1,7 @@
 import React from 'react';
 import DateConstants from './DateConstants';
 
-const { DAY_NAME_TO_INDEX } = DateConstants;
+const { DAY_NAME_TO_INDEX, DATE_ROW_COLUMN_COUNT } = DateConstants;
 
 export default class DateTHead extends React.Component {
   render() {
@@ -19,8 +19,8 @@ export default class DateTHead extends React.Component {
     const firstDay = DAY_NAME_TO_INDEX[firstDayName] ? DAY_NAME_TO_INDEX[firstDayName] : 0;
     
     let showWeekNumberEl;
-    for (let dateColIndex = 0; dateColIndex < 7; dateColIndex++) {
-      const index = (firstDay + dateColIndex) % 7;
+    for (let dateColIndex = 0; dateColIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; dateColIndex++) {
+      const index = (firstDay + dateColIndex) % DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT;
       veryShortWeekdays[dateColIndex] = allWeekdaysMin[index];
       weekDays[dateColIndex] = allWeekdaysShort[index];
     }
