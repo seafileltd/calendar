@@ -4,6 +4,8 @@ import cx from 'classnames';
 import DateConstants from './DateConstants';
 import { getTitleString, getTodayTime } from '../util/';
 
+const { DATE_ROW_COLUMN_COUNT, DAY_NAME_TO_INDEX } = DateConstants;
+
 function isSameDay(one, two) {
   return one && two && one.isSame(two, 'day');
 }
@@ -38,6 +40,7 @@ export default class DateTBody extends React.Component {
     value: PropTypes.object,
     hoverValue: PropTypes.any,
     showWeekNumber: PropTypes.bool,
+    firstDayOfWeek: PropTypes.string,
   }
 
   static defaultProps = {
@@ -49,7 +52,7 @@ export default class DateTBody extends React.Component {
     const {
       contentRender, prefixCls, selectedValue, value,
       showWeekNumber, dateRender, disabledDate,
-      hoverValue,
+      hoverValue, firstDayOfWeek,
     } = props;
     let iIndex;
     let jIndex;
@@ -74,17 +77,16 @@ export default class DateTBody extends React.Component {
     let month1 = value.clone();
     month1 = month1.date(1);
     const day = month1.day();
-    // const firstDayOfWeek = value.localeData().firstDayOfWeek();
-    // We set Sunday(7) as the first day of the week in seafile-calendar.
-    const firstDayOfWeek = 7;
-    const lastMonthDiffDay = (day + 7 - firstDayOfWeek) % 7;
+    const firstDayName = typeof firstDayOfWeek === 'string' ? firstDayOfWeek[0].toUpperCase() + firstDayOfWeek.slice(1) : 'Sunday';
+    const firstDayIndex = DAY_NAME_TO_INDEX[firstDayName] ? DAY_NAME_TO_INDEX[firstDayName] : 0;
+    const lastMonthDiffDay = (day + 7 - firstDayIndex) % 7;
     // calculate last month
     let lastMonth1 = month1.clone();
     lastMonth1 = lastMonth1.add(0 - lastMonthDiffDay, 'days');
     let passed = 0;
 
-    for (iIndex = 0; iIndex < DateConstants.DATE_ROW_COUNT; iIndex++) {
-      for (jIndex = 0; jIndex < DateConstants.DATE_COL_COUNT; jIndex++) {
+    for (iIndex = 0; iIndex < DATE_ROW_COLUMN_COUNT.DATE_ROW_COUNT; iIndex++) {
+      for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         current = lastMonth1;
         if (passed) {
           current = current.clone();
@@ -97,7 +99,7 @@ export default class DateTBody extends React.Component {
     const tableHtml = [];
     passed = 0;
 
-    for (iIndex = 0; iIndex < DateConstants.DATE_ROW_COUNT; iIndex++) {
+    for (iIndex = 0; iIndex < DATE_ROW_COLUMN_COUNT.DATE_ROW_COUNT; iIndex++) {
       let isCurrentWeek;
       let weekNumberCell;
       let isActiveWeek = false;
@@ -113,11 +115,11 @@ export default class DateTBody extends React.Component {
           </td>
         );
       }
-      for (jIndex = 0; jIndex < DateConstants.DATE_COL_COUNT; jIndex++) {
+      for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         let next = null;
         let last = null;
         current = dateTable[passed];
-        if (jIndex < DateConstants.DATE_COL_COUNT - 1) {
+        if (jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT - 1) {
           next = dateTable[passed + 1];
         }
         if (jIndex > 0) {
