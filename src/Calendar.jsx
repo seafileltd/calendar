@@ -72,6 +72,7 @@ class Calendar extends React.Component {
     inputMode: PropTypes.string,
     onBlur: PropTypes.func,
     onClickRightPanelTime: PropTypes.func,
+    firstDayOfWeek: PropTypes.string,
   }
 
   static defaultProps = {
