@@ -288,7 +288,8 @@ class Calendar extends React.Component {
     const {
       locale, prefixCls, disabledDate,
       dateInputPlaceholder, timePicker, onClickRightPanelTime,
-      disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute, firstDayOfWeek, showWeekNumber
+      disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
+      firstDayOfWeek, showWeekNumber,
     } = props;
     const { value, selectedValue, mode } = state;
     const showTimePicker = mode === 'time';

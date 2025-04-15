@@ -77,7 +77,9 @@ export default class DateTBody extends React.Component {
     let month1 = value.clone();
     month1 = month1.date(1);
     const day = month1.day();
-    const firstDayName = typeof firstDayOfWeek === 'string' ? firstDayOfWeek[0].toUpperCase() + firstDayOfWeek.slice(1) : 'Sunday';
+    const firstDayName = typeof firstDayOfWeek === 'string'
+      ? firstDayOfWeek[0].toUpperCase() + firstDayOfWeek.slice(1)
+      : 'Sunday';
     const firstDayIndex = DAY_NAME_TO_INDEX[firstDayName] ? DAY_NAME_TO_INDEX[firstDayName] : 0;
     const lastMonthDiffDay = (day + 7 - firstDayIndex) % 7;
     // calculate last month

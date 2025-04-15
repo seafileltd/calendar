@@ -11,16 +11,19 @@ export default class DateTHead extends React.Component {
     const prefixCls = props.prefixCls;
     const veryShortWeekdays = [];
     const weekDays = [];
-    
+
     const allWeekdaysMin = localeData.weekdaysMin();
     const allWeekdaysShort = localeData.weekdaysShort();
-    
-    let firstDayName = typeof props.firstDayOfWeek === 'string' ? props.firstDayOfWeek[0].toUpperCase() + props.firstDayOfWeek.slice(1) : 'Sunday';
+
+    const firstDayName = typeof props.firstDayOfWeek === 'string'
+      ? props.firstDayOfWeek[0].toUpperCase() + props.firstDayOfWeek.slice(1)
+      : 'Sunday';
     const firstDay = DAY_NAME_TO_INDEX[firstDayName] ? DAY_NAME_TO_INDEX[firstDayName] : 0;
-    
+
     let showWeekNumberEl;
-    for (let dateColIndex = 0; dateColIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; dateColIndex++) {
-      const index = (firstDay + dateColIndex) % DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT;
+    const dateColumnCount = DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT;
+    for (let dateColIndex = 0; dateColIndex < dateColumnCount; dateColIndex++) {
+      const index = (firstDay + dateColIndex) % dateColumnCount;
       veryShortWeekdays[dateColIndex] = allWeekdaysMin[index];
       weekDays[dateColIndex] = allWeekdaysShort[index];
     }
