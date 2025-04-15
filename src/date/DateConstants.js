@@ -15,5 +15,5 @@ const DAY_NAME_TO_INDEX = {
 
 export default {
   DATE_ROW_COLUMN_COUNT,
-  DAY_NAME_TO_INDEX
+  DAY_NAME_TO_INDEX,
 };
