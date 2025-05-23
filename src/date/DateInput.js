@@ -35,13 +35,12 @@ class DateInput extends React.Component {
 
     this.state = {
       str: formatDate(selectedValue, this.props.format),
-      invalid: false,
       hasFocus: false,
     };
   }
 
   componentDidUpdate() {
-    if (dateInputInstance && this.state.hasFocus && !this.state.invalid &&
+    if (dateInputInstance && this.state.hasFocus &&
       !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
       dateInputInstance.setSelectionRange(cachedSelectionStart, cachedSelectionEnd);
     }
@@ -61,20 +60,14 @@ class DateInput extends React.Component {
     // 没有内容，合法并直接退出
     if (!str) {
       onChange(null);
-      this.setState({
-        invalid: false,
-        str,
-      });
+      this.setState({ str });
       return;
     }
 
     // 不合法直接退出
     const parsed = dayjs(str, format, true);
     if (!parsed.isValid()) {
-      this.setState({
-        invalid: true,
-        str,
-      });
+      this.setState({ str });
       return;
     }
 
@@ -88,20 +81,14 @@ class DateInput extends React.Component {
       .second(parsed.second());
 
     if (!value || (disabledDate && disabledDate(value))) {
-      this.setState({
-        invalid: true,
-        str,
-      });
+      this.setState({ str });
       return;
     }
 
     if (selectedValue !== value || (
       selectedValue && value && !selectedValue.isSame(value)
     )) {
-      this.setState({
-        invalid: false,
-        str,
-      });
+      this.setState({ str });
       onChange(value);
     }
   }
@@ -139,10 +126,7 @@ class DateInput extends React.Component {
     // when popup show, click body will call this, bug!
     const selectedValue = nextProps.selectedValue;
     if (!state.hasFocus) {
-      newState = {
-        str: formatDate(selectedValue, nextProps.format),
-        invalid: false,
-      };
+      newState = { str: formatDate(selectedValue, nextProps.format) };
     }
 
     return newState;
@@ -168,15 +152,14 @@ class DateInput extends React.Component {
 
   render() {
     const props = this.props;
-    const { invalid, str } = this.state;
+    const { str } = this.state;
     const { locale, prefixCls, placeholder, clearIcon, inputMode } = props;
-    const invalidClass = invalid ? `${prefixCls}-input-invalid` : '';
     return (
       <div className={`${prefixCls}-input-wrap`}>
         <div className={`${prefixCls}-date-input-wrap`}>
           <input
             ref={this.saveDateInput}
-            className={`${prefixCls}-input ${invalidClass}`}
+            className={`${prefixCls}-input`}
             value={str}
             disabled={props.disabled}
             placeholder={placeholder}
