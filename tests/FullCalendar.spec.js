@@ -2,7 +2,7 @@
 import React from 'react';
 import Select from 'rc-select';
 import { render, mount } from 'enzyme';
-import dayjs from '../src/util/dayjs';
+import moment from 'moment';
 import FullCalendar from '../src/FullCalendar';
 
 describe('FullCalendar', () => {
@@ -82,7 +82,7 @@ describe('FullCalendar', () => {
   });
 
   it('select month', () => {
-    const selected = dayjs().add(1, 'month');
+    const selected = moment().add(1, 'month');
     const wrapper = mount(
       <FullCalendar
         type="month"

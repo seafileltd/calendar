@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import { isAllowedDate, getTodayTime } from '../util/index';
 
 function noop() {
@@ -12,7 +12,7 @@ export function getNowByCurrentStateValue(value) {
   if (value) {
     ret = getTodayTime(value);
   } else {
-    ret = dayjs();
+    ret = moment();
   }
   return ret;
 }

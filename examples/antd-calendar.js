@@ -10,12 +10,12 @@ import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 import 'rc-time-picker/assets/index.css';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
-import dayjs from '../src/util/dayjs';
+import moment from 'moment';
 
 const format = 'YYYY-MM-DD HH:mm:ss';
 const cn = location.search.indexOf('cn') !== -1;
 
-let now = dayjs();
+let now = moment();
 if (cn) {
   now = now.locale('zh-cn');
 } else {
@@ -30,7 +30,7 @@ function getFormat(time) {
 const defaultCalendarValue = now.clone();
 defaultCalendarValue.add(-1, 'month');
 
-const timePickerElement = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
+const timePickerElement = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
 
 function disabledTime(date) {
   console.log('disabledTime', date);
@@ -54,7 +54,7 @@ function disabledDate(current) {
     // allow empty select
     return false;
   }
-  let date = dayjs().locale('zh-cn');
+  let date = moment().locale('zh-cn');
   date = date.hour(0);
   date = date.minute(0);
   date = date.second(0);

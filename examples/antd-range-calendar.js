@@ -10,17 +10,17 @@ import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import '@seafile/seafile-calendar/assets/index.less';
 import 'rc-time-picker/assets/index.css';
 
-import dayjs from '../src/util/dayjs';
+import moment from 'moment';
 
 const cn = location.search.indexOf('cn') !== -1;
 
 if (cn) {
-  dayjs.locale('zh-cn');
+  moment.locale('zh-cn');
 } else {
-  dayjs.locale('en-gb');
+  moment.locale('en-gb');
 }
 
-const now = dayjs();
+const now = moment();
 if (cn) {
   now.utcOffset(8);
 } else {
@@ -32,7 +32,7 @@ defaultCalendarValue.add(-1, 'month');
 
 const timePickerElement = (
   <TimePickerPanel
-    defaultValue={[dayjs('00:00:00', 'HH:mm:ss'), dayjs('23:59:59', 'HH:mm:ss')]}
+    defaultValue={[moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]}
   />
 );
 
@@ -45,7 +45,7 @@ function newArray(start, end) {
 }
 
 function disabledDate(current) {
-  let date = dayjs();
+  let date = moment();
   date = date.hour(0);
   date = date.minute(0);
   date = date.second(0);

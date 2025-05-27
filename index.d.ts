@@ -4,7 +4,7 @@
 // Definitions: https://github.com/react-component/calendar
 
 import * as React from 'react';
-import { Dayjs } from 'dayjs';
+import {moment} from 'moment';
 
 export type Mode = 'time' | 'date' | 'month' | 'year' | 'decade';
 
@@ -12,9 +12,9 @@ export interface Props {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
-  defaultValue?: Dayjs;
-  value?: Dayjs;
-  selectedValue?: Dayjs;
+  defaultValue?: moment;
+  value?: moment;
+  selectedValue?: moment;
   mode?: Mode;
   locale?: object;
   format?: string | string[];
@@ -22,21 +22,21 @@ export interface Props {
   showWeekNumber?: boolean;
   showToday?: boolean;
   showOk?: boolean;
-  onSelect?: (date: Dayjs) => void;
+  onSelect?: ( date: moment ) => void;
   onOk?: () => void;
   onKeyDown?: () => void;
   onClickRightPanelTime?: () => void;
   timePicker?: React.ReactNode;
   dateInputPlaceholder?: string;
   onClear?: () => void;
-  onChange?: (date: Dayjs | null) => void;
-  onPanelChange?: (date: Dayjs | null, mode: Mode) => void;
-  disabledDate?: (current: Dayjs | undefined) => boolean;
-  disabledTime?: (current: Dayjs | undefined) => object;
-  dateRender?: (current: Dayjs, value: Dayjs) => React.ReactNode;
+  onChange?: ( date: moment | null ) => void;
+  onPanelChange?: ( date: moment | null, mode: Mode ) => void;
+  disabledDate?: ( current: moment | undefined ) => boolean;
+  disabledTime?: ( current: moment | undefined ) => object;
+  dateRender?: ( current: moment, value: moment ) => React.ReactNode;
   renderFooter?: () => React.ReactNode;
   renderSidebar?: () => React.ReactNode;
   inputMode?: string;
 }
 
-export default class ReactCalendar extends React.Component<Props> {}
+export default class ReactCalendar extends React.Component<Props> { }

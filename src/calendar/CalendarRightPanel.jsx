@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
+import moment from 'moment';
 
 export default class CalendarRightPanel extends React.Component {
 
@@ -11,6 +11,7 @@ export default class CalendarRightPanel extends React.Component {
     onClickRightPanelTime: PropTypes.func,
     locale: PropTypes.object,
     defaultMinutesTime: PropTypes.string,
+    cananderIput: PropTypes.string,
   }
 
   constructor(props) {
@@ -70,7 +71,7 @@ export default class CalendarRightPanel extends React.Component {
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
             {this.times.map((time) => {
-              let current = dayjs(`${selectedDate} ${time}`);
+              let current = moment(`${selectedDate} ${time}`);
               current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
               return (
                 <li
