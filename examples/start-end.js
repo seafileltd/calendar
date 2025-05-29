@@ -11,12 +11,12 @@ import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 import 'rc-time-picker/assets/index.css';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 
-import dayjs from '../src/util/dayjs';
+import moment from 'moment';
 
 const format = 'YYYY-MM-DD HH:mm:ss';
 const cn = location.search.indexOf('cn') !== -1;
 
-const now = dayjs();
+const now = moment();
 if (cn) {
   now.locale('zh-cn').utcOffset(8);
 } else {

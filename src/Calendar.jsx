@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
-import dayjs from 'dayjs';
+import moment from 'moment';
 import DateTable from './date/DateTable';
 import CalendarHeader from './calendar/CalendarHeader';
 import CalendarFooter from './calendar/CalendarFooter';
@@ -18,18 +18,15 @@ import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
 import { getTimeConfig, getTodayTime, syncTime } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
-import localeData from 'dayjs/plugin/localeData';
-import utc from 'dayjs/plugin/utc';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-dayjs.extend(utc);
-dayjs.extend(localeData);
-dayjs.extend(weekOfYear);
+moment.localeData();
+moment().utc();
+moment().week();
 
 function noop() {
 }
 
 const getMomentObjectIfValid = date => {
-  if (dayjs.isDayjs(date) && date.isValid()) {
+  if (moment.isMoment(date) && date.isValid()) {
     return date;
   }
   return false;
@@ -96,7 +93,7 @@ class Calendar extends React.Component {
       value:
           getMomentObjectIfValid(props.value) ||
           getMomentObjectIfValid(props.defaultValue) ||
-          dayjs(),
+          moment(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
   }
@@ -323,7 +320,7 @@ class Calendar extends React.Component {
         key="date-input"
         value={value}
         locale={locale}
-        placeholder={dateInputPlaceholder}
+        placeholder={dateInputPlaceholder || this.getFormat()[0]}
         showClear
         disabledTime={disabledTime}
         disabledDate={disabledDate}
@@ -334,6 +331,7 @@ class Calendar extends React.Component {
         onSelect={this.onDateInputSelect}
         clearIcon={clearIcon}
         inputMode={inputMode}
+        showHourAndMinute={showHourAndMinute}
       />
     ) : null;
 

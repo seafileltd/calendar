@@ -9,14 +9,14 @@ import DatePicker from '@seafile/seafile-calendar/src/Picker';
 import zhCN from '@seafile/seafile-calendar/src/locale/zh_CN';
 import enUS from '@seafile/seafile-calendar/src/locale/en_US';
 
-import dayjs from '../src/util/dayjs';
+import moment from 'moment';
 
 const format = 'YYYY-MM-DD';
 
 const fullFormat = 'YYYY-MM-DD dddd';
 const cn = location.search.indexOf('cn') !== -1;
 
-const now = dayjs();
+const now = moment();
 if (cn) {
   now.locale('zh-cn').utcOffset(8);
 } else {

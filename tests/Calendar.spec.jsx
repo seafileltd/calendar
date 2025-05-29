@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import keyCode from 'rc-util/lib/KeyCode';
-import dayjs from '../src/util/dayjs';
+import moment from 'moment';
 import { mount, render } from 'enzyme';
 import TimePickerPanel from 'rc-time-picker/lib/Panel';
 import Calendar from '../src/Calendar';
@@ -14,12 +14,12 @@ describe('Calendar', () => {
   describe('render', () => {
     it('render correctly', () => {
       const zhWrapper = render(
-        <Calendar locale={zhCN} defaultValue={dayjs('2017-03-29').locale('zh-cn')} />
+        <Calendar locale={zhCN} defaultValue={moment('2017-03-29').locale('zh-cn')} />
       );
       expect(zhWrapper).toMatchSnapshot();
 
       const enWrapper = render(
-        <Calendar locale={enUS} defaultValue={dayjs('2017-03-29').locale('en')} />
+        <Calendar locale={enUS} defaultValue={moment('2017-03-29').locale('en')} />
       );
       expect(enWrapper).toMatchSnapshot();
 
@@ -27,15 +27,15 @@ describe('Calendar', () => {
       const enWrapperWithMonthFormatWrapper = render(
         <Calendar
           locale={customEnUSLocalWithMonthFormat}
-          defaultValue={dayjs('2017-03-29').local('en')}
+          defaultValue={moment('2017-03-29').local('en')}
         />
       );
       expect(enWrapperWithMonthFormatWrapper).toMatchSnapshot();
     });
 
-    it('render correctly with invalid dayjs object', () => {
+    it('render correctly with invalid moment object', () => {
       const enWrapper = render(
-          <Calendar locale={enUS} defaultValue={dayjs('invalid').locale('en')} />
+          <Calendar locale={enUS} defaultValue={moment('invalid').locale('en')} />
       );
       expect(enWrapper).toMatchSnapshot();
     });
@@ -48,7 +48,7 @@ describe('Calendar', () => {
 
   describe('timePicker', () => {
     it('set defaultOpenValue if timePicker.props.defaultValue is set', () => {
-      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(<Calendar timePicker={timePicker} />);
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const selectedValues = wrapper.find('.rc-time-picker-panel-select-option-selected');
@@ -58,9 +58,9 @@ describe('Calendar', () => {
     });
 
     it('follow Calendar[selectedValue|defaultSelectedValue] when it is set', () => {
-      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(
-        <Calendar timePicker={timePicker} defaultSelectedValue={dayjs('01:01:01', 'HH:mm:ss')} />
+        <Calendar timePicker={timePicker} defaultSelectedValue={moment('01:01:01', 'HH:mm:ss')} />
       );
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const selectedValues = wrapper.find('.rc-time-picker-panel-select-option-selected');
@@ -70,7 +70,7 @@ describe('Calendar', () => {
     });
 
     it('use timePicker\'s time', () => {
-      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(<Calendar timePicker={timePicker} />);
 
       wrapper.find('.rc-calendar-today').simulate('click');
@@ -93,7 +93,7 @@ describe('Calendar', () => {
       ).toBe('3/8/2017 06:00:00');
     });
     it('timePicker date have no changes when hover', () => {
-      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
       const wrapper = mount(<Calendar timePicker={timePicker} />);
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       const dateBtns = wrapper.find('.rc-calendar-my-select a');
@@ -122,7 +122,7 @@ describe('Calendar', () => {
     });
 
     it('support controlled mode', () => {
-      const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
+      const timePicker = <TimePickerPanel defaultValue={moment('00:00:00', 'HH:mm:ss')} />;
       let value = null;
       class ControlledCalendar extends React.Component {
         state = { mode: 'date' };
@@ -155,14 +155,14 @@ describe('Calendar', () => {
       expect(wrapper.find('.rc-calendar-year-panel').length).toBe(1);
       wrapper.find('.rc-calendar-year-panel-decade-select').simulate('click');
       expect(wrapper.find('.rc-calendar-decade-panel').length).toBe(1);
-      expect(value.isSame(dayjs(), 'day'));
+      expect(value.isSame(moment(), 'day'));
       wrapper.find('.rc-calendar-decade-panel-selected-cell').simulate('click');
       expect(wrapper.find('.rc-calendar-decade-panel').length).toBe(0);
       wrapper.find('.rc-calendar-year-panel-selected-cell').simulate('click');
       expect(wrapper.find('.rc-calendar-year-panel').length).toBe(0);
       wrapper.find('.rc-calendar-month-panel-selected-cell').simulate('click');
       expect(wrapper.find('.rc-calendar-month-panel').length).toBe(0);
-      expect(value.isSame(dayjs('2010-03-29'), 'day'));
+      expect(value.isSame(moment('2010-03-29'), 'day'));
 
       wrapper.find('.rc-calendar-year-select').simulate('click');
       expect(wrapper.find('.rc-calendar-year-panel').length).toBe(1);
@@ -351,7 +351,7 @@ describe('Calendar', () => {
           if (!current) {
             return false;
           }
-          let date = dayjs();
+          let date = moment();
           date = date.hour(0);
           date = date.minute(0);
           date = date.second(0);
@@ -587,7 +587,7 @@ describe('Calendar', () => {
   });
 
   it('handle clear', () => {
-    const now = dayjs();
+    const now = moment();
     const calendar = mount(
       <Calendar defaultSelectedValue={now} />
     );
@@ -598,7 +598,7 @@ describe('Calendar', () => {
 
   describe('onOk', () => {
     it('triggers onOk', () => {
-      const selected = dayjs().add(1, 'day');
+      const selected = moment().add(1, 'day');
       const handleOk = jest.fn();
       const calendar = mount(
         <Calendar showOk defaultSelectedValue={selected} onOk={handleOk} />
@@ -618,7 +618,7 @@ describe('Calendar', () => {
     });
 
     it('does not triggers onOk if selected date is disabled', () => {
-      const selected = dayjs().add(1, 'day');
+      const selected = moment().add(1, 'day');
       const handleOk = jest.fn();
       const calendar = mount(
         <Calendar
@@ -634,11 +634,11 @@ describe('Calendar', () => {
   });
 
   it('today button', () => {
-    const selected = dayjs().add(1, 'day').utcOffset(480);
+    const selected = moment().add(1, 'day').utcOffset(480);
     const calendar = mount(
       <Calendar defaultSelectedValue={selected} />
     );
     calendar.find('.rc-calendar-today-btn').simulate('click');
-    expect(dayjs().isSame(calendar.state().selectedValue)).toBe(true);
+    expect(moment().isSame(calendar.state().selectedValue)).toBe(true);
   });
 });
