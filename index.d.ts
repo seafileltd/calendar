@@ -4,7 +4,6 @@
 // Definitions: https://github.com/react-component/calendar
 
 import * as React from 'react';
-import {Moment} from 'moment';
 
 export type Mode = 'time' | 'date' | 'month' | 'year' | 'decade';
 
@@ -12,9 +11,9 @@ export interface Props {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
-  defaultValue?: Moment;
-  value?: Moment;
-  selectedValue?: Moment;
+  defaultValue?: Object;
+  value?: Object;
+  selectedValue?: object;
   mode?: Mode;
   locale?: object;
   format?: string | string[];
@@ -22,18 +21,18 @@ export interface Props {
   showWeekNumber?: boolean;
   showToday?: boolean;
   showOk?: boolean;
-  onSelect?: ( date: Moment ) => void;
+  onSelect?: ( date: object ) => void;
   onOk?: () => void;
   onKeyDown?: () => void;
   onClickRightPanelTime?: () => void;
   timePicker?: React.ReactNode;
   dateInputPlaceholder?: string;
   onClear?: () => void;
-  onChange?: ( date: Moment | null ) => void;
-  onPanelChange?: ( date: Moment | null, mode: Mode ) => void;
-  disabledDate?: ( current: Moment | undefined ) => boolean;
-  disabledTime?: ( current: Moment | undefined ) => object;
-  dateRender?: ( current: Moment, value: Moment ) => React.ReactNode;
+  onChange?: ( date: object | null ) => void;
+  onPanelChange?: ( date: Object | null, mode: Mode ) => void;
+  disabledDate?: ( current: object | undefined ) => boolean;
+  disabledTime?: ( current: object | undefined ) => object;
+  dateRender?: ( current: object, value: object ) => React.ReactNode;
   renderFooter?: () => React.ReactNode;
   renderSidebar?: () => React.ReactNode;
   inputMode?: string;
