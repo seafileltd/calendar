@@ -4,7 +4,7 @@
 // Definitions: https://github.com/react-component/calendar
 
 import * as React from 'react';
-import {moment} from 'moment';
+import {Moment} from 'moment';
 
 export type Mode = 'time' | 'date' | 'month' | 'year' | 'decade';
 
@@ -12,9 +12,9 @@ export interface Props {
   prefixCls?: string;
   className?: string;
   style?: React.CSSProperties;
-  defaultValue?: moment;
-  value?: moment;
-  selectedValue?: moment;
+  defaultValue?: Moment;
+  value?: Moment;
+  selectedValue?: Moment;
   mode?: Mode;
   locale?: object;
   format?: string | string[];
@@ -22,18 +22,18 @@ export interface Props {
   showWeekNumber?: boolean;
   showToday?: boolean;
   showOk?: boolean;
-  onSelect?: ( date: moment ) => void;
+  onSelect?: ( date: Moment ) => void;
   onOk?: () => void;
   onKeyDown?: () => void;
   onClickRightPanelTime?: () => void;
   timePicker?: React.ReactNode;
   dateInputPlaceholder?: string;
   onClear?: () => void;
-  onChange?: ( date: moment | null ) => void;
-  onPanelChange?: ( date: moment | null, mode: Mode ) => void;
-  disabledDate?: ( current: moment | undefined ) => boolean;
-  disabledTime?: ( current: moment | undefined ) => object;
-  dateRender?: ( current: moment, value: moment ) => React.ReactNode;
+  onChange?: ( date: Moment | null ) => void;
+  onPanelChange?: ( date: Moment | null, mode: Mode ) => void;
+  disabledDate?: ( current: Moment | undefined ) => boolean;
+  disabledTime?: ( current: Moment | undefined ) => object;
+  dateRender?: ( current: Moment, value: Moment ) => React.ReactNode;
   renderFooter?: () => React.ReactNode;
   renderSidebar?: () => React.ReactNode;
   inputMode?: string;
