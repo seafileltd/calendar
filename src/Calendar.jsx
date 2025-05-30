@@ -99,6 +99,7 @@ class Calendar extends React.Component {
           dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
+    this.dateInputRef = React.createRef();
   }
 
   componentDidMount() {
@@ -216,6 +217,8 @@ class Calendar extends React.Component {
         syncTime(timePickerDefaultValue, value);
       }
     }
+    const time = `${String(value.hour()).padStart(2, 0)}:${String(value.minute()).padStart(2, 0)}`;
+    this.focusTimeInput(time);
     this.onSelect(value);
   }
 
@@ -268,6 +271,12 @@ class Calendar extends React.Component {
     return ReactDOM.findDOMNode(this);
   }
 
+  focusTimeInput = (value) => {
+    if (this.dateInputRef.current) {
+      this.dateInputRef.current.focusTimeInput(value);
+    }
+  };
+
   openTimePicker = () => {
     this.onPanelChange(null, 'time');
   }
@@ -319,11 +328,12 @@ class Calendar extends React.Component {
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
+        ref={this.dateInputRef}
         format={this.getFormat()}
         key="date-input"
         value={value}
         locale={locale}
-        placeholder={dateInputPlaceholder}
+        placeholder={dateInputPlaceholder || this.getFormat()[0]}
         showClear
         disabledTime={disabledTime}
         disabledDate={disabledDate}
@@ -334,6 +344,7 @@ class Calendar extends React.Component {
         onSelect={this.onDateInputSelect}
         clearIcon={clearIcon}
         inputMode={inputMode}
+        showHourAndMinute={showHourAndMinute}
       />
     ) : null;
 
@@ -411,6 +422,8 @@ class Calendar extends React.Component {
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
+          showHourAndMinute={showHourAndMinute}
+          format={this.getFormat()}
         />
       }
     </div>
