@@ -991,7 +991,7 @@ function TodayButton(_ref) {
       text = _ref.text;
 
   var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
-  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["p" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["m" /* getTodayTime */])(value), disabledDate);
+  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["k" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["i" /* getTodayTime */])(value), disabledDate);
   var isDisabled = disabledToday || disabled;
   var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -1000,7 +1000,7 @@ function TodayButton(_ref) {
       className: prefixCls + '-today-btn ' + disabledTodayClass,
       role: 'button',
       onClick: isDisabled ? null : onToday,
-      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["n" /* getTodayTimeStr */])(value)
+      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["j" /* getTodayTimeStr */])(value)
     },
     localeNow
   );
@@ -6279,7 +6279,7 @@ function noop() {}
 function getNowByCurrentStateValue(value) {
   var ret = void 0;
   if (value) {
-    ret = Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["m" /* getTodayTime */])(value);
+    ret = Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["i" /* getTodayTime */])(value);
   } else {
     ret = __WEBPACK_IMPORTED_MODULE_6_dayjs___default()();
   }
@@ -6360,7 +6360,7 @@ var calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {
       }, _this.isAllowedDate = function (value) {
         var disabledDate = _this.props.disabledDate;
         var disabledTime = _this.props.disabledTime;
-        return Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["p" /* isAllowedDate */])(value, disabledDate, disabledTime);
+        return Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["k" /* isAllowedDate */])(value, disabledDate, disabledTime);
       }, _temp), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
     }
 

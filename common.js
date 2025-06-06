@@ -380,33 +380,34 @@ exports.default = _assign2.default || function (target) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return currentDate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return currentMonth; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return currentYear; });
-/* unused harmony export nowTime */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return stringCurrentDate; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return stringCurrentMonth; });
+/* unused harmony export currentDate */
+/* unused harmony export currentMonth */
+/* unused harmony export currentYear */
+/* unused harmony export stringCurrentDate */
+/* unused harmony export stringCurrentMonth */
 /* unused harmony export currentTime */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DATE_FORMATS; });
-/* harmony export (immutable) */ __webpack_exports__["m"] = getTodayTime;
-/* harmony export (immutable) */ __webpack_exports__["l"] = getTitleString;
-/* harmony export (immutable) */ __webpack_exports__["n"] = getTodayTimeStr;
-/* harmony export (immutable) */ __webpack_exports__["j"] = getMonthName;
-/* harmony export (immutable) */ __webpack_exports__["v"] = syncTime;
-/* harmony export (immutable) */ __webpack_exports__["k"] = getTimeConfig;
+/* harmony export (immutable) */ __webpack_exports__["i"] = getTodayTime;
+/* harmony export (immutable) */ __webpack_exports__["h"] = getTitleString;
+/* harmony export (immutable) */ __webpack_exports__["j"] = getTodayTimeStr;
+/* harmony export (immutable) */ __webpack_exports__["f"] = getMonthName;
+/* harmony export (immutable) */ __webpack_exports__["m"] = syncTime;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getTimeConfig;
 /* unused harmony export isTimeValidByConfig */
 /* unused harmony export isTimeValid */
-/* harmony export (immutable) */ __webpack_exports__["p"] = isAllowedDate;
-/* harmony export (immutable) */ __webpack_exports__["f"] = formatDate;
-/* harmony export (immutable) */ __webpack_exports__["g"] = formatDateLocal;
-/* harmony export (immutable) */ __webpack_exports__["o"] = hasSpecialChar;
-/* harmony export (immutable) */ __webpack_exports__["s"] = isValidMonth;
-/* harmony export (immutable) */ __webpack_exports__["r"] = isValidDay;
-/* harmony export (immutable) */ __webpack_exports__["h"] = fullValidYear;
-/* harmony export (immutable) */ __webpack_exports__["e"] = delimate;
-/* harmony export (immutable) */ __webpack_exports__["i"] = getDateFormatByStr;
-/* harmony export (immutable) */ __webpack_exports__["q"] = isCurrentYear;
-/* harmony export (immutable) */ __webpack_exports__["w"] = validateTime;
+/* harmony export (immutable) */ __webpack_exports__["k"] = isAllowedDate;
+/* harmony export (immutable) */ __webpack_exports__["c"] = formatDate;
+/* harmony export (immutable) */ __webpack_exports__["d"] = formatDateLocal;
+/* unused harmony export hasSpecialChar */
+/* unused harmony export isValidMonth */
+/* unused harmony export isValidDay */
+/* unused harmony export fullValidYear */
+/* harmony export (immutable) */ __webpack_exports__["b"] = delimate;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getDateFormatByStr;
+/* unused harmony export isCurrentYear */
+/* unused harmony export validateTime */
+/* unused harmony export checkSpecialBetweenDigits */
+/* harmony export (immutable) */ __webpack_exports__["l"] = normalizeDateInput;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_dayjs__ = __webpack_require__(12);
@@ -421,7 +422,6 @@ __WEBPACK_IMPORTED_MODULE_1_dayjs___default.a.extend(__WEBPACK_IMPORTED_MODULE_2
 var currentDate = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().date();
 var currentMonth = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().month() + 1;
 var currentYear = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().year();
-var nowTime = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().format('HH:mm');
 var stringCurrentDate = String(currentDate).padStart(2, '0');
 var stringCurrentMonth = String(currentMonth).padStart(2, '0');
 var currentTime = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().format('HH:mm');
@@ -641,19 +641,35 @@ function getDateFormatByStr(str, format) {
   if (format === DATE_FORMATS.USAndTime) {
     return DATE_FORMATS.USAndTime;
   }
-  if (format === DATE_FORMATS.European || format === DATE_FORMATS.Germany_Russia_etc || format === DATE_FORMATS.Germany_Russia_etcAndTime || format === DATE_FORMATS.EuropeanAndTime) {
+  if (format === DATE_FORMATS.European || format === DATE_FORMATS.Germany_Russia_etc) {
     var day = parts[0],
         month = parts[1];
 
     var dayLen = day.length;
     var monthLen = month.length;
     if (dayLen === 2 && monthLen === 2) {
-      return 'DD' + delimiter + 'MM' + delimiter + 'YYYY HH:mm';
+      return 'DD' + delimiter + 'MM' + delimiter + 'YYYY';
     } else if (dayLen === 2 && monthLen === 1) {
-      return 'DD' + delimiter + 'M' + delimiter + 'YYYY HH:mm';
+      return 'DD' + delimiter + 'M' + delimiter + 'YYYY';
     } else if (dayLen === 1 && monthLen === 2) {
-      return 'D' + delimiter + 'MM' + delimiter + 'YYYY HH:mm';
+      return 'D' + delimiter + 'MM' + delimiter + 'YYYY';
     } else if (dayLen === 1 && monthLen === 1) {
+      return 'D' + delimiter + 'M' + delimiter + 'YYYY';
+    }
+  }
+  if (format === DATE_FORMATS.EuropeanAndTime || format === DATE_FORMATS.Germany_Russia_etcAndTime) {
+    var _day = parts[0],
+        _month = parts[1];
+
+    var _dayLen = _day.length;
+    var _monthLen = _month.length;
+    if (_dayLen === 2 && _monthLen === 2) {
+      return 'DD' + delimiter + 'MM' + delimiter + 'YYYY HH:mm';
+    } else if (_dayLen === 2 && _monthLen === 1) {
+      return 'DD' + delimiter + 'M' + delimiter + 'YYYY HH:mm';
+    } else if (_dayLen === 1 && _monthLen === 2) {
+      return 'D' + delimiter + 'MM' + delimiter + 'YYYY HH:mm';
+    } else if (_dayLen === 1 && _monthLen === 1) {
       return 'D' + delimiter + 'M' + delimiter + 'YYYY HH:mm';
     }
   }
@@ -668,22 +684,299 @@ function validateTime(inputTime) {
   if (!inputTime || typeof inputTime !== 'string') {
     return currentTime;
   }
-  var trimmedInput = inputTime.trim();
-  var timeRegex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
-
-  if (!timeRegex.test(trimmedInput)) {
+  var trimmed = inputTime.trim();
+  var timeRegex = /^(\d{2}):(\d{2})$/;
+  var match = trimmed.match(timeRegex);
+  if (!match) {
     return currentTime;
   }
-
-  var _trimmedInput$split$m = trimmedInput.split(':').map(Number),
-      hours = _trimmedInput$split$m[0],
-      minutes = _trimmedInput$split$m[1];
-
-  var parsedTime = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().hour(hours).minute(minutes);
-  if (!parsedTime.isValid()) {
+  var hour = Number(match[1]);
+  var minute = Number(match[2]);
+  if (hour > 23 || minute > 59) {
     return currentTime;
   }
-  return parsedTime.format('HH:mm');
+  return match[1] + ':' + match[2];
+}
+
+function checkSpecialBetweenDigits(str) {
+  var regex = /^\d+[^0-9]\d+$/;
+  return regex.test(str);
+}
+
+function getDatePart(str) {
+  if (typeof str !== 'string') return '';
+  var parts = str.trim().split(/\s+/);
+  return parts[0];
+}
+
+function normalizeDateInput(str, localeFormat, delimiter) {
+  var day = void 0;
+  var month = void 0;
+  var year = void 0;
+  var time = currentTime;
+  var parts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+  if (localeFormat === DATE_FORMATS.ISO) {
+    var hasSpecial = hasSpecialChar(str);
+    var numStr = str.replace(/[^0-9]/g, '');
+    if (numStr.length === 7) {
+      year = numStr.slice(0, 4);
+      month = numStr.slice(4, 6).padStart(2, '0');
+      day = numStr.slice(6, 7).padStart(2, '0');
+      if (!isValidDay(day)) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate;
+      }
+      return year + '-' + month + '-' + day;
+    }
+    if (hasSpecial) {
+      year = fullValidYear(parts[0]);
+      month = Number(parts[1]);
+      day = Number(parts[2]);
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+        }
+        return year + '-' + String(month).padStart(2, '0') + '-01';
+      }
+      if ((month >= 13 || month < 1) && isNaN(day)) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate;
+      }
+      if ((month >= 13 || month < 1) && day) {
+        return String(currentYear) + '-' + stringCurrentMonth + '-' + stringCurrentDate;
+      }
+      if (!month && !day) {
+        return year + '-01-01';
+      }
+    }
+    if (str.length >= 1 && str.length <= 8) {
+      year = fullValidYear(str.slice(0, 4));
+      month = str.slice(4, 6);
+      day = Number(str.slice(6, 8));
+      if (str.length === 5 && Number(month) < 1) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate + ' ';
+      }
+      if (str.length === 6 && Number(month) < 1) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate;
+      }
+      if (str.length === 7) {
+        if (!isValidDay(day)) {
+          return year + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + stringCurrentDate;
+        }
+        return year + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + String(day).padStart(2, '0'); // eslint-disable-line max-len
+      }
+      if (str.length === 8) {
+        if (!isValidDay(day)) {
+          return isCurrentYear(year, month, day) + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + stringCurrentDate; // eslint-disable-line max-len
+        }
+        return isCurrentYear(year, month, day) + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + String(day).padStart(2, '0'); // eslint-disable-line max-len
+      }
+      if (Number(month) >= 1 && Number(month) <= 12 && isValidDay(day)) {
+        return year + '-' + month.padStart(2, '0') + '-' + String(day).padStart(2, '0');
+      }
+      return year + '-' + (month ? month.padStart(2, '0') : '01') + '-' + (day ? String(day).padStart(2, '0') : '01'); // eslint-disable-line max-len
+    }
+    return currentYear + '/' + stringCurrentMonth + '/' + stringCurrentDate;
+  }
+  if (localeFormat === DATE_FORMATS.ISOAndTime) {
+    var unNormalDate = getDatePart(str);
+    var unNormalDateParts = formatDateLocal(unNormalDate, localeFormat, DATE_FORMATS);
+    var _hasSpecial = hasSpecialChar(unNormalDate);
+    var _numStr = unNormalDate.replace(/[^0-9]/g, '');
+    if (_numStr.length === 7) {
+      year = _numStr.slice(0, 4);
+      month = _numStr.slice(4, 6).padStart(2, '0');
+      day = _numStr.slice(6, 7).padStart(2, '0');
+      if (parts.length === 3) {
+        time = validateTime(parts[1] + ':' + parts[2]);
+      }
+      if (parts.length === 4) {
+        time = validateTime(parts[2] + ':' + parts[3]);
+      }
+      if (parts.length === 5) {
+        time = validateTime(parts[3] + ':' + parts[4]);
+      }
+      if (!isValidDay(day)) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate + ' ' + time;
+      }
+      return year + '-' + month + '-' + day + ' ' + time;
+    }
+    if (_hasSpecial) {
+      if (unNormalDateParts.length < 3) {
+        parts.splice(2, 0, '1');
+      }
+      year = fullValidYear(parts[0]);
+      month = Number(parts[1]);
+      day = Number(parts[2]);
+      time = validateTime(parts[3] + ':' + parts[4]);
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + time; // eslint-disable-line max-len
+        }
+        return year + '-' + String(month).padStart(2, '0') + '-01 ' + time;
+      }
+      if ((month >= 13 || month < 1) && isNaN(day)) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate + ' ' + time; // eslint-disable-line max-len
+      }
+      if ((month >= 13 || month < 1) && day) {
+        return String(currentYear) + '-' + stringCurrentMonth + '-' + stringCurrentDate + ' ' + time; // eslint-disable-line max-len
+      }
+      if (!month && !day) {
+        return year + '-01-01 ' + time;
+      }
+    }
+    if (unNormalDate.length >= 1 && unNormalDate.length <= 8) {
+      year = fullValidYear(unNormalDate.slice(0, 4));
+      month = unNormalDate.slice(4, 6);
+      day = Number(unNormalDate.slice(6, 8));
+      var timeParts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+      time = validateTime(timeParts[1] + ':' + timeParts[2]);
+      if (unNormalDate.length === 5 && Number(month) < 1) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate + ' ' + time;
+      }
+      if (unNormalDate.length === 6 && Number(month) < 1) {
+        return year + '-' + stringCurrentMonth + '-' + stringCurrentDate + ' ' + time;
+      }
+      if (unNormalDate.length === 7) {
+        if (!isValidDay(day)) {
+          return year + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + stringCurrentDate + ' ' + time; // eslint-disable-line max-len
+        }
+        return year + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + time; // eslint-disable-line max-len
+      }
+      if (unNormalDate.length === 8) {
+        if (!isValidDay(day)) {
+          return isCurrentYear(year, month, day) + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + stringCurrentDate + ' ' + time; // eslint-disable-line max-len
+        }
+        return isCurrentYear(year, month, day) + '-' + String(isValidMonth(month)).padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + time; // eslint-disable-line max-len
+      }
+      if (Number(month) >= 1 && Number(month) <= 12 && isValidDay(day)) {
+        return year + '-' + month.padStart(2, '0') + '-' + String(day).padStart(2, '0') + ' ' + time;
+      }
+      return year + '-' + (month ? month.padStart(2, '0') : '01') + '-' + (day ? String(day).padStart(2, '0') : '01') + ' ' + time; // eslint-disable-line max-len
+    }
+    return currentYear + '/' + stringCurrentMonth + '/' + stringCurrentDate + ' ' + time;
+  }
+  if (localeFormat === DATE_FORMATS.US) {
+    var _hasSpecial2 = hasSpecialChar(str);
+    if (_hasSpecial2) {
+      month = Number(parts[0]);
+      day = Number(parts[1]);
+      year = fullValidYear(parts[2]);
+      if (month >= 1 && month <= 12 && isValidDay(day)) {
+        return month + '/' + day + '/' + year;
+      }
+      return currentMonth + '/' + currentDate + '/' + currentYear;
+    }
+    if (str.length >= 1 && str.length <= 8) {
+      month = Number(str.slice(0, 2));
+      day = Number(str.slice(2, 4));
+      year = fullValidYear(str.slice(4, str.length));
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return month + '/' + day + '/' + year;
+        }
+        if (!day) {
+          return month + '/1/' + year;
+        }
+        return currentMonth + '/' + currentDate + '/' + currentYear;
+      }
+    }
+    return currentMonth + '/' + currentDate + '/' + currentYear;
+  }
+  if (localeFormat === DATE_FORMATS.USAndTime) {
+    var _unNormalDate = getDatePart(str);
+    var _unNormalDateParts = formatDateLocal(_unNormalDate, localeFormat, DATE_FORMATS);
+    var _hasSpecial3 = hasSpecialChar(_unNormalDate);
+    if (_hasSpecial3) {
+      if (_unNormalDateParts.length < 3) {
+        parts.splice(2, 0, String(currentYear));
+      }
+      month = Number(parts[0]);
+      day = Number(parts[1]);
+      year = fullValidYear(parts[2]);
+      time = validateTime(parts[3] + ':' + parts[4]);
+      if (month >= 1 && month <= 12 && isValidDay(day)) {
+        return month + '/' + day + '/' + year + ' ' + time;
+      }
+      return currentMonth + '/' + currentDate + '/' + currentYear + ' ' + time;
+    }
+    if (_unNormalDate.length >= 1 && _unNormalDate.length <= 8) {
+      month = Number(_unNormalDate.slice(0, 2));
+      day = Number(_unNormalDate.slice(2, 4));
+      year = fullValidYear(_unNormalDate.slice(4, _unNormalDate.length));
+      var _timeParts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+      time = validateTime(_timeParts[1] + ':' + _timeParts[2]);
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return month + '/' + day + '/' + year + ' ' + time;
+        }
+        if (!day) {
+          return month + '/1/' + year + ' ' + time;
+        }
+        return currentMonth + '/' + currentDate + '/' + currentYear + ' ' + time;
+      }
+    }
+    return currentMonth + '/' + currentDate + '/' + currentYear + ' ' + time;
+  }
+  if (localeFormat === DATE_FORMATS.European || localeFormat === DATE_FORMATS.Germany_Russia_etc) {
+    var _hasSpecial4 = hasSpecialChar(str);
+    if (_hasSpecial4) {
+      day = parts[0];
+      month = parts[1];
+      year = fullValidYear(parts[2]);
+      if (isValidDay(day) && Number(month) >= 1 && Number(month) <= 12) {
+        return '' + Number(day) + delimiter + Number(month) + delimiter + year;
+      }
+      return '' + currentDate + delimiter + currentMonth + delimiter + currentYear;
+    }
+    if (str.length >= 1 && str.length <= 8) {
+      day = Number(str.slice(0, 2));
+      var monthStr = str.slice(2, 4);
+      month = isValidMonth(monthStr);
+      var yearStr = str.slice(4, str.length);
+      year = fullValidYear(yearStr);
+
+      if (isValidDay(day)) {
+        if (Number(monthStr) < 1 && Number(monthStr) > 12) {
+          return '' + currentDate + delimiter + currentMonth + delimiter + currentYear;
+        }
+        return '' + Number(day) + delimiter + Number(month) + delimiter + year;
+      }
+    }
+    return '' + currentDate + delimiter + currentMonth + delimiter + currentYear;
+  }
+  if (localeFormat === DATE_FORMATS.EuropeanAndTime || localeFormat === DATE_FORMATS.Germany_Russia_etcAndTime) {
+    var _unNormalDate2 = getDatePart(str);
+    var _unNormalDateParts2 = formatDateLocal(_unNormalDate2, localeFormat, DATE_FORMATS);
+    var _hasSpecial5 = hasSpecialChar(_unNormalDate2);
+    if (_hasSpecial5) {
+      if (_unNormalDateParts2.length < 3) {
+        parts.splice(2, 0, String(currentYear));
+      }
+      day = parts[0];
+      month = parts[1];
+      year = fullValidYear(parts[2]);
+      time = validateTime(parts[3] + ':' + parts[4]);
+      if (isValidDay(day) && Number(month) >= 1 && Number(month) <= 12) {
+        return '' + Number(day) + delimiter + Number(month) + delimiter + year + ' ' + time;
+      }
+      return '' + currentDate + delimiter + currentMonth + delimiter + currentYear + ' ' + time;
+    }
+    if (_unNormalDate2.length >= 1 && _unNormalDate2.length <= 8) {
+      day = Number(_unNormalDate2.slice(0, 2));
+      var _monthStr = _unNormalDate2.slice(2, 4);
+      month = isValidMonth(_monthStr);
+      var _yearStr = _unNormalDate2.slice(4, _unNormalDate2.length);
+      year = fullValidYear(_yearStr);
+      var _timeParts2 = formatDateLocal(str, localeFormat, DATE_FORMATS);
+      time = validateTime(_timeParts2[1] + ':' + _timeParts2[2]);
+      if (isValidDay(day)) {
+        if (Number(_monthStr) < 1 && Number(_monthStr) > 12) {
+          return '' + currentDate + delimiter + currentMonth + delimiter + currentYear + ' ' + time;
+        }
+        return '' + Number(day) + delimiter + Number(month) + delimiter + year + ' ' + time;
+      }
+    }
+    return '' + currentDate + delimiter + currentMonth + delimiter + currentYear + ' ' + time;
+  }
 }
 
 /***/ }),
@@ -2192,7 +2485,7 @@ var MonthTable = function (_Component) {
       months[rowIndex] = [];
       for (var colIndex = 0; colIndex < COL; colIndex++) {
         current = current.month(index);
-        var content = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["j" /* getMonthName */])(current);
+        var content = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["f" /* getMonthName */])(current);
         months[rowIndex][colIndex] = {
           value: index,
           content: content,
@@ -2209,7 +2502,7 @@ var MonthTable = function (_Component) {
 
     var props = this.props;
     var value = this.state.value;
-    var today = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["m" /* getTodayTime */])(value);
+    var today = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["i" /* getTodayTime */])(value);
     var months = this.months();
     var currentMonth = value.month();
     var prefixCls = props.prefixCls,

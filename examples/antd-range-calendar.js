@@ -691,7 +691,7 @@ function TodayButton(_ref) {
       text = _ref.text;
 
   var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
-  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["p" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["m" /* getTodayTime */])(value), disabledDate);
+  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["k" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["i" /* getTodayTime */])(value), disabledDate);
   var isDisabled = disabledToday || disabled;
   var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -700,7 +700,7 @@ function TodayButton(_ref) {
       className: prefixCls + '-today-btn ' + disabledTodayClass,
       role: 'button',
       onClick: isDisabled ? null : onToday,
-      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["n" /* getTodayTimeStr */])(value)
+      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["j" /* getTodayTimeStr */])(value)
     },
     localeNow
   );
@@ -2340,7 +2340,7 @@ var DateTBody = function (_React$Component) {
     var jIndex = void 0;
     var current = void 0;
     var dateTable = [];
-    var today = Object(__WEBPACK_IMPORTED_MODULE_7__util___["m" /* getTodayTime */])(value);
+    var today = Object(__WEBPACK_IMPORTED_MODULE_7__util___["i" /* getTodayTime */])(value);
     var cellClass = prefixCls + '-cell';
     var weekNumberCellClass = prefixCls + '-week-number-cell';
     var dateClass = prefixCls + '-date';
@@ -2515,7 +2515,7 @@ var DateTBody = function (_React$Component) {
             onClick: disabled ? undefined : props.onSelect.bind(null, current),
             onMouseEnter: disabled ? undefined : props.onDayHover && props.onDayHover.bind(null, current) || undefined,
             role: 'gridcell',
-            title: Object(__WEBPACK_IMPORTED_MODULE_7__util___["l" /* getTitleString */])(current),
+            title: Object(__WEBPACK_IMPORTED_MODULE_7__util___["h" /* getTitleString */])(current),
             className: cls
           },
           dateHtml
@@ -3194,12 +3194,10 @@ var DateInput = function (_React$Component) {
     var selectedValue = props.selectedValue;
     var formatPrefix = _this.props.format[0];
     _this.state = {
-      timeStr: '',
-      dateStr: '',
-      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["f" /* formatDate */])(selectedValue, _this.props.format),
+      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, _this.props.format),
       hasFocus: false,
       localeFormat: formatPrefix,
-      delimiter: Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* delimate */])(formatPrefix),
+      delimiter: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* delimate */])(formatPrefix),
       cananderIput: ''
     };
     return _this;
@@ -3221,30 +3219,27 @@ var DateInput = function (_React$Component) {
     // when popup show, click body will call this, bug!
     var selectedValue = nextProps.selectedValue;
     if (!state.hasFocus) {
-      var timeStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["f" /* formatDate */])(selectedValue, nextProps.format).split(' ')[0];
+      var timeStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, nextProps.format).split(' ')[0];
       var parts = timeStr.split(state.delimiter);
-      var timeParts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["f" /* formatDate */])(selectedValue, nextProps.format).split(' ')[1];
+      var timeParts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, nextProps.format).split(' ')[1];
       if (parts.length === 3) {
         if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO) {
           newState = { str: parts[0].padStart(4, 0) + '-' + parts[1] + '-' + parts[2] };
         } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
           newState = {
-            str: parts[0].padStart(4, 0) + '-' + parts[1] + '-' + parts[2] + ' ' + (nextProps.showHourAndMinute ? timeParts : ''), // eslint-disable-line max-len
-            dateStr: parts[0].padStart(4, 0) + '-' + parts[1] + '-' + parts[2]
+            str: parts[0].padStart(4, 0) + '-' + parts[1] + '-' + parts[2] + ' ' + (nextProps.showHourAndMinute ? timeParts : '') // eslint-disable-line max-len
           };
         } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US) {
           newState = { str: Number(parts[0]) + '/' + Number(parts[1]) + '/' + parts[2].padStart(4, 0) };
         } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime) {
           newState = {
-            str: Number(parts[0]) + '/' + Number(parts[1]) + '/' + parts[2].padStart(4, 0) + ' ' + (nextProps.showHourAndMinute ? timeParts : ''), // eslint-disable-line max-len
-            dateStr: Number(parts[0]) + '/' + Number(parts[1]) + '/' + parts[2].padStart(4, 0)
+            str: Number(parts[0]) + '/' + Number(parts[1]) + '/' + parts[2].padStart(4, 0) + ' ' + (nextProps.showHourAndMinute ? timeParts : '') // eslint-disable-line max-len
           };
         } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc) {
           newState = { str: '' + Number(parts[0]) + state.delimiter + Number(parts[1]) + state.delimiter + parts[2].padStart(4, 0) }; // eslint-disable-line max-len
         } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime) {
           newState = {
-            str: '' + Number(parts[0]) + state.delimiter + Number(parts[1]) + state.delimiter + parts[2].padStart(4, 0) + ' ' + (nextProps.showHourAndMinute ? timeParts : ''), // eslint-disable-line max-len
-            dateStr: '' + Number(parts[0]) + state.delimiter + Number(parts[1]) + state.delimiter + parts[2].padStart(4, 0) // eslint-disable-line max-len
+            str: '' + Number(parts[0]) + state.delimiter + Number(parts[1]) + state.delimiter + parts[2].padStart(4, 0) + ' ' + (nextProps.showHourAndMinute ? timeParts : '') // eslint-disable-line max-len
           };
         }
       }
@@ -3256,174 +3251,21 @@ var DateInput = function (_React$Component) {
     return dateInputInstance;
   };
 
-  DateInput.prototype.normalizeDateInput = function normalizeDateInput(str) {
-    var day = void 0;
-    var month = void 0;
-    var year = void 0;
-    var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* formatDateLocal */])(str, this.state.localeFormat, __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */]);
-    var delimiter = this.state.delimiter;
-    var hasSpecial = Object(__WEBPACK_IMPORTED_MODULE_9__util__["o" /* hasSpecialChar */])(str);
-    if (this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO || this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
-      var numStr = str.replace(/[^0-9]/g, '');
-      if (numStr.length === 7) {
-        year = numStr.slice(0, 4);
-        month = numStr.slice(4, 6).padStart(2, '0');
-        day = numStr.slice(6, 7).padStart(2, '0');
-        if (!Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-          return year + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["u" /* stringCurrentMonth */] + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */];
-        }
-        return year + '-' + month + '-' + day;
-      }
-      if (hasSpecial) {
-        year = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* fullValidYear */])(parts[0]);
-        month = Number(parts[1]);
-        day = Number(parts[2]);
-        if (month >= 1 && month <= 12) {
-          if (Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-            return year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
-          }
-          return year + '-' + String(month).padStart(2, '0') + '-01';
-        }
-        if ((month >= 13 || month < 1) && isNaN(day)) {
-          return year + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["u" /* stringCurrentMonth */] + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */];
-        }
-        if (!month && !day) {
-          return year + '-01-01';
-        }
-      }
-      if (str.length >= 1 && str.length <= 8) {
-        year = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* fullValidYear */])(str.slice(0, 4));
-        month = str.slice(4, 6);
-        day = Number(str.slice(6, 8));
-        if (str.length === 5 && Number(month) < 1) {
-          return year + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["u" /* stringCurrentMonth */] + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */] + ' ';
-        }
-        if (str.length === 6 && Number(month) < 1) {
-          return year + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["u" /* stringCurrentMonth */] + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */];
-        }
-        if (str.length === 7) {
-          if (!Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-            return year + '-' + String(Object(__WEBPACK_IMPORTED_MODULE_9__util__["s" /* isValidMonth */])(month)).padStart(2, '0') + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */];
-          }
-          return year + '-' + String(Object(__WEBPACK_IMPORTED_MODULE_9__util__["s" /* isValidMonth */])(month)).padStart(2, '0') + '-' + String(day).padStart(2, '0'); // eslint-disable-line max-len
-        }
-        if (str.length === 8) {
-          if (!Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-            return Object(__WEBPACK_IMPORTED_MODULE_9__util__["q" /* isCurrentYear */])(year, month, day) + '-' + String(Object(__WEBPACK_IMPORTED_MODULE_9__util__["s" /* isValidMonth */])(month)).padStart(2, '0') + '-' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */]; // eslint-disable-line max-len
-          }
-          return Object(__WEBPACK_IMPORTED_MODULE_9__util__["q" /* isCurrentYear */])(year, month, day) + '-' + String(Object(__WEBPACK_IMPORTED_MODULE_9__util__["s" /* isValidMonth */])(month)).padStart(2, '0') + '-' + String(day).padStart(2, '0'); // eslint-disable-line max-len
-        }
-        if (Number(month) >= 1 && Number(month) <= 12 && Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-          return year + '-' + month.padStart(2, '0') + '-' + String(day).padStart(2, '0');
-        }
-        return year + '-' + (month ? month.padStart(2, '0') : '01') + '-' + (day ? String(day).padStart(2, '0') : '01'); // eslint-disable-line max-len
-      }
-      return __WEBPACK_IMPORTED_MODULE_9__util__["d" /* currentYear */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["u" /* stringCurrentMonth */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["t" /* stringCurrentDate */];
-    }
-    if (this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US || this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime) {
-      if (hasSpecial) {
-        month = Number(parts[0]);
-        day = Number(parts[1]);
-        year = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* fullValidYear */])(parts[2]);
-        if (month >= 1 && month <= 12 && Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-          return month + '/' + day + '/' + year;
-        }
-        return __WEBPACK_IMPORTED_MODULE_9__util__["c" /* currentMonth */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["b" /* currentDate */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["d" /* currentYear */];
-      }
-      if (str.length >= 1 && str.length <= 8) {
-        month = Number(str.slice(0, 2));
-        day = Number(str.slice(2, 4));
-        year = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* fullValidYear */])(str.slice(4, str.length));
-        if (month >= 1 && month <= 12) {
-          if (Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-            return month + '/' + day + '/' + year;
-          }
-          if (!day) {
-            return month + '/1/' + year;
-          }
-          return __WEBPACK_IMPORTED_MODULE_9__util__["c" /* currentMonth */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["b" /* currentDate */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["d" /* currentYear */];
-        }
-      }
-      return __WEBPACK_IMPORTED_MODULE_9__util__["c" /* currentMonth */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["b" /* currentDate */] + '/' + __WEBPACK_IMPORTED_MODULE_9__util__["d" /* currentYear */];
-    }
-    if (this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime || this.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc) {
-      if (hasSpecial) {
-        day = parts[0];
-        month = parts[1];
-        year = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* fullValidYear */])(parts[2]);
-        if (Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day) && Number(month) >= 1 && Number(month) <= 12) {
-          return '' + Number(day) + delimiter + Number(month) + delimiter + year;
-        }
-        return '' + __WEBPACK_IMPORTED_MODULE_9__util__["b" /* currentDate */] + delimiter + __WEBPACK_IMPORTED_MODULE_9__util__["c" /* currentMonth */] + delimiter + __WEBPACK_IMPORTED_MODULE_9__util__["d" /* currentYear */];
-      }
-      if (str.length >= 1 && str.length <= 8) {
-        day = Number(str.slice(0, 2));
-        var monthStr = str.slice(2, 4);
-        month = Object(__WEBPACK_IMPORTED_MODULE_9__util__["s" /* isValidMonth */])(monthStr);
-        var yearStr = str.slice(4, str.length);
-        year = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* fullValidYear */])(yearStr);
-        if (Number(monthStr) >= 1 && Number(monthStr) <= 12 && Object(__WEBPACK_IMPORTED_MODULE_9__util__["r" /* isValidDay */])(day)) {
-          return '' + Number(day) + delimiter + Number(month) + delimiter + year;
-        }
-      }
-      return '' + __WEBPACK_IMPORTED_MODULE_9__util__["b" /* currentDate */] + delimiter + __WEBPACK_IMPORTED_MODULE_9__util__["c" /* currentMonth */] + delimiter + __WEBPACK_IMPORTED_MODULE_9__util__["d" /* currentYear */];
-    }
-  };
-
   DateInput.prototype.render = function render() {
     var props = this.props;
-    var _state = this.state,
-        str = _state.str,
-        dateStr = _state.dateStr,
-        timeStr = _state.timeStr;
+    var str = this.state.str;
     var locale = props.locale,
         prefixCls = props.prefixCls,
         placeholder = props.placeholder,
         clearIcon = props.clearIcon,
-        inputMode = props.inputMode,
-        showHourAndMinute = props.showHourAndMinute;
+        inputMode = props.inputMode;
 
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-input-wrap' },
-      showHourAndMinute ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+      __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         'div',
-        { className: prefixCls + '-date-input-wrap', style: { display: 'flex' } },
-        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('input', {
-            ref: this.saveDateInput,
-            className: prefixCls + '-input',
-            value: dateStr,
-            disabled: props.disabled,
-            placeholder: placeholder.slice(0, 10),
-            onChange: this.onInputChangeDate,
-            onKeyDown: this.onKeyDown,
-            onFocus: this.onFocus,
-            onBlur: this.onBlur,
-            inputMode: inputMode
-          })
-        ),
-        __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-          'div',
-          null,
-          __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('input', {
-            ref: this.saveDateInput,
-            className: prefixCls + '-input',
-            value: timeStr,
-            disabled: props.disabled,
-            placeholder: 'HH:mm',
-            onChange: this.onInputChangeHourMinute,
-            onKeyDown: this.onKeyDown,
-            onFocus: this.onFocus,
-            onBlur: this.TimeBlure,
-            inputMode: inputMode
-          })
-        )
-      ) : __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
-        'div',
-        { className: prefixCls + '-date-input-wrap', style: { display: 'flex' } },
+        { className: prefixCls + '-date-input-wrap' },
         __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('input', {
           ref: this.saveDateInput,
           className: prefixCls + '-input',
@@ -3467,42 +3309,27 @@ DateInput.propTypes = {
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
   inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  showHourAndMinute: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
-  onChangeCananderIput: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func
+  showHourAndMinute: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool
 };
 
 var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
-    var _props = _this2.props,
-        showHourAndMinute = _props.showHourAndMinute,
-        onClear = _props.onClear;
-
-    if (showHourAndMinute) {
-      _this2.setState({
-        dateStr: '',
-        timeStr: ''
-      });
-    } else {
-      _this2.setState({
-        str: ''
-      });
-    }
-    onClear(null);
+    _this2.setState({
+      str: ''
+    });
+    _this2.props.onClear(null);
   };
 
   this.onInputChange = function (str) {
-    var cananderStr = _this2.normalizeDateInput(str, _this2.props.showHourAndMinute);
-    var _props2 = _this2.props,
-        disabledDate = _props2.disabledDate,
-        onChange = _props2.onChange,
-        selectedValue = _props2.selectedValue;
+    var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
+    var _props = _this2.props,
+        disabledDate = _props.disabledDate,
+        onChange = _props.onChange,
+        selectedValue = _props.selectedValue;
 
-    var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
-    var hourMinuteStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["w" /* validateTime */])(_this2.state.timeStr);
-    _this2.setState({ timeStr: hourMinuteStr });
-    cananderStr = cananderStr + ' ' + hourMinuteStr;
+    var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
     if (!str) {
       onChange(null);
@@ -3510,7 +3337,7 @@ var _initialiseProps = function _initialiseProps() {
       return;
     }
     // 不合法直接退出
-    var format = Object(__WEBPACK_IMPORTED_MODULE_9__util__["i" /* getDateFormatByStr */])(cananderStr, _this2.state.localeFormat);
+    var format = Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* getDateFormatByStr */])(cananderStr, _this2.state.localeFormat);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(cananderStr, format);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
@@ -3541,17 +3368,6 @@ var _initialiseProps = function _initialiseProps() {
     _this2.onInputChange(str);
   };
 
-  this.onInputChangeDate = function (event) {
-    var dateStr = event.target.value;
-    _this2.setState({ dateStr: dateStr });
-    _this2.onInputChange(dateStr);
-  };
-
-  this.onInputChangeHourMinute = function (e) {
-    var timeStr = e.target.value;
-    _this2.setState({ timeStr: timeStr });
-  };
-
   this.onFocus = function () {
     _this2.setState({ hasFocus: true });
   };
@@ -3560,17 +3376,17 @@ var _initialiseProps = function _initialiseProps() {
     _this2.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
-        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["f" /* formatDate */])(prevProps.value, prevProps.format)
+        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(prevProps.value, prevProps.format)
       };
     });
   };
 
   this.onKeyDown = function (event) {
     var keyCode = event.keyCode;
-    var _props3 = _this2.props,
-        onSelect = _props3.onSelect,
-        value = _props3.value,
-        disabledDate = _props3.disabledDate;
+    var _props2 = _this2.props,
+        onSelect = _props2.onSelect,
+        value = _props2.value,
+        disabledDate = _props2.disabledDate;
 
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
@@ -3589,17 +3405,6 @@ var _initialiseProps = function _initialiseProps() {
     if (dateInputInstance) {
       dateInputInstance.focus();
     }
-  };
-
-  this.TimeBlure = function () {
-    var hourMinuteStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["w" /* validateTime */])(_this2.state.timeStr);
-    _this2.setState({ timeStr: hourMinuteStr }, function () {
-      _this2.onInputChange(_this2.state.str);
-    });
-  };
-
-  this.focusTimeInput = function (timeStr) {
-    _this2.setState({ timeStr: timeStr });
   };
 
   this.saveDateInput = function (dateInput) {
@@ -13234,7 +13039,7 @@ var RangeCalendar = function (_React$Component) {
 
     var startValue = this.getStartValue();
     var endValue = this.getEndValue();
-    var todayTime = Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* getTodayTime */])(startValue);
+    var todayTime = Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* getTodayTime */])(startValue);
     var thisMonth = todayTime.month();
     var thisYear = todayTime.year();
     var isTodayInView = startValue.year() === thisYear && startValue.month() === thisMonth || endValue.year() === thisYear && endValue.month() === thisMonth;
@@ -13419,28 +13224,28 @@ var _initialiseProps = function _initialiseProps() {
     var nextSelectedValue = void 0;
     if (type === 'both') {
       if (!firstSelectedValue) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[0], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
         nextSelectedValue = [value];
       } else if (_this2.compare(firstSelectedValue, value) < 0) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[1], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[1], value);
         nextSelectedValue = [firstSelectedValue, value];
       } else {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[0], value);
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[1], firstSelectedValue);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[1], firstSelectedValue);
         nextSelectedValue = [value, firstSelectedValue];
       }
     } else if (type === 'start') {
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[0], value);
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
       var endValue = selectedValue[1];
       nextSelectedValue = endValue && _this2.compare(endValue, value) > 0 ? [value, endValue] : [value];
     } else {
       // type === 'end'
       var startValue = selectedValue[0];
       if (startValue && _this2.compare(startValue, value) <= 0) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[1], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[1], value);
         nextSelectedValue = [startValue, value];
       } else {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(prevSelectedValue[0], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
         nextSelectedValue = [value];
       }
     }
@@ -13630,7 +13435,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onToday = function () {
-    var startValue = Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* getTodayTime */])(_this2.state.value[0]);
+    var startValue = Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* getTodayTime */])(_this2.state.value[0]);
     var endValue = startValue.clone().add(1, 'months');
     _this2.setState({ value: [startValue, endValue] });
   };
@@ -13739,7 +13544,7 @@ var _initialiseProps = function _initialiseProps() {
     // keep selectedTime when select date
     if (selectedValue[0] && _this2.props.timePicker) {
       startValue = startValue.clone();
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(selectedValue[0], startValue);
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(selectedValue[0], startValue);
     }
     if (showTimePicker && selectedValue[0]) {
       startValue = selectedValue[0];
@@ -13764,7 +13569,7 @@ var _initialiseProps = function _initialiseProps() {
     var endValue = value[1] ? value[1].clone() : value[0].clone().add(1, 'month');
     // keep selectedTime when select date
     if (selectedValue[1] && _this2.props.timePicker) {
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(selectedValue[1], endValue);
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(selectedValue[1], endValue);
     }
     if (showTimePicker) {
       endValue = selectedValue[1] ? selectedValue[1] : _this2.getStartValue();
@@ -13823,7 +13628,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.isAllowedDateAndTime = function (selectedValue) {
-    return Object(__WEBPACK_IMPORTED_MODULE_14__util__["p" /* isAllowedDate */])(selectedValue[0], _this2.props.disabledDate, _this2.disabledStartTime) && Object(__WEBPACK_IMPORTED_MODULE_14__util__["p" /* isAllowedDate */])(selectedValue[1], _this2.props.disabledDate, _this2.disabledEndTime);
+    return Object(__WEBPACK_IMPORTED_MODULE_14__util__["k" /* isAllowedDate */])(selectedValue[0], _this2.props.disabledDate, _this2.disabledStartTime) && Object(__WEBPACK_IMPORTED_MODULE_14__util__["k" /* isAllowedDate */])(selectedValue[1], _this2.props.disabledDate, _this2.disabledEndTime);
   };
 
   this.isMonthYearPanelShow = function (mode) {
@@ -13850,10 +13655,10 @@ var _initialiseProps = function _initialiseProps() {
     if (timePicker && timePicker.props.defaultValue) {
       var timePickerDefaultValue = timePicker.props.defaultValue;
       if (!prevSelectedValue[0] && selectedValue[0]) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(timePickerDefaultValue[0], selectedValue[0]);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(timePickerDefaultValue[0], selectedValue[0]);
       }
       if (!prevSelectedValue[1] && selectedValue[1]) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["v" /* syncTime */])(timePickerDefaultValue[1], selectedValue[1]);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(timePickerDefaultValue[1], selectedValue[1]);
       }
     }
 
@@ -14002,7 +13807,7 @@ var CalendarPart = function (_React$Component) {
         inputMode = props.inputMode;
 
     var shouldShowTimePicker = showTimePicker && timePicker;
-    var disabledTimeConfig = shouldShowTimePicker && disabledTime ? Object(__WEBPACK_IMPORTED_MODULE_9__util_index__["k" /* getTimeConfig */])(selectedValue, disabledTime) : null;
+    var disabledTimeConfig = shouldShowTimePicker && disabledTime ? Object(__WEBPACK_IMPORTED_MODULE_9__util_index__["g" /* getTimeConfig */])(selectedValue, disabledTime) : null;
     var rangeClassName = prefixCls + '-range';
     var newProps = {
       locale: locale,
