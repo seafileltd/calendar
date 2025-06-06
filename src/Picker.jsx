@@ -103,7 +103,7 @@ class Picker extends React.Component {
       cause.source === 'todayButton') {
       this.close(this.focus);
     }
-    console.log('onCalendarSelect', value, cause);
+    console.log('onCalendarSelect', value, props);
     props.onChange(value);
   }
 
