@@ -4,12 +4,9 @@ import PropTypes from 'prop-types';
 import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
 import dayjs from 'dayjs';
-import {
-  formatDate, DATE_FORMATS, currentDate, currentMonth, currentYear,
-  stringCurrentDate, stringCurrentMonth, formatDateLocal, hasSpecialChar,
-  isValidMonth, isValidDay, fullValidYear, getDateFormatByStr, isCurrentYear,
-  validateTime, delimate,
-} from '../util';
+import { formatDate, DATE_FORMATS,
+  getDateFormatByStr, formatDateLocal,
+  delimate, normalizeDateInput } from '../util';
 
 let cachedSelectionStart;
 let cachedSelectionEnd;
@@ -40,8 +37,6 @@ class DateInput extends React.Component {
     const selectedValue = props.selectedValue;
     const formatPrefix = this.props.format[0];
     this.state = {
-      timeStr: '',
-      dateStr: '',
       str: formatDate(selectedValue, this.props.format),
       hasFocus: false,
       localeFormat: formatPrefix,
@@ -58,27 +53,16 @@ class DateInput extends React.Component {
   }
 
   onClear = () => {
-    const { showHourAndMinute, onClear } = this.props;
-    if (showHourAndMinute) {
-      this.setState({
-        dateStr: '',
-        timeStr: '',
-      });
-    } else {
-      this.setState({
-        str: '',
-      });
-    }
-    onClear(null);
+    this.setState({
+      str: '',
+    });
+    this.props.onClear(null);
   };
 
   onInputChange = (str) => {
-    let cananderStr = this.normalizeDateInput(str, this.props.showHourAndMinute);
+    const cananderStr = normalizeDateInput(str, this.state.localeFormat, this.state.delimiter);
     const { disabledDate, onChange, selectedValue } = this.props;
     const parts = formatDateLocal(cananderStr, this.state.localeFormat);
-    const hourMinuteStr = validateTime(this.state.timeStr);
-    this.setState({ timeStr: hourMinuteStr });
-    cananderStr = `${cananderStr} ${hourMinuteStr}`;
     // 没有内容，合法并直接退出
     if (!str) {
       onChange(null);
@@ -135,17 +119,6 @@ class DateInput extends React.Component {
     this.onInputChange(str);
   }
 
-  onInputChangeDate = (event) => {
-    const dateStr = event.target.value;
-    this.setState({ dateStr });
-    this.onInputChange(dateStr);
-  }
-
-  onInputChangeHourMinute = (e) => {
-    const timeStr = e.target.value;
-    this.setState({ timeStr });
-  }
-
   onFocus = () => {
     this.setState({ hasFocus: true });
   }
@@ -188,14 +161,12 @@ class DateInput extends React.Component {
         } else if (state.localeFormat === DATE_FORMATS.ISOAndTime) {
           newState = {
             str: `${parts[0].padStart(4, 0)}-${parts[1]}-${parts[2]} ${ nextProps.showHourAndMinute ? timeParts : ''}`, // eslint-disable-line max-len
-            dateStr: `${parts[0].padStart(4, 0)}-${parts[1]}-${parts[2]}`,
           };
         } else if (state.localeFormat === DATE_FORMATS.US) {
           newState = { str: `${Number(parts[0])}/${Number(parts[1])}/${parts[2].padStart(4, 0)}` };
         } else if (state.localeFormat === DATE_FORMATS.USAndTime) {
           newState = {
             str: `${Number(parts[0])}/${Number(parts[1])}/${parts[2].padStart(4, 0)} ${ nextProps.showHourAndMinute ? timeParts : ''}`, // eslint-disable-line max-len
-            dateStr: `${Number(parts[0])}/${Number(parts[1])}/${parts[2].padStart(4, 0)}`,
           };
         } else if (state.localeFormat === DATE_FORMATS.European ||
         state.localeFormat === DATE_FORMATS.Germany_Russia_etc) {
@@ -204,7 +175,6 @@ class DateInput extends React.Component {
         state.localeFormat === DATE_FORMATS.Germany_Russia_etcAndTime) {
           newState = {
             str: `${Number(parts[0])}${state.delimiter}${Number(parts[1])}${state.delimiter}${parts[2].padStart(4, 0)} ${ nextProps.showHourAndMinute ? timeParts : ''}`, // eslint-disable-line max-len
-            dateStr: `${Number(parts[0])}${state.delimiter}${Number(parts[1])}${state.delimiter}${parts[2].padStart(4, 0)}`, // eslint-disable-line max-len
           };
         }
       }
@@ -220,141 +190,10 @@ class DateInput extends React.Component {
     return ReactDOM.findDOMNode(this);
   }
 
-  normalizeDateInput(str) {
-    let day;
-    let month;
-    let year;
-    const parts = formatDateLocal(str, this.state.localeFormat, DATE_FORMATS);
-    const delimiter = this.state.delimiter;
-    const hasSpecial = hasSpecialChar(str);
-    if (this.state.localeFormat === DATE_FORMATS.ISO ||
-      this.state.localeFormat === DATE_FORMATS.ISOAndTime
-    ) {
-      const numStr = str.replace(/[^0-9]/g, '');
-      if (numStr.length === 7) {
-        year = numStr.slice(0, 4);
-        month = numStr.slice(4, 6).padStart(2, '0');
-        day = numStr.slice(6, 7).padStart(2, '0');
-        if (!isValidDay(day)) {
-          return `${year}-${stringCurrentMonth}-${stringCurrentDate}`;
-        }
-        return `${year}-${month}-${day}`;
-      }
-      if (hasSpecial) {
-        year = fullValidYear(parts[0]);
-        month = Number(parts[1]);
-        day = Number(parts[2]);
-        if (month >= 1 && month <= 12) {
-          if (isValidDay(day)) {
-            return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-          }
-          return `${year}-${String(month).padStart(2, '0')}-01`;
-        }
-        if ((month >= 13 || month < 1) && isNaN(day)) {
-          return `${year}-${stringCurrentMonth}-${stringCurrentDate}`;
-        }
-        if (!month && !day) {
-          return `${year}-01-01`;
-        }
-      }
-      if (str.length >= 1 && str.length <= 8) {
-        year = fullValidYear(str.slice(0, 4));
-        month = str.slice(4, 6);
-        day = Number(str.slice(6, 8));
-        if (str.length === 5 && Number(month) < 1) {
-          return `${year}-${stringCurrentMonth}-${stringCurrentDate} `;
-        }
-        if ((str.length === 6 && Number(month) < 1)) {
-          return `${year}-${stringCurrentMonth}-${stringCurrentDate}`;
-        }
-        if ((str.length === 7)) {
-          if (!isValidDay(day)) {
-            return `${year}-${String(isValidMonth(month)).padStart(2, '0')}-${stringCurrentDate}`;
-          }
-          return `${year}-${String(isValidMonth(month)).padStart(2, '0')}-${String(day).padStart(2, '0')}`; // eslint-disable-line max-len
-        }
-        if (str.length === 8) {
-          if (!isValidDay(day)) {
-            return `${isCurrentYear(year, month, day)}-${String(isValidMonth(month)).padStart(2, '0')}-${stringCurrentDate}`; // eslint-disable-line max-len
-          }
-          return `${isCurrentYear(year, month, day)}-${String(isValidMonth(month)).padStart(2, '0')}-${String(day).padStart(2, '0')}`; // eslint-disable-line max-len
-        }
-        if (Number(month) >= 1 && Number(month) <= 12 && isValidDay(day)) {
-          return `${year}-${month.padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-        }
-        return `${year}-${month ? month.padStart(2, '0') : '01'}-${day ? String(day).padStart(2, '0') : '01'}`; // eslint-disable-line max-len
-      }
-      return `${currentYear}/${stringCurrentMonth}/${stringCurrentDate}`;
-    }
-    if (this.state.localeFormat === DATE_FORMATS.US ||
-      this.state.localeFormat === DATE_FORMATS.USAndTime) {
-      if (hasSpecial) {
-        month = Number(parts[0]);
-        day = Number(parts[1]);
-        year = fullValidYear(parts[2]);
-        if (month >= 1 && month <= 12 && isValidDay(day)) {
-          return `${month}/${day}/${year}`;
-        }
-        return `${currentMonth}/${currentDate}/${currentYear}`;
-      }
-      if (str.length >= 1 && str.length <= 8) {
-        month = Number(str.slice(0, 2));
-        day = Number(str.slice(2, 4));
-        year = fullValidYear(str.slice(4, str.length));
-        if (month >= 1 && month <= 12) {
-          if (isValidDay(day)) {
-            return `${month}/${day}/${year}`;
-          }
-          if (!day) {
-            return `${month}/1/${year}`;
-          }
-          return `${currentMonth}/${currentDate}/${currentYear}`;
-        }
-      }
-      return `${currentMonth}/${currentDate}/${currentYear}`;
-    }
-    if (this.state.localeFormat === DATE_FORMATS.European ||
-      this.state.localeFormat === DATE_FORMATS.EuropeanAndTime ||
-      this.state.localeFormat === DATE_FORMATS.Germany_Russia_etcAndTime ||
-      this.state.localeFormat === DATE_FORMATS.Germany_Russia_etc) {
-      if (hasSpecial) {
-        day = parts[0];
-        month = parts[1];
-        year = fullValidYear(parts[2]);
-        if (isValidDay(day) && Number(month) >= 1 && Number(month) <= 12) {
-          return `${Number(day)}${delimiter}${Number(month)}${delimiter}${year}`;
-        }
-        return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear}`;
-      }
-      if (str.length >= 1 && str.length <= 8) {
-        day = Number(str.slice(0, 2));
-        const monthStr = str.slice(2, 4);
-        month = isValidMonth(monthStr);
-        const yearStr = str.slice(4, str.length);
-        year = fullValidYear(yearStr);
-        if (Number(monthStr) >= 1 && Number(monthStr) <= 12 && isValidDay(day)) {
-          return `${Number(day)}${delimiter}${Number(month)}${delimiter}${year}`;
-        }
-      }
-      return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear}`;
-    }
-  }
-
   focus = () => {
     if (dateInputInstance) {
       dateInputInstance.focus();
     }
-  }
-
-  TimeBlure = () => {
-    const hourMinuteStr = validateTime(this.state.timeStr);
-    this.setState({ timeStr: hourMinuteStr }, () => {
-      this.onInputChange(this.state.str);
-    });
-  }
-
-  focusTimeInput = (timeStr) => {
-    this.setState({ timeStr });
   }
 
   saveDateInput = (dateInput) => {
@@ -363,62 +202,24 @@ class DateInput extends React.Component {
 
   render() {
     const props = this.props;
-    const { str, dateStr, timeStr } = this.state;
-    const { locale, prefixCls, placeholder, clearIcon, inputMode, showHourAndMinute } = props;
+    const { str } = this.state;
+    const { locale, prefixCls, placeholder, clearIcon, inputMode } = props;
     return (
       <div className={`${prefixCls}-input-wrap`}>
-        {
-          showHourAndMinute ?
-            (
-              <div className={`${prefixCls}-date-input-wrap`} style={{ display: 'flex' }}>
-                <div>
-                  <input
-                    ref={this.saveDateInput}
-                    className={`${prefixCls}-input`}
-                    value={dateStr}
-                    disabled={props.disabled}
-                    placeholder={placeholder.slice(0, 10)}
-                    onChange={this.onInputChangeDate}
-                    onKeyDown={this.onKeyDown}
-                    onFocus={this.onFocus}
-                    onBlur={this.onBlur}
-                    inputMode={inputMode}
-                  />
-                </div>
-                <div>
-                  <input
-                    ref={this.saveDateInput}
-                    className={`${prefixCls}-input`}
-                    value={timeStr}
-                    disabled={props.disabled}
-                    placeholder={'HH:mm'}
-                    onChange={this.onInputChangeHourMinute}
-                    onKeyDown={this.onKeyDown}
-                    onFocus={this.onFocus}
-                    onBlur={this.TimeBlure}
-                    inputMode={inputMode}
-                  />
-                </div>
-              </div>
-            ) :
-            (
-              <div className={`${prefixCls}-date-input-wrap`} style={{ display: 'flex' }}>
-                <input
-                  ref={this.saveDateInput}
-                  className={`${prefixCls}-input`}
-                  value={str}
-                  disabled={props.disabled}
-                  placeholder={placeholder}
-                  onChange={this.onInputChangeAll}
-                  onKeyDown={this.onKeyDown}
-                  onFocus={this.onFocus}
-                  onBlur={this.onBlur}
-                  inputMode={inputMode}
-                />
-              </div>
-            )
-
-        }
+        <div className={`${prefixCls}-date-input-wrap`} style={{ display: 'flex' }}>
+          <input
+            ref={this.saveDateInput}
+            className={`${prefixCls}-input`}
+            value={str}
+            disabled={props.disabled}
+            placeholder={placeholder}
+            onChange={this.onInputChangeAll}
+            onKeyDown={this.onKeyDown}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            inputMode={inputMode}
+          />
+        </div>
         {props.showClear ? (
           <a
             role="button"

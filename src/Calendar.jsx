@@ -217,8 +217,6 @@ class Calendar extends React.Component {
         syncTime(timePickerDefaultValue, value);
       }
     }
-    const time = `${String(value.hour()).padStart(2, 0)}:${String(value.minute()).padStart(2, 0)}`;
-    this.focusTimeInput(time);
     this.onSelect(value);
   }
 

@@ -5,7 +5,6 @@ dayjs.extend(utc);
 export const currentDate = dayjs().date();
 export const currentMonth = dayjs().month() + 1;
 export const currentYear = dayjs().year();
-export const nowTime = dayjs().format('HH:mm');
 export const stringCurrentDate = String(currentDate).padStart(2, '0');
 export const stringCurrentMonth = String(currentMonth).padStart(2, '0');
 export const currentTime = dayjs().format('HH:mm');
@@ -230,9 +229,22 @@ export function getDateFormatByStr(str, format) {
     return DATE_FORMATS.USAndTime;
   }
   if (format === DATE_FORMATS.European ||
-    format === DATE_FORMATS.Germany_Russia_etc ||
-    format === DATE_FORMATS.Germany_Russia_etcAndTime ||
-    format === DATE_FORMATS.EuropeanAndTime) {
+    format === DATE_FORMATS.Germany_Russia_etc) {
+    const [day, month] = parts;
+    const dayLen = day.length;
+    const monthLen = month.length;
+    if (dayLen === 2 && monthLen === 2) {
+      return `DD${delimiter}MM${delimiter}YYYY`;
+    } else if (dayLen === 2 && monthLen === 1) {
+      return `DD${delimiter}M${delimiter}YYYY`;
+    } else if (dayLen === 1 && monthLen === 2) {
+      return `D${delimiter}MM${delimiter}YYYY`;
+    } else if (dayLen === 1 && monthLen === 1) {
+      return `D${delimiter}M${delimiter}YYYY`;
+    }
+  }
+  if (format === DATE_FORMATS.EuropeanAndTime ||
+    format === DATE_FORMATS.Germany_Russia_etcAndTime) {
     const [day, month] = parts;
     const dayLen = day.length;
     const monthLen = month.length;
@@ -257,16 +269,299 @@ export function validateTime(inputTime) {
   if (!inputTime || typeof inputTime !== 'string') {
     return currentTime;
   }
-  const trimmedInput = inputTime.trim();
-  const timeRegex = /^([0-1]?[0-9]|2[0-3]):([0-5][0-9])$/;
+  const trimmed = inputTime.trim();
+  const timeRegex = /^(\d{2}):(\d{2})$/;
+  const match = trimmed.match(timeRegex);
+  if (!match) {
+    return currentTime;
+  }
+  const hour = Number(match[1]);
+  const minute = Number(match[2]);
+  if (hour > 23 || minute > 59) {
+    return currentTime;
+  }
+  return `${match[1]}:${match[2]}`;
+}
 
-  if (!timeRegex.test(trimmedInput)) {
-    return currentTime;
+export function checkSpecialBetweenDigits(str) {
+  const regex = /^\d+[^0-9]\d+$/;
+  return regex.test(str);
+}
+
+function getDatePart(str) {
+  if (typeof str !== 'string') return '';
+  const parts = str.trim().split(/\s+/);
+  return parts[0];
+}
+
+export function normalizeDateInput(str, localeFormat, delimiter) {
+  let day;
+  let month;
+  let year;
+  let time = currentTime;
+  const parts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+  if (localeFormat === DATE_FORMATS.ISO) {
+    const hasSpecial = hasSpecialChar(str);
+    const numStr = str.replace(/[^0-9]/g, '');
+    if (numStr.length === 7) {
+      year = numStr.slice(0, 4);
+      month = numStr.slice(4, 6).padStart(2, '0');
+      day = numStr.slice(6, 7).padStart(2, '0');
+      if (!isValidDay(day)) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate}`;
+      }
+      return `${year}-${month}-${day}`;
+    }
+    if (hasSpecial) {
+      year = fullValidYear(parts[0]);
+      month = Number(parts[1]);
+      day = Number(parts[2]);
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        }
+        return `${year}-${String(month).padStart(2, '0')}-01`;
+      }
+      if ((month >= 13 || month < 1) && isNaN(day)) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate}`;
+      }
+      if ((month >= 13 || month < 1) && day) {
+        return `${String(currentYear)}-${stringCurrentMonth}-${stringCurrentDate}`;
+      }
+      if (!month && !day) {
+        return `${year}-01-01`;
+      }
+    }
+    if (str.length >= 1 && str.length <= 8) {
+      year = fullValidYear(str.slice(0, 4));
+      month = str.slice(4, 6);
+      day = Number(str.slice(6, 8));
+      if (str.length === 5 && Number(month) < 1) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate} `;
+      }
+      if ((str.length === 6 && Number(month) < 1)) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate}`;
+      }
+      if ((str.length === 7)) {
+        if (!isValidDay(day)) {
+          return `${year}-${String(isValidMonth(month)).padStart(2, '0')}-${stringCurrentDate}`;
+        }
+        return `${year}-${String(isValidMonth(month)).padStart(2, '0')}-${String(day).padStart(2, '0')}`; // eslint-disable-line max-len
+      }
+      if (str.length === 8) {
+        if (!isValidDay(day)) {
+          return `${isCurrentYear(year, month, day)}-${String(isValidMonth(month)).padStart(2, '0')}-${stringCurrentDate}`; // eslint-disable-line max-len
+        }
+        return `${isCurrentYear(year, month, day)}-${String(isValidMonth(month)).padStart(2, '0')}-${String(day).padStart(2, '0')}`; // eslint-disable-line max-len
+      }
+      if (Number(month) >= 1 && Number(month) <= 12 && isValidDay(day)) {
+        return `${year}-${month.padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+      }
+      return `${year}-${month ? month.padStart(2, '0') : '01'}-${day ? String(day).padStart(2, '0') : '01'}`; // eslint-disable-line max-len
+    }
+    return `${currentYear}/${stringCurrentMonth}/${stringCurrentDate}`;
   }
-  const [hours, minutes] = trimmedInput.split(':').map(Number);
-  const parsedTime = dayjs().hour(hours).minute(minutes);
-  if (!parsedTime.isValid()) {
-    return currentTime;
+  if (localeFormat === DATE_FORMATS.ISOAndTime) {
+    const unNormalDate = getDatePart(str);
+    const unNormalDateParts = formatDateLocal(unNormalDate, localeFormat, DATE_FORMATS);
+    const hasSpecial = hasSpecialChar(unNormalDate);
+    const numStr = unNormalDate.replace(/[^0-9]/g, '');
+    if (numStr.length === 7) {
+      year = numStr.slice(0, 4);
+      month = numStr.slice(4, 6).padStart(2, '0');
+      day = numStr.slice(6, 7).padStart(2, '0');
+      if (parts.length === 3) {
+        time = validateTime(`${parts[1]}:${parts[2]}`);
+      }
+      if (parts.length === 4) {
+        time = validateTime(`${parts[2]}:${parts[3]}`);
+      }
+      if (parts.length === 5) {
+        time = validateTime(`${parts[3]}:${parts[4]}`);
+      }
+      if (!isValidDay(day)) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate} ${time}`;
+      }
+      return `${year}-${month}-${day} ${time}`;
+    }
+    if (hasSpecial) {
+      if (unNormalDateParts.length < 3) {
+        parts.splice(2, 0, '1');
+      }
+      year = fullValidYear(parts[0]);
+      month = Number(parts[1]);
+      day = Number(parts[2]);
+      time = validateTime(`${parts[3]}:${parts[4]}`);
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')} ${time}`; // eslint-disable-line max-len
+        }
+        return `${year}-${String(month).padStart(2, '0')}-01 ${time}`;
+      }
+      if ((month >= 13 || month < 1) && isNaN(day)) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate} ${time}`; // eslint-disable-line max-len
+      }
+      if ((month >= 13 || month < 1) && day) {
+        return `${String(currentYear)}-${stringCurrentMonth}-${stringCurrentDate} ${time}`; // eslint-disable-line max-len
+      }
+      if (!month && !day) {
+        return `${year}-01-01 ${time}`;
+      }
+    }
+    if (unNormalDate.length >= 1 && unNormalDate.length <= 8) {
+      year = fullValidYear(unNormalDate.slice(0, 4));
+      month = unNormalDate.slice(4, 6);
+      day = Number(unNormalDate.slice(6, 8));
+      const timeParts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+      time = validateTime(`${timeParts[1]}:${timeParts[2]}`);
+      if (unNormalDate.length === 5 && Number(month) < 1) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate} ${time}`;
+      }
+      if ((unNormalDate.length === 6 && Number(month) < 1)) {
+        return `${year}-${stringCurrentMonth}-${stringCurrentDate} ${time}`;
+      }
+      if ((unNormalDate.length === 7)) {
+        if (!isValidDay(day)) {
+          return `${year}-${String(isValidMonth(month)).padStart(2, '0')}-${stringCurrentDate} ${time}`; // eslint-disable-line max-len
+        }
+        return `${year}-${String(isValidMonth(month)).padStart(2, '0')}-${String(day).padStart(2, '0')} ${time}`; // eslint-disable-line max-len
+      }
+      if (unNormalDate.length === 8) {
+        if (!isValidDay(day)) {
+          return `${isCurrentYear(year, month, day)}-${String(isValidMonth(month)).padStart(2, '0')}-${stringCurrentDate} ${time}`; // eslint-disable-line max-len
+        }
+        return `${isCurrentYear(year, month, day)}-${String(isValidMonth(month)).padStart(2, '0')}-${String(day).padStart(2, '0')} ${time}`; // eslint-disable-line max-len
+      }
+      if (Number(month) >= 1 && Number(month) <= 12 && isValidDay(day)) {
+        return `${year}-${month.padStart(2, '0')}-${String(day).padStart(2, '0')} ${time}`;
+      }
+      return `${year}-${month ? month.padStart(2, '0') : '01'}-${day ? String(day).padStart(2, '0') : '01'} ${time}`; // eslint-disable-line max-len
+    }
+    return `${currentYear}/${stringCurrentMonth}/${stringCurrentDate} ${time}`;
   }
-  return parsedTime.format('HH:mm');
+  if (localeFormat === DATE_FORMATS.US) {
+    const hasSpecial = hasSpecialChar(str);
+    if (hasSpecial) {
+      month = Number(parts[0]);
+      day = Number(parts[1]);
+      year = fullValidYear(parts[2]);
+      if (month >= 1 && month <= 12 && isValidDay(day)) {
+        return `${month}/${day}/${year}`;
+      }
+      return `${currentMonth}/${currentDate}/${currentYear}`;
+    }
+    if (str.length >= 1 && str.length <= 8) {
+      month = Number(str.slice(0, 2));
+      day = Number(str.slice(2, 4));
+      year = fullValidYear(str.slice(4, str.length));
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return `${month}/${day}/${year}`;
+        }
+        if (!day) {
+          return `${month}/1/${year}`;
+        }
+        return `${currentMonth}/${currentDate}/${currentYear}`;
+      }
+    }
+    return `${currentMonth}/${currentDate}/${currentYear}`;
+  }
+  if (localeFormat === DATE_FORMATS.USAndTime) {
+    const unNormalDate = getDatePart(str);
+    const unNormalDateParts = formatDateLocal(unNormalDate, localeFormat, DATE_FORMATS);
+    const hasSpecial = hasSpecialChar(unNormalDate);
+    if (hasSpecial) {
+      if (unNormalDateParts.length < 3) {
+        parts.splice(2, 0, String(currentYear));
+      }
+      month = Number(parts[0]);
+      day = Number(parts[1]);
+      year = fullValidYear(parts[2]);
+      time = validateTime(`${parts[3]}:${parts[4]}`);
+      if (month >= 1 && month <= 12 && isValidDay(day)) {
+        return `${month}/${day}/${year} ${time}`;
+      }
+      return `${currentMonth}/${currentDate}/${currentYear} ${time}`;
+    }
+    if (unNormalDate.length >= 1 && unNormalDate.length <= 8) {
+      month = Number(unNormalDate.slice(0, 2));
+      day = Number(unNormalDate.slice(2, 4));
+      year = fullValidYear(unNormalDate.slice(4, unNormalDate.length));
+      const timeParts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+      time = validateTime(`${timeParts[1]}:${timeParts[2]}`);
+      if (month >= 1 && month <= 12) {
+        if (isValidDay(day)) {
+          return `${month}/${day}/${year} ${time}`;
+        }
+        if (!day) {
+          return `${month}/1/${year} ${time}`;
+        }
+        return `${currentMonth}/${currentDate}/${currentYear} ${time}`;
+      }
+    }
+    return `${currentMonth}/${currentDate}/${currentYear} ${time}`;
+  }
+  if (localeFormat === DATE_FORMATS.European ||
+    localeFormat === DATE_FORMATS.Germany_Russia_etc) {
+    const hasSpecial = hasSpecialChar(str);
+    if (hasSpecial) {
+      day = parts[0];
+      month = parts[1];
+      year = fullValidYear(parts[2]);
+      if (isValidDay(day) && Number(month) >= 1 && Number(month) <= 12) {
+        return `${Number(day)}${delimiter}${Number(month)}${delimiter}${year}`;
+      }
+      return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear}`;
+    }
+    if (str.length >= 1 && str.length <= 8) {
+      day = Number(str.slice(0, 2));
+      const monthStr = str.slice(2, 4);
+      month = isValidMonth(monthStr);
+      const yearStr = str.slice(4, str.length);
+      year = fullValidYear(yearStr);
+
+      if (isValidDay(day)) {
+        if (Number(monthStr) < 1 && Number(monthStr) > 12) {
+          return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear}`;
+        }
+        return `${Number(day)}${delimiter}${Number(month)}${delimiter}${year}`;
+      }
+    }
+    return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear}`;
+  }
+  if (localeFormat === DATE_FORMATS.EuropeanAndTime ||
+    localeFormat === DATE_FORMATS.Germany_Russia_etcAndTime) {
+    const unNormalDate = getDatePart(str);
+    const unNormalDateParts = formatDateLocal(unNormalDate, localeFormat, DATE_FORMATS);
+    const hasSpecial = hasSpecialChar(unNormalDate);
+    if (hasSpecial) {
+      if (unNormalDateParts.length < 3) {
+        parts.splice(2, 0, String(currentYear));
+      }
+      day = parts[0];
+      month = parts[1];
+      year = fullValidYear(parts[2]);
+      time = validateTime(`${parts[3]}:${parts[4]}`);
+      if (isValidDay(day) && Number(month) >= 1 && Number(month) <= 12) {
+        return `${Number(day)}${delimiter}${Number(month)}${delimiter}${year} ${time}`;
+      }
+      return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear} ${time}`;
+    }
+    if (unNormalDate.length >= 1 && unNormalDate.length <= 8) {
+      day = Number(unNormalDate.slice(0, 2));
+      const monthStr = unNormalDate.slice(2, 4);
+      month = isValidMonth(monthStr);
+      const yearStr = unNormalDate.slice(4, unNormalDate.length);
+      year = fullValidYear(yearStr);
+      const timeParts = formatDateLocal(str, localeFormat, DATE_FORMATS);
+      time = validateTime(`${timeParts[1]}:${timeParts[2]}`);
+      if (isValidDay(day)) {
+        if (Number(monthStr) < 1 && Number(monthStr) > 12) {
+          return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear} ${time}`;
+        }
+        return `${Number(day)}${delimiter}${Number(month)}${delimiter}${year} ${time}`;
+      }
+    }
+    return `${currentDate}${delimiter}${currentMonth}${delimiter}${currentYear} ${time}`;
+  }
 }
