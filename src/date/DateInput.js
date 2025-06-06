@@ -29,7 +29,6 @@ class DateInput extends React.Component {
     clearIcon: PropTypes.node,
     inputMode: PropTypes.string,
     showHourAndMinute: PropTypes.bool,
-    onChangeCananderIput: PropTypes.func,
   }
 
   constructor(props) {
@@ -206,7 +205,7 @@ class DateInput extends React.Component {
     const { locale, prefixCls, placeholder, clearIcon, inputMode } = props;
     return (
       <div className={`${prefixCls}-input-wrap`}>
-        <div className={`${prefixCls}-date-input-wrap`} style={{ display: 'flex' }}>
+        <div className={`${prefixCls}-date-input-wrap`}>
           <input
             ref={this.saveDateInput}
             className={`${prefixCls}-input`}

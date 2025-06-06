@@ -99,7 +99,6 @@ class Calendar extends React.Component {
           dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
     };
-    this.dateInputRef = React.createRef();
   }
 
   componentDidMount() {
@@ -269,12 +268,6 @@ class Calendar extends React.Component {
     return ReactDOM.findDOMNode(this);
   }
 
-  focusTimeInput = (value) => {
-    if (this.dateInputRef.current) {
-      this.dateInputRef.current.focusTimeInput(value);
-    }
-  };
-
   openTimePicker = () => {
     this.onPanelChange(null, 'time');
   }
@@ -326,7 +319,6 @@ class Calendar extends React.Component {
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
-        ref={this.dateInputRef}
         format={this.getFormat()}
         key="date-input"
         value={value}
