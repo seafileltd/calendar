@@ -196,9 +196,11 @@ class Calendar extends React.Component {
   }
 
   onDateInputChange = (value) => {
+    console.log('onDateInputChange', value);
     this.onSelect(value, {
       source: 'dateInput',
     });
+    console.log(111)
   }
 
   onDateInputSelect = (value) => {
