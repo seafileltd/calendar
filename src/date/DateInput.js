@@ -71,24 +71,13 @@ class DateInput extends React.Component {
     // 不合法直接退出
     const format = getDateFormatByStr(cananderStr, this.state.localeFormat);
     const parsed = dayjs(cananderStr, format);
-    // eslint-disable-next-line no-console
-    console.log('cananderStr', cananderStr, format, parts);// eslint-disable-next-line no-console
     let value = this.props.value.clone();
     value.locale('zh-cn');
-    // value = value
-    //   .year(parsed.year())
-    //   .month(parsed.month())
-    //   .date(parsed.date())
-    //   .hour(parsed.hour())
-    //   .minute(parsed.minute())
-    //   .second(parsed.second());
-
     if (this.state.localeFormat === DATE_FORMATS.ISO ||
       this.state.localeFormat === DATE_FORMATS.ISOAndTime
     ) {
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' ||
         parts[0].slice(0, 2) === '00')) {
-        console.log('ISO format', parts[0]);
         value = value
           .year(parts[0])
           .month(parsed.month())
@@ -96,8 +85,6 @@ class DateInput extends React.Component {
           .hour(parsed.hour())
           .minute(parsed.minute())
           .second(parsed.second());
-        // eslint-disable-next-line no-console
-        console.log('ISO format year', value);
       } else {
         value = value
           .year(parsed.year())
@@ -170,6 +157,7 @@ class DateInput extends React.Component {
     if (keyCode === KeyCode.ENTER && onSelect) {
       const validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
+        console.log('🍉', value.clone());
         onSelect(value.clone());
       }
       event.preventDefault();
