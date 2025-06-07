@@ -76,7 +76,7 @@ class DateInput extends React.Component {
     let value = this.props.value.clone();
     value.locale('zh-cn');
     value = value
-      .year(parsed.year())
+      .year('0001')
       .month(parsed.month())
       .date(parsed.date())
       .hour(parsed.hour())
