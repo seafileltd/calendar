@@ -3566,10 +3566,13 @@ var _initialiseProps = function _initialiseProps() {
     // 不合法直接退出
     var format = Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* getDateFormatByStr */])(cananderStr, _this2.state.localeFormat);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(cananderStr, format);
+    // eslint-disable-next-line no-console
+    console.log('cananderStr', cananderStr, format, parts); // eslint-disable-next-line no-console
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
     if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
+      console.log('ISO format');
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
         value.year(parts[0]);
       }
@@ -7349,7 +7352,8 @@ var _initialiseProps = function _initialiseProps() {
     if (cause.source === 'keyboard' || cause.source === 'dateInputSelect' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
       _this2.close(_this2.focus);
     }
-    console.log('onCalendarSelect', value, props.calendar.props.format[0]);
+    // eslint-disable-next-line no-console
+    console.log('onCalendarSelect', value);
     props.onChange(value);
   };
 
@@ -7902,7 +7906,6 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onDateInputChange = function (value) {
-    console.log('onDateInputChange', value);
     _this2.onSelect(value, {
       source: 'dateInput'
     });

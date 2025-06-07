@@ -6727,7 +6727,8 @@ var _initialiseProps = function _initialiseProps() {
     if (cause.source === 'keyboard' || cause.source === 'dateInputSelect' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
       _this2.close(_this2.focus);
     }
-    console.log('onCalendarSelect', value, props.calendar.props.format[0]);
+    // eslint-disable-next-line no-console
+    console.log('onCalendarSelect', value);
     props.onChange(value);
   };
 
