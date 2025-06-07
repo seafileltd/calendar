@@ -3566,24 +3566,11 @@ var _initialiseProps = function _initialiseProps() {
     // 不合法直接退出
     var format = Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* getDateFormatByStr */])(cananderStr, _this2.state.localeFormat);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(cananderStr, format);
-    // eslint-disable-next-line no-console
-    console.log('cananderStr', cananderStr, format, parts); // eslint-disable-next-line no-console
     var value = _this2.props.value.clone();
     value.locale('zh-cn');
-    // value = value
-    //   .year(parsed.year())
-    //   .month(parsed.month())
-    //   .date(parsed.date())
-    //   .hour(parsed.hour())
-    //   .minute(parsed.minute())
-    //   .second(parsed.second());
-
     if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
-        console.log('ISO format', parts[0]);
         value = value.year(parts[0]).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-        // eslint-disable-next-line no-console
-        console.log('ISO format year', value);
       } else {
         value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
       }
@@ -3635,6 +3622,7 @@ var _initialiseProps = function _initialiseProps() {
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
+        console.log('🍉', value.clone());
         onSelect(value.clone());
       }
       event.preventDefault();
