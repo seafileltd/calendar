@@ -74,6 +74,7 @@ class DateInput extends React.Component {
     // eslint-disable-next-line no-console
     console.log('cananderStr', cananderStr, format, parts);// eslint-disable-next-line no-console
     let value = this.props.value.clone();
+    value.locale('zh-cn');
     value = value
       .year(parsed.year())
       .month(parsed.month())
