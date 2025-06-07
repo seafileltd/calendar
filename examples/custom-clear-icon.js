@@ -2591,6 +2591,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onDateInputChange = function (value) {
+    console.log('onDateInputChange', value);
     _this2.onSelect(value, {
       source: 'dateInput'
     });
