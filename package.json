@@ -1,6 +1,6 @@
 {
   "name": "@seafile/seafile-calendar",
-  "version": "0.0.29",
+  "version": "0.0.29-alpha32",
   "description": "React Calendar",
   "keywords": [
     "react",

@@ -323,7 +323,7 @@ class Calendar extends React.Component {
         key="date-input"
         value={value}
         locale={locale}
-        placeholder={dateInputPlaceholder}
+        placeholder={dateInputPlaceholder || this.getFormat()[0]}
         showClear
         disabledTime={disabledTime}
         disabledDate={disabledDate}
@@ -334,6 +334,7 @@ class Calendar extends React.Component {
         onSelect={this.onDateInputSelect}
         clearIcon={clearIcon}
         inputMode={inputMode}
+        showHourAndMinute={showHourAndMinute}
       />
     ) : null;
 
@@ -411,6 +412,8 @@ class Calendar extends React.Component {
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
+          showHourAndMinute={showHourAndMinute}
+          format={this.getFormat()}
         />
       }
     </div>
