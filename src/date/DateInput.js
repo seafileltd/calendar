@@ -86,9 +86,9 @@ class DateInput extends React.Component {
     if (this.state.localeFormat === DATE_FORMATS.ISO ||
       this.state.localeFormat === DATE_FORMATS.ISOAndTime
     ) {
-      console.log('ISO format');
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' ||
         parts[0].slice(0, 2) === '00')) {
+        console.log('ISO format', parts[0]);
         value.year(parts[0]);
         // eslint-disable-next-line no-console
         console.log('ISO format year', value);
