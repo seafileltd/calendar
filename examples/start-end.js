@@ -3342,6 +3342,7 @@ var _initialiseProps = function _initialiseProps() {
     // eslint-disable-next-line no-console
     console.log('cananderStr', cananderStr, format, parts); // eslint-disable-next-line no-console
     var value = _this2.props.value.clone();
+    value.locale('zh-cn');
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
     if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
