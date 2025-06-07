@@ -3570,19 +3570,28 @@ var _initialiseProps = function _initialiseProps() {
     console.log('cananderStr', cananderStr, format, parts); // eslint-disable-next-line no-console
     var value = _this2.props.value.clone();
     value.locale('zh-cn');
-    value = value.year('0001').month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+    // value = value
+    //   .year(parsed.year())
+    //   .month(parsed.month())
+    //   .date(parsed.date())
+    //   .hour(parsed.hour())
+    //   .minute(parsed.minute())
+    //   .second(parsed.second());
 
     if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
         console.log('ISO format', parts[0]);
-        value.year(parts[0]);
+        value = value.year(parts[0]).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
         // eslint-disable-next-line no-console
         console.log('ISO format year', value);
+      } else {
+        value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
       }
-    }
-    if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime) {
+    } else if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime) {
       if (parts[2] && parts[2].length === 4 && (parts[2].slice(0, 3) === '000' || parts[2].slice(0, 2) === '00')) {
-        value.year(parts[2]);
+        value = value.year(parts[2]).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+      } else {
+        value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
       }
     }
     if (!value || disabledDate && disabledDate(value)) {
