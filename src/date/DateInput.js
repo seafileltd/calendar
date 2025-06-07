@@ -71,6 +71,8 @@ class DateInput extends React.Component {
     // 不合法直接退出
     const format = getDateFormatByStr(cananderStr, this.state.localeFormat);
     const parsed = dayjs(cananderStr, format);
+    // eslint-disable-next-line no-console
+    console.log('cananderStr',cananderStr,format,parts);// eslint-disable-next-line no-console
     let value = this.props.value.clone();
     value = value
       .year(parsed.year())
@@ -83,6 +85,7 @@ class DateInput extends React.Component {
     if (this.state.localeFormat === DATE_FORMATS.ISO ||
       this.state.localeFormat === DATE_FORMATS.ISOAndTime
     ) {
+      console.log('ISO format');
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' ||
         parts[0].slice(0, 2) === '00')) {
         value.year(parts[0]);
