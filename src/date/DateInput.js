@@ -89,6 +89,8 @@ class DateInput extends React.Component {
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' ||
         parts[0].slice(0, 2) === '00')) {
         value.year(parts[0]);
+        // eslint-disable-next-line no-console
+        console.log('ISO format year', value);
       }
     }
     if (this.state.localeFormat === DATE_FORMATS.European ||
@@ -112,6 +114,8 @@ class DateInput extends React.Component {
       selectedValue && value && !selectedValue.isSame(value)
     )) {
       this.setState({ str });
+      // eslint-disable-next-line no-console
+      console.log('value', value);
       onChange(value);
     }
   }
