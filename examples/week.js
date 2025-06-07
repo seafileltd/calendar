@@ -3575,6 +3575,8 @@ var _initialiseProps = function _initialiseProps() {
       console.log('ISO format');
       if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
         value.year(parts[0]);
+        // eslint-disable-next-line no-console
+        console.log('ISO format year', value);
       }
     }
     if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime) {
@@ -3589,6 +3591,8 @@ var _initialiseProps = function _initialiseProps() {
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
+      // eslint-disable-next-line no-console
+      console.log('value', value);
       onChange(value);
     }
   };
