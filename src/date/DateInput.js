@@ -129,8 +129,6 @@ class DateInput extends React.Component {
       selectedValue && value && !selectedValue.isSame(value)
     )) {
       this.setState({ str });
-      // eslint-disable-next-line no-console
-      console.log('value', value);
       onChange(value);
     }
   }
@@ -157,7 +155,6 @@ class DateInput extends React.Component {
     if (keyCode === KeyCode.ENTER && onSelect) {
       const validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
-        console.log('🍉', value.clone());
         onSelect(value.clone());
       }
       event.preventDefault();
