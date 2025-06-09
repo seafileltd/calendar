@@ -3322,6 +3322,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onInputChange = function (str) {
+    console.log(str);
     var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
