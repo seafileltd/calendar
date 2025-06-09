@@ -147,6 +147,7 @@ class DateInput extends React.Component {
         str: '',
       });
       this.props.onClear(null);
+      return;
     }
     this.setState((prevState, prevProps) => ({
       hasFocus: false,
