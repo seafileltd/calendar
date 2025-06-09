@@ -3606,6 +3606,7 @@ var _initialiseProps = function _initialiseProps() {
         str: ''
       });
       _this2.props.onClear(null);
+      return;
     }
     _this2.setState(function (prevState, prevProps) {
       return {
