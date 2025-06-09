@@ -63,10 +63,6 @@ class DateInput extends React.Component {
     const parts = formatDateLocal(cananderStr, this.state.localeFormat);
     // 没有内容，合法并直接退出
     if (!str) {
-      if (str === '') {
-        this.setState({ str: '' });
-        return;
-      }
       onChange(null);
       this.setState({ str });
       return;
@@ -148,7 +144,7 @@ class DateInput extends React.Component {
   onBlur = () => {
     this.setState((prevState, prevProps) => ({
       hasFocus: false,
-      str: formatDate(prevProps.value, prevProps.format),
+      str: prevState.str ? formatDate(prevProps.value, prevProps.format) : '',
     }));
   }
 
