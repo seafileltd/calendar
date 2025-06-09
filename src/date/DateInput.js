@@ -40,7 +40,6 @@ class DateInput extends React.Component {
       hasFocus: false,
       localeFormat: formatPrefix,
       delimiter: delimate(formatPrefix),
-      cananderIput: '',
     };
   }
 
