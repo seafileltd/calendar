@@ -1646,8 +1646,7 @@ var DateInput = function (_React$Component) {
       str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, _this.props.format),
       hasFocus: false,
       localeFormat: formatPrefix,
-      delimiter: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* delimate */])(formatPrefix),
-      cananderIput: ''
+      delimiter: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* delimate */])(formatPrefix)
     };
     return _this;
   }
@@ -1780,7 +1779,11 @@ var _initialiseProps = function _initialiseProps() {
 
     var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
-    if (!str || str.length === 0) {
+    if (!str) {
+      if (str === '') {
+        _this2.setState({ str: '' });
+        return;
+      }
       onChange(null);
       _this2.setState({ str: str });
       return;
