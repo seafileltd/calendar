@@ -58,6 +58,7 @@ class DateInput extends React.Component {
   };
 
   onInputChange = (str) => {
+    console.log(str);
     const cananderStr = normalizeDateInput(str, this.state.localeFormat, this.state.delimiter);
     const { disabledDate, onChange, selectedValue } = this.props;
     const parts = formatDateLocal(cananderStr, this.state.localeFormat);
