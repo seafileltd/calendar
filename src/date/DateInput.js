@@ -62,10 +62,15 @@ class DateInput extends React.Component {
     const { disabledDate, onChange, selectedValue } = this.props;
     const parts = formatDateLocal(cananderStr, this.state.localeFormat);
     // 没有内容，合法并直接退出
+
     if (!str) {
-      onChange(null);
-      this.setState({ str });
-      return;
+      if (!this.state.str) {
+        this.setState({
+          str: '',
+        });
+        this.props.onClear(null);
+        return;
+      }
     }
     // 不合法直接退出
     const format = getDateFormatByStr(cananderStr, this.state.localeFormat);
