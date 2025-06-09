@@ -3374,10 +3374,13 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onBlur = function () {
+    if (!_this2.state.str) {
+      _this2.setState({ str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(_this2.props.value, _this2.props.format) });
+    }
     _this2.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
-        str: prevState.str ? Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(prevProps.value, prevProps.format) : ''
+        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(prevProps.value, prevProps.format)
       };
     });
   };
