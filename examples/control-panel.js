@@ -3375,13 +3375,6 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onBlur = function () {
-    if (!_this2.state.str) {
-      _this2.setState({
-        str: ''
-      });
-      _this2.props.onClear(null);
-      return;
-    }
     _this2.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
