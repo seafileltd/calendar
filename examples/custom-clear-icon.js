@@ -1779,10 +1779,15 @@ var _initialiseProps = function _initialiseProps() {
 
     var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
+
     if (!str) {
-      onChange(null);
-      _this2.setState({ str: str });
-      return;
+      if (!_this2.state.str) {
+        _this2.setState({
+          str: ''
+        });
+        _this2.props.onClear(null);
+        return;
+      }
     }
     // 不合法直接退出
     var format = Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* getDateFormatByStr */])(cananderStr, _this2.state.localeFormat);
