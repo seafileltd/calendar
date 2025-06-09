@@ -29,7 +29,7 @@ class DateInput extends React.Component {
     clearIcon: PropTypes.node,
     inputMode: PropTypes.string,
     showHourAndMinute: PropTypes.bool,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -58,21 +58,15 @@ class DateInput extends React.Component {
   };
 
   onInputChange = (str) => {
-    console.log(str);
     const cananderStr = normalizeDateInput(str, this.state.localeFormat, this.state.delimiter);
     const { disabledDate, onChange, selectedValue } = this.props;
     const parts = formatDateLocal(cananderStr, this.state.localeFormat);
     // 没有内容，合法并直接退出
-
     if (!str) {
-      if (!this.state.str) {
-        this.setState({
-          str: '',
-        });
-        this.props.onClear(null);
+        onChange(null);
+        this.setState({ str: '' });
         return;
       }
-    }
     // 不合法直接退出
     const format = getDateFormatByStr(cananderStr, this.state.localeFormat);
     const parsed = dayjs(cananderStr, format);
@@ -136,16 +130,16 @@ class DateInput extends React.Component {
       this.setState({ str });
       onChange(value);
     }
-  }
+  };
 
   onInputChangeAll = (event) => {
     const str = event.target.value;
     this.onInputChange(str);
-  }
+  };
 
   onFocus = () => {
     this.setState({ hasFocus: true });
-  }
+  };
 
   onBlur = () => {
     if (!this.state.str) {
@@ -159,7 +153,7 @@ class DateInput extends React.Component {
       hasFocus: false,
       str: formatDate(prevProps.value, prevProps.format),
     }));
-  }
+  };
 
   onKeyDown = (event) => {
     const { keyCode } = event;
@@ -219,17 +213,17 @@ class DateInput extends React.Component {
 
   getRootDOMNode = () => {
     return ReactDOM.findDOMNode(this);
-  }
+  };
 
   focus = () => {
     if (dateInputInstance) {
       dateInputInstance.focus();
     }
-  }
+  };
 
   saveDateInput = (dateInput) => {
     dateInputInstance = dateInput;
-  }
+  };
 
   render() {
     const props = this.props;
