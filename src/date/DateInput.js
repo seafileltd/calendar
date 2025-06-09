@@ -127,6 +127,7 @@ class DateInput extends React.Component {
     if (selectedValue !== value || (
       selectedValue && value && !selectedValue.isSame(value)
     )) {
+      // console.log(123)
       this.setState({ str });
       onChange(value);
     }
