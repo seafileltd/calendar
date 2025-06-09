@@ -142,9 +142,12 @@ class DateInput extends React.Component {
   }
 
   onBlur = () => {
+    if (!this.state.str) {
+      this.setState({ str: formatDate(this.props.value, this.props.format) });
+    }
     this.setState((prevState, prevProps) => ({
       hasFocus: false,
-      str: prevState.str ? formatDate(prevProps.value, prevProps.format) : '',
+      str: formatDate(prevProps.value, prevProps.format),
     }));
   }
 
