@@ -1780,10 +1780,6 @@ var _initialiseProps = function _initialiseProps() {
     var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
     if (!str) {
-      if (str === '') {
-        _this2.setState({ str: '' });
-        return;
-      }
       onChange(null);
       _this2.setState({ str: str });
       return;
@@ -1830,7 +1826,7 @@ var _initialiseProps = function _initialiseProps() {
     _this2.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
-        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(prevProps.value, prevProps.format)
+        str: prevState.str ? Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(prevProps.value, prevProps.format) : ''
       };
     });
   };
