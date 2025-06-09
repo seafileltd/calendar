@@ -1808,6 +1808,7 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
+      // console.log(123)
       _this2.setState({ str: str });
       onChange(value);
     }

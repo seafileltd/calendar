@@ -3581,6 +3581,7 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
+      // console.log(123)
       _this2.setState({ str: str });
       onChange(value);
     }
@@ -7074,6 +7075,7 @@ var _initialiseProps = function _initialiseProps() {
   this.onCalendarSelect = function (value) {
     var cause = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
+    console.log('value', value);
     var props = _this2.props;
     if (!('value' in props)) {
       _this2.setState({
