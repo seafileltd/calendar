@@ -1810,8 +1810,6 @@ var _initialiseProps = function _initialiseProps() {
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
-      // eslint-disable-next-line no-console
-      console.log('value', value);
       onChange(value);
     }
   };
@@ -1844,7 +1842,6 @@ var _initialiseProps = function _initialiseProps() {
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
-        console.log('🍉', value.clone());
         onSelect(value.clone());
       }
       event.preventDefault();
