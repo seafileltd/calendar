@@ -64,6 +64,7 @@ class DateInput extends React.Component {
     // 没有内容，合法并直接退出
     if (!str) {
       onChange(null);
+      this.onClear();
       this.setState({ str: '' });
       return;
     }
