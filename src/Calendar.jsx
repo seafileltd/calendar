@@ -196,6 +196,7 @@ class Calendar extends React.Component {
   }
 
   onDateInputChange = (value) => {
+    if (!value) return;
     this.onSelect(value, {
       source: 'dateInput',
     });
