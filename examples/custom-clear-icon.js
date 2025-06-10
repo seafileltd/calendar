@@ -1780,7 +1780,7 @@ var _initialiseProps = function _initialiseProps() {
     var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
     if (!str) {
-      onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+      onChange(null);
       _this2.setState({ str: '' });
       return;
     }
@@ -2593,6 +2593,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onDateInputChange = function (value) {
+    if (!value) return;
     _this2.onSelect(value, {
       source: 'dateInput'
     });
