@@ -7827,6 +7827,7 @@ var CalendarRightPanel = function (_React$Component) {
     if (showHourAndMinute) {
       selectedDate = value.format().slice(0, String(value.format()).indexOf('T')).padStart(10, 0);
     }
+    console.log('selectedDate', selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
@@ -7849,6 +7850,8 @@ var CalendarRightPanel = function (_React$Component) {
             if (showHourAndMinute) {
               var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
               if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
+                console.log('year', year);
+                console.log('current', current);
                 current.year(parts[0]);
               }
             }
