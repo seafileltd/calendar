@@ -2355,7 +2355,7 @@ var Calendar = function (_React$Component) {
       onSelect: this.onDateInputSelect,
       clearIcon: clearIcon,
       inputMode: inputMode,
-      showHourAndMinute: true
+      showHourAndMinute: showHourAndMinute
     }) : null;
 
     var children = [];
@@ -2431,14 +2431,14 @@ var Calendar = function (_React$Component) {
             onCloseTimePicker: this.closeTimePicker
           })
         ),
-        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__calendar_CalendarRightPanel__["a" /* default */], {
+        showHourAndMinute && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__calendar_CalendarRightPanel__["a" /* default */], {
           prefixCls: prefixCls,
           value: value,
           locale: locale,
           onSelect: this.onDateTableSelect,
           onClickRightPanelTime: onClickRightPanelTime,
           defaultMinutesTime: this.props.defaultMinutesTime,
-          showHourAndMinute: true,
+          showHourAndMinute: showHourAndMinute,
           format: this.getFormat()
         })
       )
@@ -2700,6 +2700,7 @@ var CalendarRightPanel = function (_React$Component) {
     var _this = __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(this, _React$Component.call(this, props));
 
     _this.onSelect = function (value) {
+      console.log('value', value);
       _this.setState({
         highlightTime: value
       });
@@ -2758,7 +2759,6 @@ var CalendarRightPanel = function (_React$Component) {
     if (showHourAndMinute) {
       selectedDate = value.format().slice(0, String(value.format()).indexOf('T')).padStart(10, 0);
     }
-    console.log('selectedDate', selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
