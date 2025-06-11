@@ -8070,10 +8070,10 @@ var CalendarRightPanel = function (_React$Component) {
     if (showHourAndMinute) {
       selectedDate = value.format().slice(0, String(value.format()).indexOf('T')).padStart(10, 0);
     }
-    console.log('selectedDate', selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
+    console.log('selectedDate', selectedDate);
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-right-panel' },
@@ -8090,17 +8090,15 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           this.times.map(function (time) {
             var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time);
-            if (showHourAndMinute) {
-              var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
-              if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
-                console.log('year', parts[0]);
-                console.log('parts', parts);
-                // console.log('current',current)
-                current.year('0001');
-              }
-            }
-            // console.log('可乐',current)
+            // if (showHourAndMinute) {
+            //   const parts = formatDateLocal(selectedDate, this.state.localeFormat);
+            //   if (parts[0] && parts[0].length === 4 &&
+            //   (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
+            //     current.year('0001');
+            //   }
+            // }
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
+            console.log('current', current);
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
