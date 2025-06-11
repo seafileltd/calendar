@@ -413,7 +413,6 @@ class Calendar extends React.Component {
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
-          showHourAndMinute={showHourAndMinute}
           format={this.getFormat()}
         />
       }
