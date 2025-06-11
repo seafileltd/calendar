@@ -3324,6 +3324,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onInputChange = function (event) {
     var str = event.target.value;
+    console.log('str', str);
     var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
@@ -3332,7 +3333,10 @@ var _initialiseProps = function _initialiseProps() {
 
     var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
+    console.log('cananderStr', cananderStr);
+
     if (!str) {
+      console.log('我不想走进来');
       onChange(null);
       _this2.setState({ str: '' });
       return;
@@ -3361,6 +3365,7 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
+      console.log('成功🏅');
       _this2.setState({ str: str });
       onChange(value);
     }
