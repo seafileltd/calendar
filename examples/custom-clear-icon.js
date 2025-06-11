@@ -2749,6 +2749,8 @@ var CalendarRightPanel = function (_React$Component) {
         locale = _props.locale;
 
     var selectedDate = value.format().slice(0, String(value.format()).indexOf('T'));
+    console.log('value', value);
+    console.log('selectedDate', selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
