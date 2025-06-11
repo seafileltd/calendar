@@ -7424,7 +7424,7 @@ var Calendar = function (_React$Component) {
       onSelect: this.onDateInputSelect,
       clearIcon: clearIcon,
       inputMode: inputMode,
-      showHourAndMinute: showHourAndMinute
+      showHourAndMinute: true
     }) : null;
 
     var children = [];
@@ -7500,14 +7500,14 @@ var Calendar = function (_React$Component) {
             onCloseTimePicker: this.closeTimePicker
           })
         ),
-        showHourAndMinute && __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__calendar_CalendarRightPanel__["a" /* default */], {
+        __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__calendar_CalendarRightPanel__["a" /* default */], {
           prefixCls: prefixCls,
           value: value,
           locale: locale,
           onSelect: this.onDateTableSelect,
           onClickRightPanelTime: onClickRightPanelTime,
           defaultMinutesTime: this.props.defaultMinutesTime,
-          showHourAndMinute: showHourAndMinute,
+          showHourAndMinute: true,
           format: this.getFormat()
         })
       )
@@ -7826,6 +7826,7 @@ var CalendarRightPanel = function (_React$Component) {
     if (showHourAndMinute) {
       selectedDate = value.format().slice(0, String(value.format()).indexOf('T')).padStart(10, 0);
     }
+    console.log('selectedDate', selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
