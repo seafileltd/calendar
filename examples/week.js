@@ -8061,7 +8061,7 @@ var CalendarRightPanel = function (_React$Component) {
         prefixCls = _props.prefixCls,
         locale = _props.locale;
 
-    var selectedDate = value.format();
+    var selectedDate = value.format().slice(0, String(value.format()).indexOf('T'));
     console.log('selectedDate', selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
