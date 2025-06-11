@@ -7795,7 +7795,8 @@ var CalendarRightPanel = function (_React$Component) {
     };
 
     _this.state = {
-      highlightTime: _this.props.value || null
+      highlightTime: _this.props.value || null,
+      localeFormat: _this.props.format[0]
     };
     _this.timeRef = __WEBPACK_IMPORTED_MODULE_3_react___default.a.createRef();
     _this.times = _this.getTimes();
@@ -7840,13 +7841,12 @@ var CalendarRightPanel = function (_React$Component) {
           'ul',
           null,
           this.times.map(function (time) {
-
             console.log('1111', selectedDate + ' ' + time);
             var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
             var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]);
-
-            current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
             console.log('current', current);
+            current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
+            // console.log('current', current);
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
@@ -7876,7 +7876,9 @@ CalendarRightPanel.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
   onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.func,
   locale: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object,
-  defaultMinutesTime: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string
+  defaultMinutesTime: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
+  format: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string)])
+
 };
 /* harmony default export */ __webpack_exports__["a"] = (CalendarRightPanel);
 
