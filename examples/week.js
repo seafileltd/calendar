@@ -8098,6 +8098,8 @@ var CalendarRightPanel = function (_React$Component) {
                 current.year(parts[0]);
               }
             }
+            console.log('可乐', current);
+
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
