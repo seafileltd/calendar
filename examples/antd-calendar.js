@@ -7931,7 +7931,7 @@ var CalendarRightPanel = function (_React$Component) {
             if (showHourAndMinute) {
               var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
               if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
-                console.log('year', year);
+                console.log('year', parts[0]);
                 console.log('current', current);
                 current.year(parts[0]);
               }
