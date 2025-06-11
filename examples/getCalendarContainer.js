@@ -7851,11 +7851,12 @@ var CalendarRightPanel = function (_React$Component) {
               var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
               if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
                 console.log('year', parts[0]);
-                console.log('current', current);
+                console.log('parts', parts);
+                // console.log('current',current)
                 current.year('0001');
               }
             }
-            console.log('可乐', current);
+            // console.log('可乐',current)
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
