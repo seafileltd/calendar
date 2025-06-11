@@ -3465,6 +3465,7 @@ var DateInput = function (_React$Component) {
         }
       }
     }
+
     return newState;
   };
 
@@ -3493,7 +3494,7 @@ var DateInput = function (_React$Component) {
           value: str,
           disabled: props.disabled,
           placeholder: placeholder,
-          onChange: this.onInputChangeAll,
+          onChange: this.onInputChange,
           onKeyDown: this.onKeyDown,
           onFocus: this.onFocus,
           onBlur: this.onBlur,
@@ -3543,7 +3544,8 @@ var _initialiseProps = function _initialiseProps() {
     _this2.props.onClear(null);
   };
 
-  this.onInputChange = function (str) {
+  this.onInputChange = function (event) {
+    var str = event.target.value;
     var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
@@ -3581,15 +3583,9 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
-      // console.log(123)
       _this2.setState({ str: str });
       onChange(value);
     }
-  };
-
-  this.onInputChangeAll = function (event) {
-    var str = event.target.value;
-    _this2.onInputChange(str);
   };
 
   this.onFocus = function () {

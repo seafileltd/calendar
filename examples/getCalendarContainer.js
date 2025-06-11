@@ -3243,6 +3243,7 @@ var DateInput = function (_React$Component) {
         }
       }
     }
+
     return newState;
   };
 
@@ -3271,7 +3272,7 @@ var DateInput = function (_React$Component) {
           value: str,
           disabled: props.disabled,
           placeholder: placeholder,
-          onChange: this.onInputChangeAll,
+          onChange: this.onInputChange,
           onKeyDown: this.onKeyDown,
           onFocus: this.onFocus,
           onBlur: this.onBlur,
@@ -3321,7 +3322,8 @@ var _initialiseProps = function _initialiseProps() {
     _this2.props.onClear(null);
   };
 
-  this.onInputChange = function (str) {
+  this.onInputChange = function (event) {
+    var str = event.target.value;
     var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
@@ -3359,15 +3361,9 @@ var _initialiseProps = function _initialiseProps() {
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
-      // console.log(123)
       _this2.setState({ str: str });
       onChange(value);
     }
-  };
-
-  this.onInputChangeAll = function (event) {
-    var str = event.target.value;
-    _this2.onInputChange(str);
   };
 
   this.onFocus = function () {
@@ -7820,11 +7816,9 @@ var CalendarRightPanel = function (_React$Component) {
         locale = _props.locale;
 
     var selectedDate = value.format().slice(0, String(value.format()).indexOf('T'));
-    console.log('selectedDate', value, selectedDate);
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
-    console.log('1111', '' + selectedDate);
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-right-panel' },
@@ -7841,7 +7835,7 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           this.times.map(function (time) {
             var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
-            var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]).month(parts[1] - 1).date(parts[2]);
+            var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]).month(parts[1] - 1).date(parts[2]); // eslint-disable-line max-len
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
@@ -7874,7 +7868,6 @@ CalendarRightPanel.propTypes = {
   locale: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.object,
   defaultMinutesTime: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
   format: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.oneOfType([__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string, __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.arrayOf(__WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string)])
-
 };
 /* harmony default export */ __webpack_exports__["a"] = (CalendarRightPanel);
 
