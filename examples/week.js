@@ -8069,6 +8069,7 @@ var CalendarRightPanel = function (_React$Component) {
     var highlight = this.state.highlightTime;
     var highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     var isZhcn = locale && locale.today === '今天';
+    console.log('1111', '' + selectedDate);
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-right-panel' },
@@ -8084,12 +8085,9 @@ var CalendarRightPanel = function (_React$Component) {
           'ul',
           null,
           this.times.map(function (time) {
-            console.log('1111', selectedDate + ' ' + time);
             var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
-            var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]);
-            console.log('current', current);
+            var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]).month(parts[1]).date(parts[2]);
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
-            // console.log('current', current);
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
               {
