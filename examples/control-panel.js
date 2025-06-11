@@ -7338,7 +7338,6 @@ var Calendar = function (_React$Component) {
           onSelect: this.onDateTableSelect,
           onClickRightPanelTime: onClickRightPanelTime,
           defaultMinutesTime: this.props.defaultMinutesTime,
-          showHourAndMinute: showHourAndMinute,
           format: this.getFormat()
         })
       )
@@ -7674,7 +7673,7 @@ var CalendarRightPanel = function (_React$Component) {
           null,
           this.times.map(function (time) {
             var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["d" /* formatDateLocal */])(selectedDate, _this2.state.localeFormat);
-            var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]).month(parts[1]).date(parts[2]);
+            var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]).month(parts[1] - 1).date(parts[2]);
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
               'li',
