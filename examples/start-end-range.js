@@ -3545,6 +3545,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onInputChange = function (event) {
+    console.log(11111);
     var str = event.target.value;
     console.log('str', str);
     var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
@@ -7078,6 +7079,7 @@ var _initialiseProps = function _initialiseProps() {
     if (cause.source === 'keyboard' || cause.source === 'dateInputSelect' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
       _this2.close(_this2.focus);
     }
+    console.log(11111);
     props.onChange(value);
   };
 
