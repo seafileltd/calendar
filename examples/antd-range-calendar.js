@@ -691,7 +691,7 @@ function TodayButton(_ref) {
       text = _ref.text;
 
   var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
-  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["k" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["i" /* getTodayTime */])(value), disabledDate);
+  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["h" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["e" /* getTodayTime */])(value), disabledDate);
   var isDisabled = disabledToday || disabled;
   var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -700,7 +700,7 @@ function TodayButton(_ref) {
       className: prefixCls + '-today-btn ' + disabledTodayClass,
       role: 'button',
       onClick: isDisabled ? null : onToday,
-      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["j" /* getTodayTimeStr */])(value)
+      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["f" /* getTodayTimeStr */])(value)
     },
     localeNow
   );
@@ -2340,7 +2340,7 @@ var DateTBody = function (_React$Component) {
     var jIndex = void 0;
     var current = void 0;
     var dateTable = [];
-    var today = Object(__WEBPACK_IMPORTED_MODULE_7__util___["i" /* getTodayTime */])(value);
+    var today = Object(__WEBPACK_IMPORTED_MODULE_7__util___["e" /* getTodayTime */])(value);
     var cellClass = prefixCls + '-cell';
     var weekNumberCellClass = prefixCls + '-week-number-cell';
     var dateClass = prefixCls + '-date';
@@ -2515,7 +2515,7 @@ var DateTBody = function (_React$Component) {
             onClick: disabled ? undefined : props.onSelect.bind(null, current),
             onMouseEnter: disabled ? undefined : props.onDayHover && props.onDayHover.bind(null, current) || undefined,
             role: 'gridcell',
-            title: Object(__WEBPACK_IMPORTED_MODULE_7__util___["h" /* getTitleString */])(current),
+            title: Object(__WEBPACK_IMPORTED_MODULE_7__util___["d" /* getTitleString */])(current),
             className: cls
           },
           dateHtml
@@ -3176,6 +3176,9 @@ DecadePanel.defaultProps = {
 
 
 
+var customParseFormat = __webpack_require__(82);
+
+__WEBPACK_IMPORTED_MODULE_8_dayjs___default.a.extend(customParseFormat);
 
 var cachedSelectionStart = void 0;
 var cachedSelectionEnd = void 0;
@@ -3192,12 +3195,11 @@ var DateInput = function (_React$Component) {
     _initialiseProps.call(_this);
 
     var selectedValue = props.selectedValue;
-    var formatPrefix = _this.props.format[0];
+
     _this.state = {
-      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, _this.props.format),
+      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, _this.props.format),
       hasFocus: false,
-      localeFormat: formatPrefix,
-      delimiter: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* delimate */])(formatPrefix)
+      localFormat: _this.props.format[0]
     };
     return _this;
   }
@@ -3218,30 +3220,7 @@ var DateInput = function (_React$Component) {
     // when popup show, click body will call this, bug!
     var selectedValue = nextProps.selectedValue;
     if (!state.hasFocus) {
-      var timeStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, nextProps.format).split(' ')[0];
-      var parts = timeStr.split(state.delimiter);
-      var timeParts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(selectedValue, nextProps.format).split(' ')[1];
-      if (parts.length === 3) {
-        if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO) {
-          newState = { str: parts[0].padStart(4, 0) + '-' + parts[1] + '-' + parts[2] };
-        } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
-          newState = {
-            str: parts[0].padStart(4, 0) + '-' + parts[1] + '-' + parts[2] + ' ' + (nextProps.showHourAndMinute ? timeParts : '') // eslint-disable-line max-len
-          };
-        } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US) {
-          newState = { str: Number(parts[0]) + '/' + Number(parts[1]) + '/' + parts[2].padStart(4, 0) };
-        } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime) {
-          newState = {
-            str: Number(parts[0]) + '/' + Number(parts[1]) + '/' + parts[2].padStart(4, 0) + ' ' + (nextProps.showHourAndMinute ? timeParts : '') // eslint-disable-line max-len
-          };
-        } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc) {
-          newState = { str: '' + Number(parts[0]) + state.delimiter + Number(parts[1]) + state.delimiter + parts[2].padStart(4, 0) }; // eslint-disable-line max-len
-        } else if (state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime) {
-          newState = {
-            str: '' + Number(parts[0]) + state.delimiter + Number(parts[1]) + state.delimiter + parts[2].padStart(4, 0) + ' ' + (nextProps.showHourAndMinute ? timeParts : '') // eslint-disable-line max-len
-          };
-        }
-      }
+      newState = { str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, nextProps.format) };
     }
 
     return newState;
@@ -3308,65 +3287,43 @@ DateInput.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  showHourAndMinute: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
 };
 
 var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
-    _this2.setState({
-      str: ''
-    });
+    _this2.setState({ str: '' });
     _this2.props.onClear(null);
   };
 
   this.onInputChange = function (event) {
-    console.log(11111);
     var str = event.target.value;
-    console.log('str', str);
-    var cananderStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["l" /* normalizeDateInput */])(str, _this2.state.localeFormat, _this2.state.delimiter);
+    var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
+        format = _props.format,
         onChange = _props.onChange,
         selectedValue = _props.selectedValue;
 
-    var parts = Object(__WEBPACK_IMPORTED_MODULE_9__util__["d" /* formatDateLocal */])(cananderStr, _this2.state.localeFormat);
     // 没有内容，合法并直接退出
-    console.log('cananderStr', cananderStr);
 
-    if (!str) {
-      console.log('我不想走进来');
+    if (!calendarStr) {
       onChange(null);
       _this2.setState({ str: '' });
       return;
     }
-    // 不合法直接退出
-    var format = Object(__WEBPACK_IMPORTED_MODULE_9__util__["e" /* getDateFormatByStr */])(cananderStr, _this2.state.localeFormat);
-    var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(cananderStr, format);
+    var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
-    value.locale('zh-cn');
-    if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISO || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].ISOAndTime) {
-      if (parts[0] && parts[0].length === 4 && (parts[0].slice(0, 3) === '000' || parts[0].slice(0, 2) === '00')) {
-        value = value.year(parts[0]).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-      } else {
-        value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-      }
-    } else if (_this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].European || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].EuropeanAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].US || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].USAndTime || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etc || _this2.state.localeFormat === __WEBPACK_IMPORTED_MODULE_9__util__["a" /* DATE_FORMATS */].Germany_Russia_etcAndTime) {
-      if (parts[2] && parts[2].length === 4 && (parts[2].slice(0, 3) === '000' || parts[2].slice(0, 2) === '00')) {
-        value = value.year(parts[2]).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-      } else {
-        value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-      }
-    }
+    value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+
     if (!value || disabledDate && disabledDate(value)) {
       _this2.setState({ str: str });
       return;
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
-      console.log('成功🏅');
       _this2.setState({ str: str });
       onChange(value);
     }
@@ -3380,7 +3337,7 @@ var _initialiseProps = function _initialiseProps() {
     _this2.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
-        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["c" /* formatDate */])(prevProps.value, prevProps.format)
+        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(prevProps.value, prevProps.format)
       };
     });
   };
@@ -6845,7 +6802,6 @@ var _initialiseProps = function _initialiseProps() {
     if (cause.source === 'keyboard' || cause.source === 'dateInputSelect' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
       _this2.close(_this2.focus);
     }
-    console.log(11111);
     props.onChange(value);
   };
 
@@ -6902,7 +6858,6 @@ var _initialiseProps = function _initialiseProps() {
           open: open
         }, callback);
       }
-      console.log(11111);
       onOpenChange(open);
     }
   };
@@ -6977,7 +6932,7 @@ var placements = {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(82)
+/* WEBPACK VAR INJECTION */(function(global) {var now = __webpack_require__(83)
   , root = typeof window === 'undefined' ? global : window
   , vendors = ['moz', 'webkit']
   , suffix = 'AnimationFrame'
@@ -7093,7 +7048,8 @@ module.exports = g;
 /* 79 */,
 /* 80 */,
 /* 81 */,
-/* 82 */
+/* 82 */,
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {// Generated by CoffeeScript 1.12.2
@@ -7136,10 +7092,10 @@ module.exports = g;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(21)))
 
 /***/ }),
-/* 83 */,
 /* 84 */,
 /* 85 */,
-/* 86 */
+/* 86 */,
+/* 87 */
 /***/ (function(module, exports) {
 
 //! moment.js
@@ -12833,16 +12789,16 @@ module.exports = g;
 
 
 /***/ }),
-/* 87 */,
 /* 88 */,
 /* 89 */,
-/* 90 */
+/* 90 */,
+/* 91 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -12862,7 +12818,7 @@ module.exports = g;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_rc_util_es_KeyCode__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__range_calendar_CalendarPart__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__range_calendar_CalendarPart__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__calendar_TodayButton__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__calendar_OkButton__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__calendar_TimePickerButton__ = __webpack_require__(29);
@@ -13045,7 +13001,7 @@ var RangeCalendar = function (_React$Component) {
 
     var startValue = this.getStartValue();
     var endValue = this.getEndValue();
-    var todayTime = Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* getTodayTime */])(startValue);
+    var todayTime = Object(__WEBPACK_IMPORTED_MODULE_14__util__["e" /* getTodayTime */])(startValue);
     var thisMonth = todayTime.month();
     var thisYear = todayTime.year();
     var isTodayInView = startValue.year() === thisYear && startValue.month() === thisMonth || endValue.year() === thisYear && endValue.month() === thisMonth;
@@ -13230,28 +13186,28 @@ var _initialiseProps = function _initialiseProps() {
     var nextSelectedValue = void 0;
     if (type === 'both') {
       if (!firstSelectedValue) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[0], value);
         nextSelectedValue = [value];
       } else if (_this2.compare(firstSelectedValue, value) < 0) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[1], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[1], value);
         nextSelectedValue = [firstSelectedValue, value];
       } else {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[1], firstSelectedValue);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[0], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[1], firstSelectedValue);
         nextSelectedValue = [value, firstSelectedValue];
       }
     } else if (type === 'start') {
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[0], value);
       var endValue = selectedValue[1];
       nextSelectedValue = endValue && _this2.compare(endValue, value) > 0 ? [value, endValue] : [value];
     } else {
       // type === 'end'
       var startValue = selectedValue[0];
       if (startValue && _this2.compare(startValue, value) <= 0) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[1], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[1], value);
         nextSelectedValue = [startValue, value];
       } else {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(prevSelectedValue[0], value);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(prevSelectedValue[0], value);
         nextSelectedValue = [value];
       }
     }
@@ -13441,7 +13397,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onToday = function () {
-    var startValue = Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* getTodayTime */])(_this2.state.value[0]);
+    var startValue = Object(__WEBPACK_IMPORTED_MODULE_14__util__["e" /* getTodayTime */])(_this2.state.value[0]);
     var endValue = startValue.clone().add(1, 'months');
     _this2.setState({ value: [startValue, endValue] });
   };
@@ -13550,7 +13506,7 @@ var _initialiseProps = function _initialiseProps() {
     // keep selectedTime when select date
     if (selectedValue[0] && _this2.props.timePicker) {
       startValue = startValue.clone();
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(selectedValue[0], startValue);
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(selectedValue[0], startValue);
     }
     if (showTimePicker && selectedValue[0]) {
       startValue = selectedValue[0];
@@ -13575,7 +13531,7 @@ var _initialiseProps = function _initialiseProps() {
     var endValue = value[1] ? value[1].clone() : value[0].clone().add(1, 'month');
     // keep selectedTime when select date
     if (selectedValue[1] && _this2.props.timePicker) {
-      Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(selectedValue[1], endValue);
+      Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(selectedValue[1], endValue);
     }
     if (showTimePicker) {
       endValue = selectedValue[1] ? selectedValue[1] : _this2.getStartValue();
@@ -13634,7 +13590,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.isAllowedDateAndTime = function (selectedValue) {
-    return Object(__WEBPACK_IMPORTED_MODULE_14__util__["k" /* isAllowedDate */])(selectedValue[0], _this2.props.disabledDate, _this2.disabledStartTime) && Object(__WEBPACK_IMPORTED_MODULE_14__util__["k" /* isAllowedDate */])(selectedValue[1], _this2.props.disabledDate, _this2.disabledEndTime);
+    return Object(__WEBPACK_IMPORTED_MODULE_14__util__["h" /* isAllowedDate */])(selectedValue[0], _this2.props.disabledDate, _this2.disabledStartTime) && Object(__WEBPACK_IMPORTED_MODULE_14__util__["h" /* isAllowedDate */])(selectedValue[1], _this2.props.disabledDate, _this2.disabledEndTime);
   };
 
   this.isMonthYearPanelShow = function (mode) {
@@ -13661,10 +13617,10 @@ var _initialiseProps = function _initialiseProps() {
     if (timePicker && timePicker.props.defaultValue) {
       var timePickerDefaultValue = timePicker.props.defaultValue;
       if (!prevSelectedValue[0] && selectedValue[0]) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(timePickerDefaultValue[0], selectedValue[0]);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(timePickerDefaultValue[0], selectedValue[0]);
       }
       if (!prevSelectedValue[1] && selectedValue[1]) {
-        Object(__WEBPACK_IMPORTED_MODULE_14__util__["m" /* syncTime */])(timePickerDefaultValue[1], selectedValue[1]);
+        Object(__WEBPACK_IMPORTED_MODULE_14__util__["i" /* syncTime */])(timePickerDefaultValue[1], selectedValue[1]);
       }
     }
 
@@ -13748,7 +13704,7 @@ Object(__WEBPACK_IMPORTED_MODULE_7_react_lifecycles_compat__["polyfill"])(RangeC
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_13__mixin_CommonMixin__["a" /* commonMixinWrapper */])(RangeCalendar));
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13813,7 +13769,7 @@ var CalendarPart = function (_React$Component) {
         inputMode = props.inputMode;
 
     var shouldShowTimePicker = showTimePicker && timePicker;
-    var disabledTimeConfig = shouldShowTimePicker && disabledTime ? Object(__WEBPACK_IMPORTED_MODULE_9__util_index__["g" /* getTimeConfig */])(selectedValue, disabledTime) : null;
+    var disabledTimeConfig = shouldShowTimePicker && disabledTime ? Object(__WEBPACK_IMPORTED_MODULE_9__util_index__["c" /* getTimeConfig */])(selectedValue, disabledTime) : null;
     var rangeClassName = prefixCls + '-range';
     var newProps = {
       locale: locale,
@@ -13921,14 +13877,14 @@ CalendarPart.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (CalendarPart);
 
 /***/ }),
-/* 93 */,
 /* 94 */,
 /* 95 */,
 /* 96 */,
 /* 97 */,
 /* 98 */,
 /* 99 */,
-/* 100 */
+/* 100 */,
+/* 101 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13936,13 +13892,13 @@ CalendarPart.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Header__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Combobox__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Header__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Combobox__ = __webpack_require__(103);
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -14226,7 +14182,7 @@ Object(__WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__["polyfill"])(Panel)
 /* harmony default export */ __webpack_exports__["a"] = (Panel);
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14234,7 +14190,7 @@ Object(__WEBPACK_IMPORTED_MODULE_4_react_lifecycles_compat__["polyfill"])(Panel)
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment__ = __webpack_require__(87);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_classnames__);
@@ -14478,7 +14434,7 @@ _defineProperty(Header, "defaultProps", {
 /* harmony default export */ __webpack_exports__["a"] = (Header);
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -14486,7 +14442,7 @@ _defineProperty(Header, "defaultProps", {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Select__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Select__ = __webpack_require__(104);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -14791,7 +14747,7 @@ _defineProperty(Combobox, "propTypes", {
 /* harmony default export */ __webpack_exports__["a"] = (Combobox);
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -15009,7 +14965,6 @@ _defineProperty(Select, "propTypes", {
 /* harmony default export */ __webpack_exports__["a"] = (Select);
 
 /***/ }),
-/* 104 */,
 /* 105 */,
 /* 106 */,
 /* 107 */,
@@ -15167,13 +15122,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_dom__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__seafile_seafile_calendar_src_Picker__ = __webpack_require__(68);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__seafile_seafile_calendar_src_RangeCalendar__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__seafile_seafile_calendar_src_RangeCalendar__ = __webpack_require__(92);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__seafile_seafile_calendar_src_locale_zh_CN__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__seafile_seafile_calendar_src_locale_en_US__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_time_picker_es_Panel__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_rc_time_picker_es_Panel__ = __webpack_require__(101);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__seafile_seafile_calendar_assets_index_less__ = __webpack_require__(78);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__seafile_seafile_calendar_assets_index_less___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__seafile_seafile_calendar_assets_index_less__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_time_picker_assets_index_css__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_time_picker_assets_index_css__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_rc_time_picker_assets_index_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_rc_time_picker_assets_index_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__src_util_dayjs__ = __webpack_require__(66);
 

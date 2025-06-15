@@ -991,7 +991,7 @@ function TodayButton(_ref) {
       text = _ref.text;
 
   var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
-  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["k" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["i" /* getTodayTime */])(value), disabledDate);
+  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["h" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["e" /* getTodayTime */])(value), disabledDate);
   var isDisabled = disabledToday || disabled;
   var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -1000,7 +1000,7 @@ function TodayButton(_ref) {
       className: prefixCls + '-today-btn ' + disabledTodayClass,
       role: 'button',
       onClick: isDisabled ? null : onToday,
-      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["j" /* getTodayTimeStr */])(value)
+      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["f" /* getTodayTimeStr */])(value)
     },
     localeNow
   );
@@ -6279,7 +6279,7 @@ function noop() {}
 function getNowByCurrentStateValue(value) {
   var ret = void 0;
   if (value) {
-    ret = Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["i" /* getTodayTime */])(value);
+    ret = Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["e" /* getTodayTime */])(value);
   } else {
     ret = __WEBPACK_IMPORTED_MODULE_6_dayjs___default()();
   }
@@ -6360,7 +6360,7 @@ var calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {
       }, _this.isAllowedDate = function (value) {
         var disabledDate = _this.props.disabledDate;
         var disabledTime = _this.props.disabledTime;
-        return Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["k" /* isAllowedDate */])(value, disabledDate, disabledTime);
+        return Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["h" /* isAllowedDate */])(value, disabledDate, disabledTime);
       }, _temp), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
     }
 
@@ -6727,7 +6727,6 @@ var _initialiseProps = function _initialiseProps() {
     if (cause.source === 'keyboard' || cause.source === 'dateInputSelect' || !props.calendar.props.timePicker && cause.source !== 'dateInput' || cause.source === 'todayButton') {
       _this2.close(_this2.focus);
     }
-    console.log(11111);
     props.onChange(value);
   };
 
@@ -6784,7 +6783,6 @@ var _initialiseProps = function _initialiseProps() {
           open: open
         }, callback);
       }
-      console.log(11111);
       onOpenChange(open);
     }
   };
