@@ -275,6 +275,18 @@ export function initializeStr(str, format) {
   const formattedArray = tokenizeFormattedDate(inputStr, format, DATE_FORMATS);
   const dateDelimater = delimate(format);
   if (format === DATE_FORMATS.ISO) {
+    const numStr = inputStr.replace(/[^0-9]/g, '');
+    if (numStr.length === 7 || numStr.length === 8) {
+      const yearStr = numStr.slice(0, 4);
+      const monthStr = numStr.slice(4, 6) || '01';
+      const dateStr = numStr.slice(6, numStr.length) || '01';
+      const validateYear = validateCalendarYear(yearStr);
+      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      day = String(day).padStart(2, 0);
+      month = String(month).padStart(2, 0);
+      return `${year}${dateDelimater}${month}${dateDelimater}${day}`;
+    }
     if (hasSpecial) {
       const validateYear = validateCalendarYear(formattedArray[0]);
       let { day, month } = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
@@ -299,6 +311,27 @@ export function initializeStr(str, format) {
     const datePart = getDatePart(inputStr);
     const formattedDateArray = tokenizeFormattedDate(datePart, format);
     const isDateSpecial = hasSpecialChar(datePart);
+    const numStr = datePart.replace(/[^0-9]/g, '');
+    if (numStr.length === 7 || numStr.length === 8) {
+      const yearStr = numStr.slice(0, 4);
+      const monthStr = numStr.slice(4, 6) || '01';
+      const dateStr = numStr.slice(6, numStr.length) || '01';
+      if (formattedArray.length === 3) {
+        time = validateTime(`${formattedArray[1]}:${formattedArray[2]}`);
+      }
+      if (formattedArray.length === 4) {
+        time = validateTime(`${formattedArray[2]}:${formattedArray[3]}`);
+      }
+      if (formattedArray.length === 5) {
+        time = validateTime(`${formattedArray[3]}:${formattedArray[4]}`);
+      }
+      const validateYear = validateCalendarYear(yearStr);
+      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      day = String(day).padStart(2, 0);
+      month = String(month).padStart(2, 0);
+      return `${year}${dateDelimater}${month}${dateDelimater}${day} ${time}`;
+    }
     if (isDateSpecial) {
       if (formattedDateArray.length < 3) {
         formattedArray.splice(2, 0, '01');
