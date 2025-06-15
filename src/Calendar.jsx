@@ -316,6 +316,8 @@ class Calendar extends React.Component {
 
       timePickerEle = React.cloneElement(timePicker, timePickerProps);
     }
+    const calanderInputPlaceholder = dateInputPlaceholder ||
+  (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
@@ -323,7 +325,7 @@ class Calendar extends React.Component {
         key="date-input"
         value={value}
         locale={locale}
-        placeholder={dateInputPlaceholder}
+        placeholder={calanderInputPlaceholder}
         showClear
         disabledTime={disabledTime}
         disabledDate={disabledDate}
@@ -411,6 +413,7 @@ class Calendar extends React.Component {
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
+          format={this.getFormat()}
         />
       }
     </div>
