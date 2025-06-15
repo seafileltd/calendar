@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import { tokenizeFormattedDate } from '../util';
 
 export default class CalendarRightPanel extends React.Component {
 
@@ -11,12 +12,14 @@ export default class CalendarRightPanel extends React.Component {
     onClickRightPanelTime: PropTypes.func,
     locale: PropTypes.object,
     defaultMinutesTime: PropTypes.string,
+    format: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
   }
 
   constructor(props) {
     super(props);
     this.state = {
       highlightTime: this.props.value || null,
+      localeFormat: this.props.format[0],
     };
     this.timeRef = React.createRef();
     this.times = this.getTimes();
@@ -58,7 +61,7 @@ export default class CalendarRightPanel extends React.Component {
 
   render() {
     const { value, prefixCls, locale } = this.props;
-    const selectedDate = value.format().slice(0, 10);
+    const selectedDate = value.format().slice(0, String(value.format()).indexOf('T'));
     const highlight = this.state.highlightTime;
     const highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     const isZhcn = (locale && locale.today === '今天');
@@ -70,7 +73,8 @@ export default class CalendarRightPanel extends React.Component {
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
             {this.times.map((time) => {
-              let current = dayjs(`${selectedDate} ${time}`);
+              const parts = tokenizeFormattedDate(selectedDate, this.state.localeFormat);
+              let current = dayjs(`${selectedDate} ${time}`).year(parts[0]).month(parts[1] - 1).date(parts[2]); // eslint-disable-line max-len
               current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
               return (
                 <li
