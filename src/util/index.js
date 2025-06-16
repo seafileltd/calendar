@@ -2,12 +2,10 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
 dayjs.extend(utc);
-export const currentDate = dayjs().date();
-export const currentMonth = dayjs().month() + 1;
-export const currentYear = dayjs().year();
-export const stringCurrentDate = String(currentDate).padStart(2, '0');
-export const stringCurrentMonth = String(currentMonth).padStart(2, '0');
-export const currentTime = dayjs().format('HH:mm');
+export const getCurrentDate = () => dayjs().date();
+export const getCurrentMonth = () => dayjs().month() + 1;
+export const getCurrentYear = () => dayjs().year();
+export const getCurrentTime = () => dayjs().format('HH:mm');
 
 export const DATE_FORMATS = {
   ISO: 'YYYY-MM-DD',
@@ -123,20 +121,23 @@ export function formatDate(value, format) {
   return value.format(format);
 }
 
+export const isLeapYear = (year) => {
+  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+};
+
 export function validateCalendarDay(dayStr) {
   if (!/^\d+$/.test(dayStr)) return false;
   const day = Number(dayStr);
-  if ([1, 3, 5, 7, 8, 10, 12].includes(currentMonth)) {
+  const MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
+  const MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
+  if (MONTHS_WITH_31_DAYS.includes(getCurrentMonth())) {
     return day >= 1 && day <= 31;
   }
-  if ([4, 6, 9, 11].includes(currentMonth)) {
+  if (MONTHS_WITH_30_DAYS.includes(getCurrentMonth())) {
     return day >= 1 && day <= 30;
   }
-  if (currentMonth === 2) {
-    const isLeapYear = (year) => {
-      return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-    };
-    const year = currentYear;
+  if (getCurrentMonth() === 2) {
+    const year = getCurrentYear();
     if (isLeapYear(year)) {
       return day >= 1 && day <= 29;
     }
@@ -174,18 +175,18 @@ export function hasSpecialChar(str) {
 
 export function validateTime(inputTime) {
   if (!inputTime || typeof inputTime !== 'string') {
-    return currentTime;
+    return getCurrentTime();
   }
   const trimmed = inputTime.trim();
   const timeRegex = /^(\d{2}):(\d{2})$/;
   const match = trimmed.match(timeRegex);
   if (!match) {
-    return currentTime;
+    return getCurrentTime();
   }
   const hour = Number(match[1]);
   const minute = Number(match[2]);
   if (hour > 23 || minute > 59) {
-    return currentTime;
+    return getCurrentTime();
   }
   return `${match[1]}:${match[2]}`;
 }
@@ -205,25 +206,21 @@ export function delimate(format) {
 
 export function validateCalendarYear(yearStr) {
   const year = yearStr;
-  if (!year || isNaN(year)) return currentYear;
+  if (!year || isNaN(year)) return getCurrentYear();
   if (year.length === 2) {
     if (Number(year) >= 0 && Number(year) < 69) {
-      return year ? `20${year}` : currentYear;
+      return year ? `20${year}` : getCurrentYear();
     } else if (Number(year) >= 69 && Number(year) < 100) {
-      return year ? `19${year}` : currentYear;
+      return year ? `19${year}` : getCurrentYear();
     }
   }
   if (year.length === 4) {
     return year;
   }
-  return year ? year.padStart(4, '0') : currentYear;
+  return year ? year.padStart(4, '0') : getCurrentYear();
 }
 
-export const isLeapYear = (year) => {
-  return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-};
-
-export function validateCalendarDayAndMonth(dayStr, monthStr, yearStr) {
+export function validateAndNormalizeDate(dayStr, monthStr, yearStr) {
   let day = Number(dayStr);
   let month = Number(monthStr);
   let year = yearStr;
@@ -235,27 +232,27 @@ export function validateCalendarDayAndMonth(dayStr, monthStr, yearStr) {
   const isValidDayTwentyEight = day < 1 || day > 28;
 
   if (month > 12 || month < 0 || !month) {
-    day = currentDate;
-    month = currentMonth;
-    year = currentYear;
+    day = getCurrentDate();
+    month = getCurrentMonth();
+    year = getCurrentYear();
   }
 
   if ((isInThirtyOneDaysMonths && isValidDayThirtyOne)
     || (isInThirtyDaysMonths && isValidDayThirty)) {
-    day = currentDate;
-    month = currentMonth;
-    year = currentYear;
+    day = getCurrentDate();
+    month = getCurrentMonth();
+    year = getCurrentYear();
   }
 
   if (month === 2) {
     if (isLeapYear(year) && isValidDayTwentyNight) {
-      day = currentDate;
-      month = currentMonth;
-      year = currentYear;
+      day = getCurrentDate();
+      month = getCurrentMonth();
+      year = getCurrentYear();
     } else if (isValidDayTwentyEight) {
-      day = currentDate;
-      month = currentMonth;
-      year = currentYear;
+      day = getCurrentDate();
+      month = getCurrentMonth();
+      year = getCurrentYear();
     }
   }
   return { day, month, year };
@@ -270,9 +267,9 @@ export function getDatePart(str) {
 export function initializeStr(str, format) {
   const inputStr = str;
   const inputStrLength = inputStr.length;
-  let time = currentTime;
+  let time = getCurrentTime();
   const hasSpecial = hasSpecialChar(inputStr);
-  const formattedArray = tokenizeFormattedDate(inputStr, format, DATE_FORMATS);
+  const formattedArray = tokenizeFormattedDate(inputStr, format);
   const dateDelimater = delimate(format);
   if (format === DATE_FORMATS.ISO) {
     const numStr = inputStr.replace(/[^0-9]/g, '');
@@ -281,16 +278,16 @@ export function initializeStr(str, format) {
       const monthStr = numStr.slice(4, 6) || '01';
       const dateStr = numStr.slice(6, numStr.length) || '01';
       const validateYear = validateCalendarYear(yearStr);
-      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
-      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      let { day, month } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
+      const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${year}${dateDelimater}${month}${dateDelimater}${day}`;
     }
     if (hasSpecial) {
       const validateYear = validateCalendarYear(formattedArray[0]);
-      let { day, month } = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
-      const { year } = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
+      let { day, month } = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
+      const { year } = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${year}${dateDelimater}${month}${dateDelimater}${day}`;
@@ -299,13 +296,13 @@ export function initializeStr(str, format) {
       const monthStr = inputStr.slice(4, 6) || '01';
       const dateStr = inputStr.slice(6, 8) || '01';
       const validateYear = validateCalendarYear(yearStr);
-      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
-      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      let { day, month } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
+      const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${year}${dateDelimater}${month}${dateDelimater}${day}`;
     } else if (inputStrLength > 8) {
-      return `${currentYear}${dateDelimater}${String(currentMonth).padStart(2, 0)}${dateDelimater}${String(currentDate).padStart(2, 0)}`; // eslint-disable-line max-len
+      return `${getCurrentYear()}${dateDelimater}${String(getCurrentMonth()).padStart(2, 0)}${dateDelimater}${String(getCurrentDate()).padStart(2, 0)}`; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.ISOAndTime) {
     const datePart = getDatePart(inputStr);
@@ -326,8 +323,8 @@ export function initializeStr(str, format) {
         time = validateTime(`${formattedArray[3]}:${formattedArray[4]}`);
       }
       const validateYear = validateCalendarYear(yearStr);
-      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
-      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      let { day, month } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
+      const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${year}${dateDelimater}${month}${dateDelimater}${day} ${time}`;
@@ -337,8 +334,8 @@ export function initializeStr(str, format) {
         formattedArray.splice(2, 0, '01');
       }
       const validateYear = validateCalendarYear(formattedArray[0]);
-      let { day, month } = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
-      const { year } = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
+      let { day, month } = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
+      const { year } = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', validateYear); // eslint-disable-line max-len
       time = validateTime(`${formattedArray[3]}:${formattedArray[4]}`);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
@@ -350,28 +347,28 @@ export function initializeStr(str, format) {
       const timeParts = tokenizeFormattedDate(inputStr, format);
       time = validateTime(`${timeParts[1]}:${timeParts[2]}`);
       const validateYear = validateCalendarYear(yearStr);
-      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
-      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      let { day, month } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
+      const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${year}${dateDelimater}${month}${dateDelimater}${day} ${time}`;
     } else if (datePart.length > 8) {
-      return `${currentYear}${dateDelimater}${String(currentMonth).padStart(2, 0)}${dateDelimater}${String(currentDate).padStart(2, 0)}  ${currentTime}`; // eslint-disable-line max-len
+      return `${getCurrentYear()}${dateDelimater}${String(getCurrentMonth()).padStart(2, 0)}${dateDelimater}${String(getCurrentDate()).padStart(2, 0)}  ${getCurrentTime()}`; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.US) {
     if (hasSpecial) {
       const validateYear = validateCalendarYear(formattedArray[2]);
-      const { day, month, year } = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], validateYear); // eslint-disable-line max-len
+      const { day, month, year } = validateAndNormalizeDate(formattedArray[1] || '1', formattedArray[0], validateYear); // eslint-disable-line max-len
       return `${month}${dateDelimater}${day}${dateDelimater}${year}`;
     } else if (inputStrLength >= 1 && inputStrLength <= 8) {
       const monthStr = inputStr.slice(0, 2);
       const dateStr = inputStr.slice(2, 4) || '1';
       const yearStr = inputStr.slice(4, inputStr.length);
       const validateYear = validateCalendarYear(yearStr);
-      const { day, month, year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      const { day, month, year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       return `${month}${dateDelimater}${day}${dateDelimater}${year}`; // eslint-disable-line max-len
     } else if (inputStrLength > 8) {
-      return `${String(currentMonth).padStart(2, 0)}${dateDelimater}${String(currentDate).padStart(2, 0)}${dateDelimater}${currentYear}`; // eslint-disable-line max-len
+      return `${String(getCurrentMonth()).padStart(2, 0)}${dateDelimater}${String(getCurrentDate()).padStart(2, 0)}${dateDelimater}${getCurrentYear()}`; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.USAndTime) {
     const datePart = getDatePart(inputStr);
@@ -379,10 +376,10 @@ export function initializeStr(str, format) {
     const isDateSpecial = hasSpecialChar(datePart);
     if (isDateSpecial) {
       if (formattedDateArray.length < 3) {
-        formattedArray.splice(2, 0, String(currentYear));
+        formattedArray.splice(2, 0, String(getCurrentYear()));
       }
       const validateYear = validateCalendarYear(formattedArray[2]);
-      const { day, month, year } = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], validateYear); // eslint-disable-line max-len
+      const { day, month, year } = validateAndNormalizeDate(formattedArray[1] || '1', formattedArray[0], validateYear); // eslint-disable-line max-len
       time = validateTime(`${formattedArray[3]}:${formattedArray[4]}`);
       return `${month}${dateDelimater}${day}${dateDelimater}${year} ${time}`;
     } else if (datePart.length >= 1 && datePart.length <= 8) {
@@ -390,20 +387,20 @@ export function initializeStr(str, format) {
       const dateStr = datePart.slice(2, 4) || '1';
       const yearStr = datePart.slice(4, datePart.length);
       const validateYear = validateCalendarYear(yearStr); // eslint-disable-line max-len
-      const { day, month, year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      const { day, month, year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       const timeParts = tokenizeFormattedDate(inputStr, format);
-      time = validateTime(`${timeParts[1]}:${timeParts[2]}`) || currentTime;
+      time = validateTime(`${timeParts[1]}:${timeParts[2]}`) || getCurrentTime();
       return `${month}${dateDelimater}${day}${dateDelimater}${year} ${time}`;
     } else if (datePart.length > 8) {
-      return `${String(currentMonth).padStart(2, 0)}${dateDelimater}${String(currentDate).padStart(2, 0)}${dateDelimater}${currentYear} ${currentTime}`; // eslint-disable-line max-len
+      return `${String(getCurrentMonth()).padStart(2, 0)}${dateDelimater}${String(getCurrentDate()).padStart(2, 0)}${dateDelimater}${getCurrentYear()} ${getCurrentTime()}`; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.European
     || format === DATE_FORMATS.Germany_Russia_etc
   ) {
     if (hasSpecial) {
       const validateYear = validateCalendarYear(formattedArray[2]);
-      let { day, month } = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
-      const { year } = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
+      let { day, month } = validateAndNormalizeDate(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
+      const { year } = validateAndNormalizeDate(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${day}${dateDelimater}${month}${dateDelimater}${year}`;
@@ -412,13 +409,13 @@ export function initializeStr(str, format) {
       const monthStr = inputStr.slice(2, 4);
       const yearStr = inputStr.slice(4, inputStr.length);
       const validateYear = validateCalendarYear(yearStr);
-      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear); // eslint-disable-line max-len
-      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear); // eslint-disable-line max-len
+      const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear); // eslint-disable-line max-len
+      let { day, month } = validateAndNormalizeDate(dateStr, monthStr, validateYear); // eslint-disable-line max-len
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${day}${dateDelimater}${month}${dateDelimater}${year}`;
     } else if (inputStrLength > 8) {
-      return `${String(currentDate).padStart(2, 0)}${dateDelimater}${String(currentMonth).padStart(2, 0)}${dateDelimater}${currentYear}`; // eslint-disable-line max-len
+      return `${String(getCurrentDate()).padStart(2, 0)}${dateDelimater}${String(getCurrentMonth()).padStart(2, 0)}${dateDelimater}${getCurrentYear()}`; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.EuropeanAndTime
     || format === DATE_FORMATS.Germany_Russia_etcAndTime
@@ -428,11 +425,11 @@ export function initializeStr(str, format) {
     const isDateSpecial = hasSpecialChar(datePart);
     if (isDateSpecial) {
       if (formattedDateArray.length < 3) {
-        formattedArray.splice(2, 0, String(currentYear));
+        formattedArray.splice(2, 0, String(getCurrentYear()));
       }
       const validateYear = validateCalendarYear(formattedArray[2]);
-      let { day, month } = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
-      const { year } = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
+      let { day, month } = validateAndNormalizeDate(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
+      const { year } = validateAndNormalizeDate(formattedArray[0], formattedArray[1], validateYear); // eslint-disable-line max-len
       time = validateTime(`${formattedArray[3]}:${formattedArray[4]}`);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
@@ -444,13 +441,13 @@ export function initializeStr(str, format) {
       const timeParts = tokenizeFormattedDate(inputStr, format);
       time = validateTime(`${timeParts[1]}:${timeParts[2]}`);
       const validateYear = validateCalendarYear(yearStr);
-      let { day, month } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
-      const { year } = validateCalendarDayAndMonth(dateStr, monthStr, validateYear);
+      let { day, month } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
+      const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear);
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return `${day}${dateDelimater}${month}${dateDelimater}${year} ${time}`;
     } else if (datePart.length > 8) {
-      return `${String(currentDate).padStart(2, 0)}${dateDelimater}${String(currentMonth).padStart(2, 0)}${dateDelimater}${currentYear} ${currentTime}`; // eslint-disable-line max-len
+      return `${String(getCurrentDate()).padStart(2, 0)}${dateDelimater}${String(getCurrentMonth()).padStart(2, 0)}${dateDelimater}${getCurrentYear()} ${getCurrentTime()}`; // eslint-disable-line max-len
     }
   }
 }

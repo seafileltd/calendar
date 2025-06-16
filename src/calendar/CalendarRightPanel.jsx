@@ -17,9 +17,10 @@ export default class CalendarRightPanel extends React.Component {
 
   constructor(props) {
     super(props);
+    const format = Array.isArray(this.props.format) ? this.props.format[0] : this.props.format;
     this.state = {
       highlightTime: this.props.value || null,
-      localeFormat: this.props.format[0],
+      localeFormat: format,
     };
     this.timeRef = React.createRef();
     this.times = this.getTimes();
