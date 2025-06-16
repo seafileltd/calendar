@@ -686,37 +686,55 @@ function initializeStr(str, format) {
   var formattedArray = tokenizeFormattedDate(inputStr, format, DATE_FORMATS);
   var dateDelimater = delimate(format);
   if (format === DATE_FORMATS.ISO) {
-    if (hasSpecial) {
-      var validateYear = validateCalendarYear(formattedArray[0]);
+    var numStr = inputStr.replace(/[^0-9]/g, '');
+    if (numStr.length === 7 || numStr.length === 8) {
+      var yearStr = numStr.slice(0, 4);
+      var monthStr = numStr.slice(4, 6) || '01';
+      var dateStr = numStr.slice(6, numStr.length) || '01';
+      var validateYear = validateCalendarYear(yearStr);
 
-      var _validateCalendarDayA = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear),
+      var _validateCalendarDayA = validateCalendarDayAndMonth(dateStr, monthStr, validateYear),
           day = _validateCalendarDayA.day,
-          month = _validateCalendarDayA.month; // eslint-disable-line max-len
+          month = _validateCalendarDayA.month;
 
-
-      var _validateCalendarDayA2 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', validateYear),
-          year = _validateCalendarDayA2.year; // eslint-disable-line max-len
-
+      var _validateCalendarDayA2 = validateCalendarDayAndMonth(dateStr, monthStr, validateYear),
+          year = _validateCalendarDayA2.year;
 
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
       return '' + year + dateDelimater + month + dateDelimater + day;
-    } else if (inputStrLength >= 1 && inputStrLength <= 8) {
-      var yearStr = inputStr.slice(0, 4);
-      var monthStr = inputStr.slice(4, 6) || '01';
-      var dateStr = inputStr.slice(6, 8) || '01';
-      var _validateYear = validateCalendarYear(yearStr);
+    }
+    if (hasSpecial) {
+      var _validateYear = validateCalendarYear(formattedArray[0]);
 
-      var _validateCalendarDayA3 = validateCalendarDayAndMonth(dateStr, monthStr, _validateYear),
+      var _validateCalendarDayA3 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear),
           _day = _validateCalendarDayA3.day,
-          _month = _validateCalendarDayA3.month;
+          _month = _validateCalendarDayA3.month; // eslint-disable-line max-len
 
-      var _validateCalendarDayA4 = validateCalendarDayAndMonth(dateStr, monthStr, _validateYear),
-          _year = _validateCalendarDayA4.year;
+
+      var _validateCalendarDayA4 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear),
+          _year = _validateCalendarDayA4.year; // eslint-disable-line max-len
+
 
       _day = String(_day).padStart(2, 0);
       _month = String(_month).padStart(2, 0);
       return '' + _year + dateDelimater + _month + dateDelimater + _day;
+    } else if (inputStrLength >= 1 && inputStrLength <= 8) {
+      var _yearStr = inputStr.slice(0, 4);
+      var _monthStr = inputStr.slice(4, 6) || '01';
+      var _dateStr = inputStr.slice(6, 8) || '01';
+      var _validateYear2 = validateCalendarYear(_yearStr);
+
+      var _validateCalendarDayA5 = validateCalendarDayAndMonth(_dateStr, _monthStr, _validateYear2),
+          _day2 = _validateCalendarDayA5.day,
+          _month2 = _validateCalendarDayA5.month;
+
+      var _validateCalendarDayA6 = validateCalendarDayAndMonth(_dateStr, _monthStr, _validateYear2),
+          _year2 = _validateCalendarDayA6.year;
+
+      _day2 = String(_day2).padStart(2, 0);
+      _month2 = String(_month2).padStart(2, 0);
+      return '' + _year2 + dateDelimater + _month2 + dateDelimater + _day2;
     } else if (inputStrLength > 8) {
       return '' + currentYear + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0); // eslint-disable-line max-len
     }
@@ -724,69 +742,96 @@ function initializeStr(str, format) {
     var datePart = getDatePart(inputStr);
     var formattedDateArray = tokenizeFormattedDate(datePart, format);
     var isDateSpecial = hasSpecialChar(datePart);
-    if (isDateSpecial) {
-      if (formattedDateArray.length < 3) {
-        formattedArray.splice(2, 0, '01');
+    var _numStr = datePart.replace(/[^0-9]/g, '');
+    if (_numStr.length === 7 || _numStr.length === 8) {
+      var _yearStr2 = _numStr.slice(0, 4);
+      var _monthStr2 = _numStr.slice(4, 6) || '01';
+      var _dateStr2 = _numStr.slice(6, _numStr.length) || '01';
+      if (formattedArray.length === 3) {
+        time = validateTime(formattedArray[1] + ':' + formattedArray[2]);
       }
-      var _validateYear2 = validateCalendarYear(formattedArray[0]);
+      if (formattedArray.length === 4) {
+        time = validateTime(formattedArray[2] + ':' + formattedArray[3]);
+      }
+      if (formattedArray.length === 5) {
+        time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
+      }
+      var _validateYear3 = validateCalendarYear(_yearStr2);
 
-      var _validateCalendarDayA5 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear2),
-          _day2 = _validateCalendarDayA5.day,
-          _month2 = _validateCalendarDayA5.month; // eslint-disable-line max-len
-
-
-      var _validateCalendarDayA6 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear2),
-          _year2 = _validateCalendarDayA6.year; // eslint-disable-line max-len
-
-
-      time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
-      _day2 = String(_day2).padStart(2, 0);
-      _month2 = String(_month2).padStart(2, 0);
-      return '' + _year2 + dateDelimater + _month2 + dateDelimater + _day2 + ' ' + time;
-    } else if (datePart.length >= 1 && datePart.length <= 8) {
-      var _yearStr = datePart.slice(0, 4);
-      var _monthStr = datePart.slice(4, 6) || '01';
-      var _dateStr = datePart.slice(6, 8) || '01';
-      var timeParts = tokenizeFormattedDate(inputStr, format);
-      time = validateTime(timeParts[1] + ':' + timeParts[2]);
-      var _validateYear3 = validateCalendarYear(_yearStr);
-
-      var _validateCalendarDayA7 = validateCalendarDayAndMonth(_dateStr, _monthStr, _validateYear3),
+      var _validateCalendarDayA7 = validateCalendarDayAndMonth(_dateStr2, _monthStr2, _validateYear3),
           _day3 = _validateCalendarDayA7.day,
           _month3 = _validateCalendarDayA7.month;
 
-      var _validateCalendarDayA8 = validateCalendarDayAndMonth(_dateStr, _monthStr, _validateYear3),
+      var _validateCalendarDayA8 = validateCalendarDayAndMonth(_dateStr2, _monthStr2, _validateYear3),
           _year3 = _validateCalendarDayA8.year;
 
       _day3 = String(_day3).padStart(2, 0);
       _month3 = String(_month3).padStart(2, 0);
       return '' + _year3 + dateDelimater + _month3 + dateDelimater + _day3 + ' ' + time;
+    }
+    if (isDateSpecial) {
+      if (formattedDateArray.length < 3) {
+        formattedArray.splice(2, 0, '01');
+      }
+      var _validateYear4 = validateCalendarYear(formattedArray[0]);
+
+      var _validateCalendarDayA9 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear4),
+          _day4 = _validateCalendarDayA9.day,
+          _month4 = _validateCalendarDayA9.month; // eslint-disable-line max-len
+
+
+      var _validateCalendarDayA10 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear4),
+          _year4 = _validateCalendarDayA10.year; // eslint-disable-line max-len
+
+
+      time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
+      _day4 = String(_day4).padStart(2, 0);
+      _month4 = String(_month4).padStart(2, 0);
+      return '' + _year4 + dateDelimater + _month4 + dateDelimater + _day4 + ' ' + time;
+    } else if (datePart.length >= 1 && datePart.length <= 8) {
+      var _yearStr3 = datePart.slice(0, 4);
+      var _monthStr3 = datePart.slice(4, 6) || '01';
+      var _dateStr3 = datePart.slice(6, 8) || '01';
+      var timeParts = tokenizeFormattedDate(inputStr, format);
+      time = validateTime(timeParts[1] + ':' + timeParts[2]);
+      var _validateYear5 = validateCalendarYear(_yearStr3);
+
+      var _validateCalendarDayA11 = validateCalendarDayAndMonth(_dateStr3, _monthStr3, _validateYear5),
+          _day5 = _validateCalendarDayA11.day,
+          _month5 = _validateCalendarDayA11.month;
+
+      var _validateCalendarDayA12 = validateCalendarDayAndMonth(_dateStr3, _monthStr3, _validateYear5),
+          _year5 = _validateCalendarDayA12.year;
+
+      _day5 = String(_day5).padStart(2, 0);
+      _month5 = String(_month5).padStart(2, 0);
+      return '' + _year5 + dateDelimater + _month5 + dateDelimater + _day5 + ' ' + time;
     } else if (datePart.length > 8) {
       return '' + currentYear + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0) + '  ' + currentTime; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.US) {
     if (hasSpecial) {
-      var _validateYear4 = validateCalendarYear(formattedArray[2]);
+      var _validateYear6 = validateCalendarYear(formattedArray[2]);
 
-      var _validateCalendarDayA9 = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], _validateYear4),
-          _day4 = _validateCalendarDayA9.day,
-          _month4 = _validateCalendarDayA9.month,
-          _year4 = _validateCalendarDayA9.year; // eslint-disable-line max-len
+      var _validateCalendarDayA13 = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], _validateYear6),
+          _day6 = _validateCalendarDayA13.day,
+          _month6 = _validateCalendarDayA13.month,
+          _year6 = _validateCalendarDayA13.year; // eslint-disable-line max-len
 
 
-      return '' + _month4 + dateDelimater + _day4 + dateDelimater + _year4;
+      return '' + _month6 + dateDelimater + _day6 + dateDelimater + _year6;
     } else if (inputStrLength >= 1 && inputStrLength <= 8) {
-      var _monthStr2 = inputStr.slice(0, 2);
-      var _dateStr2 = inputStr.slice(2, 4) || '1';
-      var _yearStr2 = inputStr.slice(4, inputStr.length);
-      var _validateYear5 = validateCalendarYear(_yearStr2);
+      var _monthStr4 = inputStr.slice(0, 2);
+      var _dateStr4 = inputStr.slice(2, 4) || '1';
+      var _yearStr4 = inputStr.slice(4, inputStr.length);
+      var _validateYear7 = validateCalendarYear(_yearStr4);
 
-      var _validateCalendarDayA10 = validateCalendarDayAndMonth(_dateStr2, _monthStr2, _validateYear5),
-          _day5 = _validateCalendarDayA10.day,
-          _month5 = _validateCalendarDayA10.month,
-          _year5 = _validateCalendarDayA10.year;
+      var _validateCalendarDayA14 = validateCalendarDayAndMonth(_dateStr4, _monthStr4, _validateYear7),
+          _day7 = _validateCalendarDayA14.day,
+          _month7 = _validateCalendarDayA14.month,
+          _year7 = _validateCalendarDayA14.year;
 
-      return '' + _month5 + dateDelimater + _day5 + dateDelimater + _year5; // eslint-disable-line max-len
+      return '' + _month7 + dateDelimater + _day7 + dateDelimater + _year7; // eslint-disable-line max-len
     } else if (inputStrLength > 8) {
       return '' + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0) + dateDelimater + currentYear; // eslint-disable-line max-len
     }
@@ -798,78 +843,35 @@ function initializeStr(str, format) {
       if (_formattedDateArray.length < 3) {
         formattedArray.splice(2, 0, String(currentYear));
       }
-      var _validateYear6 = validateCalendarYear(formattedArray[2]);
+      var _validateYear8 = validateCalendarYear(formattedArray[2]);
 
-      var _validateCalendarDayA11 = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], _validateYear6),
-          _day6 = _validateCalendarDayA11.day,
-          _month6 = _validateCalendarDayA11.month,
-          _year6 = _validateCalendarDayA11.year; // eslint-disable-line max-len
+      var _validateCalendarDayA15 = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], _validateYear8),
+          _day8 = _validateCalendarDayA15.day,
+          _month8 = _validateCalendarDayA15.month,
+          _year8 = _validateCalendarDayA15.year; // eslint-disable-line max-len
 
 
       time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
-      return '' + _month6 + dateDelimater + _day6 + dateDelimater + _year6 + ' ' + time;
+      return '' + _month8 + dateDelimater + _day8 + dateDelimater + _year8 + ' ' + time;
     } else if (_datePart.length >= 1 && _datePart.length <= 8) {
-      var _monthStr3 = _datePart.slice(0, 2);
-      var _dateStr3 = _datePart.slice(2, 4) || '1';
-      var _yearStr3 = _datePart.slice(4, _datePart.length);
-      var _validateYear7 = validateCalendarYear(_yearStr3); // eslint-disable-line max-len
+      var _monthStr5 = _datePart.slice(0, 2);
+      var _dateStr5 = _datePart.slice(2, 4) || '1';
+      var _yearStr5 = _datePart.slice(4, _datePart.length);
+      var _validateYear9 = validateCalendarYear(_yearStr5); // eslint-disable-line max-len
 
-      var _validateCalendarDayA12 = validateCalendarDayAndMonth(_dateStr3, _monthStr3, _validateYear7),
-          _day7 = _validateCalendarDayA12.day,
-          _month7 = _validateCalendarDayA12.month,
-          _year7 = _validateCalendarDayA12.year;
+      var _validateCalendarDayA16 = validateCalendarDayAndMonth(_dateStr5, _monthStr5, _validateYear9),
+          _day9 = _validateCalendarDayA16.day,
+          _month9 = _validateCalendarDayA16.month,
+          _year9 = _validateCalendarDayA16.year;
 
       var _timeParts = tokenizeFormattedDate(inputStr, format);
       time = validateTime(_timeParts[1] + ':' + _timeParts[2]) || currentTime;
-      return '' + _month7 + dateDelimater + _day7 + dateDelimater + _year7 + ' ' + time;
+      return '' + _month9 + dateDelimater + _day9 + dateDelimater + _year9 + ' ' + time;
     } else if (_datePart.length > 8) {
       return '' + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0) + dateDelimater + currentYear + ' ' + currentTime; // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.European || format === DATE_FORMATS.Germany_Russia_etc) {
     if (hasSpecial) {
-      var _validateYear8 = validateCalendarYear(formattedArray[2]);
-
-      var _validateCalendarDayA13 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear8),
-          _day8 = _validateCalendarDayA13.day,
-          _month8 = _validateCalendarDayA13.month; // eslint-disable-line max-len
-
-
-      var _validateCalendarDayA14 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear8),
-          _year8 = _validateCalendarDayA14.year; // eslint-disable-line max-len
-
-
-      _day8 = String(_day8).padStart(2, 0);
-      _month8 = String(_month8).padStart(2, 0);
-      return '' + _day8 + dateDelimater + _month8 + dateDelimater + _year8;
-    } else if (inputStrLength >= 1 && inputStrLength <= 8) {
-      var _dateStr4 = inputStr.slice(0, 2);
-      var _monthStr4 = inputStr.slice(2, 4);
-      var _yearStr4 = inputStr.slice(4, inputStr.length);
-      var _validateYear9 = validateCalendarYear(_yearStr4);
-
-      var _validateCalendarDayA15 = validateCalendarDayAndMonth(_dateStr4, _monthStr4, _validateYear9),
-          _year9 = _validateCalendarDayA15.year; // eslint-disable-line max-len
-
-
-      var _validateCalendarDayA16 = validateCalendarDayAndMonth(_dateStr4, _monthStr4, _validateYear9),
-          _day9 = _validateCalendarDayA16.day,
-          _month9 = _validateCalendarDayA16.month; // eslint-disable-line max-len
-
-
-      _day9 = String(_day9).padStart(2, 0);
-      _month9 = String(_month9).padStart(2, 0);
-      return '' + _day9 + dateDelimater + _month9 + dateDelimater + _year9;
-    } else if (inputStrLength > 8) {
-      return '' + String(currentDate).padStart(2, 0) + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + currentYear; // eslint-disable-line max-len
-    }
-  } else if (format === DATE_FORMATS.EuropeanAndTime || format === DATE_FORMATS.Germany_Russia_etcAndTime) {
-    var _datePart2 = getDatePart(inputStr);
-    var _formattedDateArray2 = tokenizeFormattedDate(_datePart2, format);
-    var _isDateSpecial2 = hasSpecialChar(_datePart2);
-    if (_isDateSpecial2) {
-      if (_formattedDateArray2.length < 3) {
-        formattedArray.splice(2, 0, String(currentYear));
-      }
       var _validateYear10 = validateCalendarYear(formattedArray[2]);
 
       var _validateCalendarDayA17 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear10),
@@ -881,28 +883,71 @@ function initializeStr(str, format) {
           _year10 = _validateCalendarDayA18.year; // eslint-disable-line max-len
 
 
-      time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
       _day10 = String(_day10).padStart(2, 0);
       _month10 = String(_month10).padStart(2, 0);
-      return '' + _day10 + dateDelimater + _month10 + dateDelimater + _year10 + ' ' + time;
-    } else if (_datePart2.length >= 1 && _datePart2.length <= 8) {
-      var _dateStr5 = _datePart2.slice(0, 2);
-      var _monthStr5 = _datePart2.slice(2, 4);
-      var _yearStr5 = _datePart2.slice(4, _datePart2.length);
-      var _timeParts2 = tokenizeFormattedDate(inputStr, format);
-      time = validateTime(_timeParts2[1] + ':' + _timeParts2[2]);
-      var _validateYear11 = validateCalendarYear(_yearStr5);
+      return '' + _day10 + dateDelimater + _month10 + dateDelimater + _year10;
+    } else if (inputStrLength >= 1 && inputStrLength <= 8) {
+      var _dateStr6 = inputStr.slice(0, 2);
+      var _monthStr6 = inputStr.slice(2, 4);
+      var _yearStr6 = inputStr.slice(4, inputStr.length);
+      var _validateYear11 = validateCalendarYear(_yearStr6);
 
-      var _validateCalendarDayA19 = validateCalendarDayAndMonth(_dateStr5, _monthStr5, _validateYear11),
-          _day11 = _validateCalendarDayA19.day,
-          _month11 = _validateCalendarDayA19.month;
+      var _validateCalendarDayA19 = validateCalendarDayAndMonth(_dateStr6, _monthStr6, _validateYear11),
+          _year11 = _validateCalendarDayA19.year; // eslint-disable-line max-len
 
-      var _validateCalendarDayA20 = validateCalendarDayAndMonth(_dateStr5, _monthStr5, _validateYear11),
-          _year11 = _validateCalendarDayA20.year;
+
+      var _validateCalendarDayA20 = validateCalendarDayAndMonth(_dateStr6, _monthStr6, _validateYear11),
+          _day11 = _validateCalendarDayA20.day,
+          _month11 = _validateCalendarDayA20.month; // eslint-disable-line max-len
+
 
       _day11 = String(_day11).padStart(2, 0);
       _month11 = String(_month11).padStart(2, 0);
-      return '' + _day11 + dateDelimater + _month11 + dateDelimater + _year11 + ' ' + time;
+      return '' + _day11 + dateDelimater + _month11 + dateDelimater + _year11;
+    } else if (inputStrLength > 8) {
+      return '' + String(currentDate).padStart(2, 0) + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + currentYear; // eslint-disable-line max-len
+    }
+  } else if (format === DATE_FORMATS.EuropeanAndTime || format === DATE_FORMATS.Germany_Russia_etcAndTime) {
+    var _datePart2 = getDatePart(inputStr);
+    var _formattedDateArray2 = tokenizeFormattedDate(_datePart2, format);
+    var _isDateSpecial2 = hasSpecialChar(_datePart2);
+    if (_isDateSpecial2) {
+      if (_formattedDateArray2.length < 3) {
+        formattedArray.splice(2, 0, String(currentYear));
+      }
+      var _validateYear12 = validateCalendarYear(formattedArray[2]);
+
+      var _validateCalendarDayA21 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear12),
+          _day12 = _validateCalendarDayA21.day,
+          _month12 = _validateCalendarDayA21.month; // eslint-disable-line max-len
+
+
+      var _validateCalendarDayA22 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear12),
+          _year12 = _validateCalendarDayA22.year; // eslint-disable-line max-len
+
+
+      time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
+      _day12 = String(_day12).padStart(2, 0);
+      _month12 = String(_month12).padStart(2, 0);
+      return '' + _day12 + dateDelimater + _month12 + dateDelimater + _year12 + ' ' + time;
+    } else if (_datePart2.length >= 1 && _datePart2.length <= 8) {
+      var _dateStr7 = _datePart2.slice(0, 2);
+      var _monthStr7 = _datePart2.slice(2, 4);
+      var _yearStr7 = _datePart2.slice(4, _datePart2.length);
+      var _timeParts2 = tokenizeFormattedDate(inputStr, format);
+      time = validateTime(_timeParts2[1] + ':' + _timeParts2[2]);
+      var _validateYear13 = validateCalendarYear(_yearStr7);
+
+      var _validateCalendarDayA23 = validateCalendarDayAndMonth(_dateStr7, _monthStr7, _validateYear13),
+          _day13 = _validateCalendarDayA23.day,
+          _month13 = _validateCalendarDayA23.month;
+
+      var _validateCalendarDayA24 = validateCalendarDayAndMonth(_dateStr7, _monthStr7, _validateYear13),
+          _year13 = _validateCalendarDayA24.year;
+
+      _day13 = String(_day13).padStart(2, 0);
+      _month13 = String(_month13).padStart(2, 0);
+      return '' + _day13 + dateDelimater + _month13 + dateDelimater + _year13 + ' ' + time;
     } else if (_datePart2.length > 8) {
       return '' + String(currentDate).padStart(2, 0) + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + currentYear + ' ' + currentTime; // eslint-disable-line max-len
     }
