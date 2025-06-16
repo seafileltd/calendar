@@ -380,12 +380,10 @@ exports.default = _assign2.default || function (target) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export currentDate */
-/* unused harmony export currentMonth */
-/* unused harmony export currentYear */
-/* unused harmony export stringCurrentDate */
-/* unused harmony export stringCurrentMonth */
-/* unused harmony export currentTime */
+/* unused harmony export getCurrentDate */
+/* unused harmony export getCurrentMonth */
+/* unused harmony export getCurrentYear */
+/* unused harmony export getCurrentTime */
 /* unused harmony export DATE_FORMATS */
 /* harmony export (immutable) */ __webpack_exports__["e"] = getTodayTime;
 /* harmony export (immutable) */ __webpack_exports__["d"] = getTitleString;
@@ -397,14 +395,14 @@ exports.default = _assign2.default || function (target) {
 /* unused harmony export isTimeValid */
 /* harmony export (immutable) */ __webpack_exports__["h"] = isAllowedDate;
 /* harmony export (immutable) */ __webpack_exports__["a"] = formatDate;
+/* unused harmony export isLeapYear */
 /* unused harmony export validateCalendarDay */
 /* harmony export (immutable) */ __webpack_exports__["j"] = tokenizeFormattedDate;
 /* unused harmony export hasSpecialChar */
 /* unused harmony export validateTime */
 /* unused harmony export delimate */
 /* unused harmony export validateCalendarYear */
-/* unused harmony export isLeapYear */
-/* unused harmony export validateCalendarDayAndMonth */
+/* unused harmony export validateAndNormalizeDate */
 /* unused harmony export getDatePart */
 /* harmony export (immutable) */ __webpack_exports__["g"] = initializeStr;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(7);
@@ -418,12 +416,18 @@ exports.default = _assign2.default || function (target) {
 
 
 __WEBPACK_IMPORTED_MODULE_1_dayjs___default.a.extend(__WEBPACK_IMPORTED_MODULE_2_dayjs_plugin_utc___default.a);
-var currentDate = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().date();
-var currentMonth = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().month() + 1;
-var currentYear = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().year();
-var stringCurrentDate = String(currentDate).padStart(2, '0');
-var stringCurrentMonth = String(currentMonth).padStart(2, '0');
-var currentTime = __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().format('HH:mm');
+var getCurrentDate = function getCurrentDate() {
+  return __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().date();
+};
+var getCurrentMonth = function getCurrentMonth() {
+  return __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().month() + 1;
+};
+var getCurrentYear = function getCurrentYear() {
+  return __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().year();
+};
+var getCurrentTime = function getCurrentTime() {
+  return __WEBPACK_IMPORTED_MODULE_1_dayjs___default()().format('HH:mm');
+};
 
 var DATE_FORMATS = {
   ISO: 'YYYY-MM-DD',
@@ -536,21 +540,24 @@ function formatDate(value, format) {
   return value.format(format);
 }
 
+var isLeapYear = function isLeapYear(year) {
+  return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
+};
+
 function validateCalendarDay(dayStr) {
   if (!/^\d+$/.test(dayStr)) return false;
   var day = Number(dayStr);
-  if ([1, 3, 5, 7, 8, 10, 12].includes(currentMonth)) {
+  var MONTHS_WITH_31_DAYS = [1, 3, 5, 7, 8, 10, 12];
+  var MONTHS_WITH_30_DAYS = [4, 6, 9, 11];
+  if (MONTHS_WITH_31_DAYS.includes(getCurrentMonth())) {
     return day >= 1 && day <= 31;
   }
-  if ([4, 6, 9, 11].includes(currentMonth)) {
+  if (MONTHS_WITH_30_DAYS.includes(getCurrentMonth())) {
     return day >= 1 && day <= 30;
   }
-  if (currentMonth === 2) {
-    var _isLeapYear = function _isLeapYear(year) {
-      return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
-    };
-    var year = currentYear;
-    if (_isLeapYear(year)) {
+  if (getCurrentMonth() === 2) {
+    var year = getCurrentYear();
+    if (isLeapYear(year)) {
       return day >= 1 && day <= 29;
     }
     return day >= 1 && day <= 28;
@@ -587,18 +594,18 @@ function hasSpecialChar(str) {
 
 function validateTime(inputTime) {
   if (!inputTime || typeof inputTime !== 'string') {
-    return currentTime;
+    return getCurrentTime();
   }
   var trimmed = inputTime.trim();
   var timeRegex = /^(\d{2}):(\d{2})$/;
   var match = trimmed.match(timeRegex);
   if (!match) {
-    return currentTime;
+    return getCurrentTime();
   }
   var hour = Number(match[1]);
   var minute = Number(match[2]);
   if (hour > 23 || minute > 59) {
-    return currentTime;
+    return getCurrentTime();
   }
   return match[1] + ':' + match[2];
 }
@@ -617,25 +624,21 @@ function delimate(format) {
 
 function validateCalendarYear(yearStr) {
   var year = yearStr;
-  if (!year || isNaN(year)) return currentYear;
+  if (!year || isNaN(year)) return getCurrentYear();
   if (year.length === 2) {
     if (Number(year) >= 0 && Number(year) < 69) {
-      return year ? '20' + year : currentYear;
+      return year ? '20' + year : getCurrentYear();
     } else if (Number(year) >= 69 && Number(year) < 100) {
-      return year ? '19' + year : currentYear;
+      return year ? '19' + year : getCurrentYear();
     }
   }
   if (year.length === 4) {
     return year;
   }
-  return year ? year.padStart(4, '0') : currentYear;
+  return year ? year.padStart(4, '0') : getCurrentYear();
 }
 
-var isLeapYear = function isLeapYear(year) {
-  return year % 4 === 0 && year % 100 !== 0 || year % 400 === 0;
-};
-
-function validateCalendarDayAndMonth(dayStr, monthStr, yearStr) {
+function validateAndNormalizeDate(dayStr, monthStr, yearStr) {
   var day = Number(dayStr);
   var month = Number(monthStr);
   var year = yearStr;
@@ -647,26 +650,26 @@ function validateCalendarDayAndMonth(dayStr, monthStr, yearStr) {
   var isValidDayTwentyEight = day < 1 || day > 28;
 
   if (month > 12 || month < 0 || !month) {
-    day = currentDate;
-    month = currentMonth;
-    year = currentYear;
+    day = getCurrentDate();
+    month = getCurrentMonth();
+    year = getCurrentYear();
   }
 
   if (isInThirtyOneDaysMonths && isValidDayThirtyOne || isInThirtyDaysMonths && isValidDayThirty) {
-    day = currentDate;
-    month = currentMonth;
-    year = currentYear;
+    day = getCurrentDate();
+    month = getCurrentMonth();
+    year = getCurrentYear();
   }
 
   if (month === 2) {
     if (isLeapYear(year) && isValidDayTwentyNight) {
-      day = currentDate;
-      month = currentMonth;
-      year = currentYear;
+      day = getCurrentDate();
+      month = getCurrentMonth();
+      year = getCurrentYear();
     } else if (isValidDayTwentyEight) {
-      day = currentDate;
-      month = currentMonth;
-      year = currentYear;
+      day = getCurrentDate();
+      month = getCurrentMonth();
+      year = getCurrentYear();
     }
   }
   return { day: day, month: month, year: year };
@@ -681,9 +684,9 @@ function getDatePart(str) {
 function initializeStr(str, format) {
   var inputStr = str;
   var inputStrLength = inputStr.length;
-  var time = currentTime;
+  var time = getCurrentTime();
   var hasSpecial = hasSpecialChar(inputStr);
-  var formattedArray = tokenizeFormattedDate(inputStr, format, DATE_FORMATS);
+  var formattedArray = tokenizeFormattedDate(inputStr, format);
   var dateDelimater = delimate(format);
   if (format === DATE_FORMATS.ISO) {
     var numStr = inputStr.replace(/[^0-9]/g, '');
@@ -693,12 +696,12 @@ function initializeStr(str, format) {
       var dateStr = numStr.slice(6, numStr.length) || '01';
       var validateYear = validateCalendarYear(yearStr);
 
-      var _validateCalendarDayA = validateCalendarDayAndMonth(dateStr, monthStr, validateYear),
-          day = _validateCalendarDayA.day,
-          month = _validateCalendarDayA.month;
+      var _validateAndNormalize = validateAndNormalizeDate(dateStr, monthStr, validateYear),
+          day = _validateAndNormalize.day,
+          month = _validateAndNormalize.month;
 
-      var _validateCalendarDayA2 = validateCalendarDayAndMonth(dateStr, monthStr, validateYear),
-          year = _validateCalendarDayA2.year;
+      var _validateAndNormalize2 = validateAndNormalizeDate(dateStr, monthStr, validateYear),
+          year = _validateAndNormalize2.year;
 
       day = String(day).padStart(2, 0);
       month = String(month).padStart(2, 0);
@@ -707,13 +710,13 @@ function initializeStr(str, format) {
     if (hasSpecial) {
       var _validateYear = validateCalendarYear(formattedArray[0]);
 
-      var _validateCalendarDayA3 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear),
-          _day = _validateCalendarDayA3.day,
-          _month = _validateCalendarDayA3.month; // eslint-disable-line max-len
+      var _validateAndNormalize3 = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear),
+          _day = _validateAndNormalize3.day,
+          _month = _validateAndNormalize3.month; // eslint-disable-line max-len
 
 
-      var _validateCalendarDayA4 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear),
-          _year = _validateCalendarDayA4.year; // eslint-disable-line max-len
+      var _validateAndNormalize4 = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear),
+          _year = _validateAndNormalize4.year; // eslint-disable-line max-len
 
 
       _day = String(_day).padStart(2, 0);
@@ -725,18 +728,18 @@ function initializeStr(str, format) {
       var _dateStr = inputStr.slice(6, 8) || '01';
       var _validateYear2 = validateCalendarYear(_yearStr);
 
-      var _validateCalendarDayA5 = validateCalendarDayAndMonth(_dateStr, _monthStr, _validateYear2),
-          _day2 = _validateCalendarDayA5.day,
-          _month2 = _validateCalendarDayA5.month;
+      var _validateAndNormalize5 = validateAndNormalizeDate(_dateStr, _monthStr, _validateYear2),
+          _day2 = _validateAndNormalize5.day,
+          _month2 = _validateAndNormalize5.month;
 
-      var _validateCalendarDayA6 = validateCalendarDayAndMonth(_dateStr, _monthStr, _validateYear2),
-          _year2 = _validateCalendarDayA6.year;
+      var _validateAndNormalize6 = validateAndNormalizeDate(_dateStr, _monthStr, _validateYear2),
+          _year2 = _validateAndNormalize6.year;
 
       _day2 = String(_day2).padStart(2, 0);
       _month2 = String(_month2).padStart(2, 0);
       return '' + _year2 + dateDelimater + _month2 + dateDelimater + _day2;
     } else if (inputStrLength > 8) {
-      return '' + currentYear + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0); // eslint-disable-line max-len
+      return '' + getCurrentYear() + dateDelimater + String(getCurrentMonth()).padStart(2, 0) + dateDelimater + String(getCurrentDate()).padStart(2, 0); // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.ISOAndTime) {
     var datePart = getDatePart(inputStr);
@@ -758,12 +761,12 @@ function initializeStr(str, format) {
       }
       var _validateYear3 = validateCalendarYear(_yearStr2);
 
-      var _validateCalendarDayA7 = validateCalendarDayAndMonth(_dateStr2, _monthStr2, _validateYear3),
-          _day3 = _validateCalendarDayA7.day,
-          _month3 = _validateCalendarDayA7.month;
+      var _validateAndNormalize7 = validateAndNormalizeDate(_dateStr2, _monthStr2, _validateYear3),
+          _day3 = _validateAndNormalize7.day,
+          _month3 = _validateAndNormalize7.month;
 
-      var _validateCalendarDayA8 = validateCalendarDayAndMonth(_dateStr2, _monthStr2, _validateYear3),
-          _year3 = _validateCalendarDayA8.year;
+      var _validateAndNormalize8 = validateAndNormalizeDate(_dateStr2, _monthStr2, _validateYear3),
+          _year3 = _validateAndNormalize8.year;
 
       _day3 = String(_day3).padStart(2, 0);
       _month3 = String(_month3).padStart(2, 0);
@@ -775,13 +778,13 @@ function initializeStr(str, format) {
       }
       var _validateYear4 = validateCalendarYear(formattedArray[0]);
 
-      var _validateCalendarDayA9 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear4),
-          _day4 = _validateCalendarDayA9.day,
-          _month4 = _validateCalendarDayA9.month; // eslint-disable-line max-len
+      var _validateAndNormalize9 = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear4),
+          _day4 = _validateAndNormalize9.day,
+          _month4 = _validateAndNormalize9.month; // eslint-disable-line max-len
 
 
-      var _validateCalendarDayA10 = validateCalendarDayAndMonth(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear4),
-          _year4 = _validateCalendarDayA10.year; // eslint-disable-line max-len
+      var _validateAndNormalize10 = validateAndNormalizeDate(formattedArray[2] || '01', formattedArray[1] || '01', _validateYear4),
+          _year4 = _validateAndNormalize10.year; // eslint-disable-line max-len
 
 
       time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
@@ -796,27 +799,27 @@ function initializeStr(str, format) {
       time = validateTime(timeParts[1] + ':' + timeParts[2]);
       var _validateYear5 = validateCalendarYear(_yearStr3);
 
-      var _validateCalendarDayA11 = validateCalendarDayAndMonth(_dateStr3, _monthStr3, _validateYear5),
-          _day5 = _validateCalendarDayA11.day,
-          _month5 = _validateCalendarDayA11.month;
+      var _validateAndNormalize11 = validateAndNormalizeDate(_dateStr3, _monthStr3, _validateYear5),
+          _day5 = _validateAndNormalize11.day,
+          _month5 = _validateAndNormalize11.month;
 
-      var _validateCalendarDayA12 = validateCalendarDayAndMonth(_dateStr3, _monthStr3, _validateYear5),
-          _year5 = _validateCalendarDayA12.year;
+      var _validateAndNormalize12 = validateAndNormalizeDate(_dateStr3, _monthStr3, _validateYear5),
+          _year5 = _validateAndNormalize12.year;
 
       _day5 = String(_day5).padStart(2, 0);
       _month5 = String(_month5).padStart(2, 0);
       return '' + _year5 + dateDelimater + _month5 + dateDelimater + _day5 + ' ' + time;
     } else if (datePart.length > 8) {
-      return '' + currentYear + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0) + '  ' + currentTime; // eslint-disable-line max-len
+      return '' + getCurrentYear() + dateDelimater + String(getCurrentMonth()).padStart(2, 0) + dateDelimater + String(getCurrentDate()).padStart(2, 0) + '  ' + getCurrentTime(); // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.US) {
     if (hasSpecial) {
       var _validateYear6 = validateCalendarYear(formattedArray[2]);
 
-      var _validateCalendarDayA13 = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], _validateYear6),
-          _day6 = _validateCalendarDayA13.day,
-          _month6 = _validateCalendarDayA13.month,
-          _year6 = _validateCalendarDayA13.year; // eslint-disable-line max-len
+      var _validateAndNormalize13 = validateAndNormalizeDate(formattedArray[1] || '1', formattedArray[0], _validateYear6),
+          _day6 = _validateAndNormalize13.day,
+          _month6 = _validateAndNormalize13.month,
+          _year6 = _validateAndNormalize13.year; // eslint-disable-line max-len
 
 
       return '' + _month6 + dateDelimater + _day6 + dateDelimater + _year6;
@@ -826,14 +829,14 @@ function initializeStr(str, format) {
       var _yearStr4 = inputStr.slice(4, inputStr.length);
       var _validateYear7 = validateCalendarYear(_yearStr4);
 
-      var _validateCalendarDayA14 = validateCalendarDayAndMonth(_dateStr4, _monthStr4, _validateYear7),
-          _day7 = _validateCalendarDayA14.day,
-          _month7 = _validateCalendarDayA14.month,
-          _year7 = _validateCalendarDayA14.year;
+      var _validateAndNormalize14 = validateAndNormalizeDate(_dateStr4, _monthStr4, _validateYear7),
+          _day7 = _validateAndNormalize14.day,
+          _month7 = _validateAndNormalize14.month,
+          _year7 = _validateAndNormalize14.year;
 
       return '' + _month7 + dateDelimater + _day7 + dateDelimater + _year7; // eslint-disable-line max-len
     } else if (inputStrLength > 8) {
-      return '' + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0) + dateDelimater + currentYear; // eslint-disable-line max-len
+      return '' + String(getCurrentMonth()).padStart(2, 0) + dateDelimater + String(getCurrentDate()).padStart(2, 0) + dateDelimater + getCurrentYear(); // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.USAndTime) {
     var _datePart = getDatePart(inputStr);
@@ -841,14 +844,14 @@ function initializeStr(str, format) {
     var _isDateSpecial = hasSpecialChar(_datePart);
     if (_isDateSpecial) {
       if (_formattedDateArray.length < 3) {
-        formattedArray.splice(2, 0, String(currentYear));
+        formattedArray.splice(2, 0, String(getCurrentYear()));
       }
       var _validateYear8 = validateCalendarYear(formattedArray[2]);
 
-      var _validateCalendarDayA15 = validateCalendarDayAndMonth(formattedArray[1] || '1', formattedArray[0], _validateYear8),
-          _day8 = _validateCalendarDayA15.day,
-          _month8 = _validateCalendarDayA15.month,
-          _year8 = _validateCalendarDayA15.year; // eslint-disable-line max-len
+      var _validateAndNormalize15 = validateAndNormalizeDate(formattedArray[1] || '1', formattedArray[0], _validateYear8),
+          _day8 = _validateAndNormalize15.day,
+          _month8 = _validateAndNormalize15.month,
+          _year8 = _validateAndNormalize15.year; // eslint-disable-line max-len
 
 
       time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
@@ -859,28 +862,28 @@ function initializeStr(str, format) {
       var _yearStr5 = _datePart.slice(4, _datePart.length);
       var _validateYear9 = validateCalendarYear(_yearStr5); // eslint-disable-line max-len
 
-      var _validateCalendarDayA16 = validateCalendarDayAndMonth(_dateStr5, _monthStr5, _validateYear9),
-          _day9 = _validateCalendarDayA16.day,
-          _month9 = _validateCalendarDayA16.month,
-          _year9 = _validateCalendarDayA16.year;
+      var _validateAndNormalize16 = validateAndNormalizeDate(_dateStr5, _monthStr5, _validateYear9),
+          _day9 = _validateAndNormalize16.day,
+          _month9 = _validateAndNormalize16.month,
+          _year9 = _validateAndNormalize16.year;
 
       var _timeParts = tokenizeFormattedDate(inputStr, format);
-      time = validateTime(_timeParts[1] + ':' + _timeParts[2]) || currentTime;
+      time = validateTime(_timeParts[1] + ':' + _timeParts[2]) || getCurrentTime();
       return '' + _month9 + dateDelimater + _day9 + dateDelimater + _year9 + ' ' + time;
     } else if (_datePart.length > 8) {
-      return '' + String(currentMonth).padStart(2, 0) + dateDelimater + String(currentDate).padStart(2, 0) + dateDelimater + currentYear + ' ' + currentTime; // eslint-disable-line max-len
+      return '' + String(getCurrentMonth()).padStart(2, 0) + dateDelimater + String(getCurrentDate()).padStart(2, 0) + dateDelimater + getCurrentYear() + ' ' + getCurrentTime(); // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.European || format === DATE_FORMATS.Germany_Russia_etc) {
     if (hasSpecial) {
       var _validateYear10 = validateCalendarYear(formattedArray[2]);
 
-      var _validateCalendarDayA17 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear10),
-          _day10 = _validateCalendarDayA17.day,
-          _month10 = _validateCalendarDayA17.month; // eslint-disable-line max-len
+      var _validateAndNormalize17 = validateAndNormalizeDate(formattedArray[0], formattedArray[1], _validateYear10),
+          _day10 = _validateAndNormalize17.day,
+          _month10 = _validateAndNormalize17.month; // eslint-disable-line max-len
 
 
-      var _validateCalendarDayA18 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear10),
-          _year10 = _validateCalendarDayA18.year; // eslint-disable-line max-len
+      var _validateAndNormalize18 = validateAndNormalizeDate(formattedArray[0], formattedArray[1], _validateYear10),
+          _year10 = _validateAndNormalize18.year; // eslint-disable-line max-len
 
 
       _day10 = String(_day10).padStart(2, 0);
@@ -892,20 +895,20 @@ function initializeStr(str, format) {
       var _yearStr6 = inputStr.slice(4, inputStr.length);
       var _validateYear11 = validateCalendarYear(_yearStr6);
 
-      var _validateCalendarDayA19 = validateCalendarDayAndMonth(_dateStr6, _monthStr6, _validateYear11),
-          _year11 = _validateCalendarDayA19.year; // eslint-disable-line max-len
+      var _validateAndNormalize19 = validateAndNormalizeDate(_dateStr6, _monthStr6, _validateYear11),
+          _year11 = _validateAndNormalize19.year; // eslint-disable-line max-len
 
 
-      var _validateCalendarDayA20 = validateCalendarDayAndMonth(_dateStr6, _monthStr6, _validateYear11),
-          _day11 = _validateCalendarDayA20.day,
-          _month11 = _validateCalendarDayA20.month; // eslint-disable-line max-len
+      var _validateAndNormalize20 = validateAndNormalizeDate(_dateStr6, _monthStr6, _validateYear11),
+          _day11 = _validateAndNormalize20.day,
+          _month11 = _validateAndNormalize20.month; // eslint-disable-line max-len
 
 
       _day11 = String(_day11).padStart(2, 0);
       _month11 = String(_month11).padStart(2, 0);
       return '' + _day11 + dateDelimater + _month11 + dateDelimater + _year11;
     } else if (inputStrLength > 8) {
-      return '' + String(currentDate).padStart(2, 0) + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + currentYear; // eslint-disable-line max-len
+      return '' + String(getCurrentDate()).padStart(2, 0) + dateDelimater + String(getCurrentMonth()).padStart(2, 0) + dateDelimater + getCurrentYear(); // eslint-disable-line max-len
     }
   } else if (format === DATE_FORMATS.EuropeanAndTime || format === DATE_FORMATS.Germany_Russia_etcAndTime) {
     var _datePart2 = getDatePart(inputStr);
@@ -913,17 +916,17 @@ function initializeStr(str, format) {
     var _isDateSpecial2 = hasSpecialChar(_datePart2);
     if (_isDateSpecial2) {
       if (_formattedDateArray2.length < 3) {
-        formattedArray.splice(2, 0, String(currentYear));
+        formattedArray.splice(2, 0, String(getCurrentYear()));
       }
       var _validateYear12 = validateCalendarYear(formattedArray[2]);
 
-      var _validateCalendarDayA21 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear12),
-          _day12 = _validateCalendarDayA21.day,
-          _month12 = _validateCalendarDayA21.month; // eslint-disable-line max-len
+      var _validateAndNormalize21 = validateAndNormalizeDate(formattedArray[0], formattedArray[1], _validateYear12),
+          _day12 = _validateAndNormalize21.day,
+          _month12 = _validateAndNormalize21.month; // eslint-disable-line max-len
 
 
-      var _validateCalendarDayA22 = validateCalendarDayAndMonth(formattedArray[0], formattedArray[1], _validateYear12),
-          _year12 = _validateCalendarDayA22.year; // eslint-disable-line max-len
+      var _validateAndNormalize22 = validateAndNormalizeDate(formattedArray[0], formattedArray[1], _validateYear12),
+          _year12 = _validateAndNormalize22.year; // eslint-disable-line max-len
 
 
       time = validateTime(formattedArray[3] + ':' + formattedArray[4]);
@@ -938,18 +941,18 @@ function initializeStr(str, format) {
       time = validateTime(_timeParts2[1] + ':' + _timeParts2[2]);
       var _validateYear13 = validateCalendarYear(_yearStr7);
 
-      var _validateCalendarDayA23 = validateCalendarDayAndMonth(_dateStr7, _monthStr7, _validateYear13),
-          _day13 = _validateCalendarDayA23.day,
-          _month13 = _validateCalendarDayA23.month;
+      var _validateAndNormalize23 = validateAndNormalizeDate(_dateStr7, _monthStr7, _validateYear13),
+          _day13 = _validateAndNormalize23.day,
+          _month13 = _validateAndNormalize23.month;
 
-      var _validateCalendarDayA24 = validateCalendarDayAndMonth(_dateStr7, _monthStr7, _validateYear13),
-          _year13 = _validateCalendarDayA24.year;
+      var _validateAndNormalize24 = validateAndNormalizeDate(_dateStr7, _monthStr7, _validateYear13),
+          _year13 = _validateAndNormalize24.year;
 
       _day13 = String(_day13).padStart(2, 0);
       _month13 = String(_month13).padStart(2, 0);
       return '' + _day13 + dateDelimater + _month13 + dateDelimater + _year13 + ' ' + time;
     } else if (_datePart2.length > 8) {
-      return '' + String(currentDate).padStart(2, 0) + dateDelimater + String(currentMonth).padStart(2, 0) + dateDelimater + currentYear + ' ' + currentTime; // eslint-disable-line max-len
+      return '' + String(getCurrentDate()).padStart(2, 0) + dateDelimater + String(getCurrentMonth()).padStart(2, 0) + dateDelimater + getCurrentYear() + ' ' + getCurrentTime(); // eslint-disable-line max-len
     }
   }
 }

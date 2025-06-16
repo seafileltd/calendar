@@ -2297,14 +2297,14 @@ var Calendar = function (_React$Component) {
 
       timePickerEle = __WEBPACK_IMPORTED_MODULE_4_react___default.a.cloneElement(timePicker, timePickerProps);
     }
-    var calanderInputPlaceholder = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
+    var calendarInputPlaceholder = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
 
     var dateInputElement = props.showDateInput ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_16__date_DateInput__["a" /* default */], {
       format: this.getFormat(),
       key: 'date-input',
       value: value,
       locale: locale,
-      placeholder: calanderInputPlaceholder,
+      placeholder: calendarInputPlaceholder,
       showClear: true,
       disabledTime: disabledTime,
       disabledDate: disabledDate,
@@ -2683,9 +2683,10 @@ var CalendarRightPanel = function (_React$Component) {
       _this.timeRef.current.scrollBy(0, 200);
     };
 
+    var format = Array.isArray(_this.props.format) ? _this.props.format[0] : _this.props.format;
     _this.state = {
       highlightTime: _this.props.value || null,
-      localeFormat: _this.props.format[0]
+      localeFormat: format
     };
     _this.timeRef = __WEBPACK_IMPORTED_MODULE_3_react___default.a.createRef();
     _this.times = _this.getTimes();
