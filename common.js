@@ -891,7 +891,7 @@ function initializeStr(str, format) {
       return '' + _day10 + dateDelimater + _month10 + dateDelimater + _year10;
     } else if (inputStrLength >= 1 && inputStrLength <= 8) {
       var _dateStr6 = inputStr.slice(0, 2);
-      var _monthStr6 = inputStr.slice(2, 4);
+      var _monthStr6 = inputStr.slice(2, 4) || getCurrentMonth();
       var _yearStr6 = inputStr.slice(4, inputStr.length);
       var _validateYear11 = validateCalendarYear(_yearStr6);
 
@@ -935,7 +935,7 @@ function initializeStr(str, format) {
       return '' + _day12 + dateDelimater + _month12 + dateDelimater + _year12 + ' ' + time;
     } else if (_datePart2.length >= 1 && _datePart2.length <= 8) {
       var _dateStr7 = _datePart2.slice(0, 2);
-      var _monthStr7 = _datePart2.slice(2, 4);
+      var _monthStr7 = _datePart2.slice(2, 4) || getCurrentMonth();
       var _yearStr7 = _datePart2.slice(4, _datePart2.length);
       var _timeParts2 = tokenizeFormattedDate(inputStr, format);
       time = validateTime(_timeParts2[1] + ':' + _timeParts2[2]);
