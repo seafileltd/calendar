@@ -406,7 +406,7 @@ export function initializeStr(str, format) {
       return `${day}${dateDelimater}${month}${dateDelimater}${year}`;
     } else if (inputStrLength >= 1 && inputStrLength <= 8) {
       const dateStr = inputStr.slice(0, 2);
-      const monthStr = inputStr.slice(2, 4);
+      const monthStr = inputStr.slice(2, 4) || getCurrentMonth();
       const yearStr = inputStr.slice(4, inputStr.length);
       const validateYear = validateCalendarYear(yearStr);
       const { year } = validateAndNormalizeDate(dateStr, monthStr, validateYear); // eslint-disable-line max-len
@@ -436,7 +436,7 @@ export function initializeStr(str, format) {
       return `${day}${dateDelimater}${month}${dateDelimater}${year} ${time}`;
     } else if (datePart.length >= 1 && datePart.length <= 8) {
       const dateStr = datePart.slice(0, 2);
-      const monthStr = datePart.slice(2, 4);
+      const monthStr = datePart.slice(2, 4) || getCurrentMonth();
       const yearStr = datePart.slice(4, datePart.length);
       const timeParts = tokenizeFormattedDate(inputStr, format);
       time = validateTime(`${timeParts[1]}:${timeParts[2]}`);
