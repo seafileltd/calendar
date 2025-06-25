@@ -1749,6 +1749,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onInputChange = function (event) {
     var str = event.target.value;
+    console.log('str', str);
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
@@ -1758,10 +1759,10 @@ var _initialiseProps = function _initialiseProps() {
 
     // 没有内容，合法并直接退出
 
-    if (!calendarStr) {
+    if (!str) {
       onChange(null);
       var nowDay = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()().format(format[0]);
-      _this2.setState({ str: nowDay });
+      _this2.setState({ str: '' });
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
