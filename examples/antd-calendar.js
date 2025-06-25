@@ -3311,7 +3311,7 @@ var _initialiseProps = function _initialiseProps() {
 
     if (!calendarStr) {
       onChange(null);
-      _this2.setState({ str: '' });
+      _this2.setState({ str: __WEBPACK_IMPORTED_MODULE_8_dayjs___default()() });
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
