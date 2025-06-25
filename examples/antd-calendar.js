@@ -3287,8 +3287,7 @@ DateInput.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  defaultValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -3305,14 +3304,13 @@ var _initialiseProps = function _initialiseProps() {
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
         format = _props.format,
-        defaultValue = _props.defaultValue,
         onChange = _props.onChange,
         selectedValue = _props.selectedValue;
 
     // 没有内容，合法并直接退出
 
     if (!str) {
-      console.log('defayltValue', defaultValue);
+      console.log('selectedValue', selectedValue);
       onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
       _this2.setState({ str: '' });
       return;
@@ -7456,7 +7454,6 @@ var Calendar = function (_React$Component) {
       key: 'date-input',
       value: value,
       locale: locale,
-      defaultValue: props.defaultValue,
       placeholder: calendarInputPlaceholder,
       showClear: true,
       disabledTime: disabledTime,
