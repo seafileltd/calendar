@@ -3538,7 +3538,9 @@ var _initialiseProps = function _initialiseProps() {
 
     if (!calendarStr) {
       onChange(null);
-      _this2.setState({ str: __WEBPACK_IMPORTED_MODULE_8_dayjs___default()() });
+      var nowDay = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()().format(format);
+      console.log('nowDay', nowDay);
+      _this2.setState({ str: nowDay });
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
