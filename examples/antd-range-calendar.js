@@ -3300,7 +3300,6 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onInputChange = function (event) {
     var str = event.target.value;
-    console.log('str', str);
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
@@ -3311,9 +3310,9 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str) {
+      var defayltValue = _this2.props.value;
+      console.log('defayltValue', defayltValue);
       onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
-      console.log(111);
-      var nowDay = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()().format(format[0]);
       _this2.setState({ str: '' });
       return;
     }
