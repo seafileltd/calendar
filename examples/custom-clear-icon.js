@@ -1760,7 +1760,8 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str) {
-      onChange(null);
+      onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+      console.log(111);
       var nowDay = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()().format(format[0]);
       _this2.setState({ str: '' });
       return;
