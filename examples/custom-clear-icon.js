@@ -1743,8 +1743,8 @@ var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
+    console.log('我走进来了');
     _this2.setState({ str: '' });
-    _this2.props.onChange(null);
     _this2.props.onClear(null);
   };
 
@@ -1757,10 +1757,10 @@ var _initialiseProps = function _initialiseProps() {
         onChange = _props.onChange,
         selectedValue = _props.selectedValue;
 
+    console.log('str', str);
     // 没有内容，合法并直接退出
-
     if (!str) {
-      _this2.props.onClear(null);
+      onChange(null);
       _this2.setState({ str: '' });
       return;
     }
