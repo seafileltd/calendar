@@ -3295,6 +3295,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onClear = function () {
     _this2.setState({ str: '' });
+    _this2.props.onChange(null);
     _this2.props.onClear(null);
   };
 
@@ -3310,7 +3311,7 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str) {
-      onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+      _this2.props.onClear(null);
       _this2.setState({ str: '' });
       return;
     }
