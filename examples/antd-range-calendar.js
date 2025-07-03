@@ -3289,7 +3289,7 @@ DateInput.propTypes = {
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
   inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  defaultValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object
+  defaultInputValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -3308,12 +3308,12 @@ var _initialiseProps = function _initialiseProps() {
         format = _props.format,
         onChange = _props.onChange,
         selectedValue = _props.selectedValue,
-        defaultValue = _props.defaultValue;
+        defaultInputValue = _props.defaultInputValue;
 
     console.log('calendarStr', !calendarStr);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
-    console.log('defaultValue', defaultValue);
+    console.log('defaultValue', defaultInputValue);
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
     if (!value || disabledDate && disabledDate(value)) {
@@ -3323,7 +3323,7 @@ var _initialiseProps = function _initialiseProps() {
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
-      var changeVal = !calendarStr ? defaultValue : value;
+      var changeVal = !calendarStr ? defaultInputValue : value;
       console.log('changeVal', changeVal);
       onChange(changeVal);
     }
@@ -6838,6 +6838,7 @@ var _initialiseProps = function _initialiseProps() {
     var extraProps = {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
+      defaultInputValue: calendarProps.defaultValue,
       selectedValue: value,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),

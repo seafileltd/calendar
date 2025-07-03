@@ -6763,6 +6763,7 @@ var _initialiseProps = function _initialiseProps() {
     var extraProps = {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
+      defaultInputValue: calendarProps.defaultValue,
       selectedValue: value,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),
