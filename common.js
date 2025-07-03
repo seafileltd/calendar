@@ -683,6 +683,7 @@ function getDatePart(str) {
 
 function initializeStr(str, format) {
   var inputStr = str;
+  if (!inputStr) return '';
   var inputStrLength = inputStr.length;
   var time = getCurrentTime();
   var hasSpecial = hasSpecialChar(inputStr);

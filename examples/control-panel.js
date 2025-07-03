@@ -3310,15 +3310,10 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue,
         defaultValue = _props.defaultValue;
 
-    console.log('str', str);
-    // 没有内容，合法并直接退出
-    if (!str) {
-      onChange(defaultValue);
-      _this2.setState({ str: '' });
-      return;
-    }
+    console.log('calendarStr', calendarStr);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
+    console.log('value', value);
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
     if (!value || disabledDate && disabledDate(value)) {
