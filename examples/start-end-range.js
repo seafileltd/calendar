@@ -3463,6 +3463,8 @@ var DateInput = function (_React$Component) {
         defaultValue = props.defaultValue;
 
     console.log('defaultValue', defaultValue);
+    console.log('str', str);
+
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-input-wrap' },
