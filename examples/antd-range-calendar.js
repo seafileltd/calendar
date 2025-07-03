@@ -3310,7 +3310,7 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue,
         defaultValue = _props.defaultValue;
 
-    console.log('calendarStr', calendarStr);
+    console.log('calendarStr', !calendarStr);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     console.log('value', value);
