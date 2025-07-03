@@ -3461,7 +3461,6 @@ var DateInput = function (_React$Component) {
         clearIcon = props.clearIcon,
         inputMode = props.inputMode;
 
-
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-input-wrap' },
@@ -3510,8 +3509,7 @@ DateInput.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  defaultInputValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -3529,15 +3527,21 @@ var _initialiseProps = function _initialiseProps() {
         disabledDate = _props.disabledDate,
         format = _props.format,
         onChange = _props.onChange,
-        selectedValue = _props.selectedValue,
-        defaultInputValue = _props.defaultInputValue;
+        selectedValue = _props.selectedValue;
 
-    console.log('calendarStr', !calendarStr);
+    // 没有内容，合法并直接退出
+    // if (!str) {
+    //   onChange(null);
+    //   this.setState({ str: '' });
+    //   return;
+    // }
+
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
-    console.log('defaultValue', defaultInputValue);
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
+    console.log('calendarStr', calendarStr);
 
+    console.log('value', value);
     if (!value || disabledDate && disabledDate(value)) {
       _this2.setState({ str: str });
       return;
@@ -3545,9 +3549,7 @@ var _initialiseProps = function _initialiseProps() {
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
-      var changeVal = !calendarStr ? defaultInputValue : value;
-      console.log('changeVal', changeVal);
-      onChange(changeVal);
+      onChange(value);
     }
   };
 
@@ -7066,14 +7068,12 @@ var _initialiseProps = function _initialiseProps() {
     var props = _this2.props;
     var state = _this2.state;
     var calendarProps = props.calendar.props;
-    console.log('calendarProps', calendarProps);
     var value = state.value;
 
     var defaultValue = value;
     var extraProps = {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
-      defaultInputValue: calendarProps.defaultValue,
       selectedValue: value,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),

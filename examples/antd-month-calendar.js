@@ -6757,14 +6757,12 @@ var _initialiseProps = function _initialiseProps() {
     var props = _this2.props;
     var state = _this2.state;
     var calendarProps = props.calendar.props;
-    console.log('calendarProps', calendarProps);
     var value = state.value;
 
     var defaultValue = value;
     var extraProps = {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
-      defaultInputValue: calendarProps.defaultValue,
       selectedValue: value,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),
