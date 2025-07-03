@@ -3237,11 +3237,8 @@ var DateInput = function (_React$Component) {
         prefixCls = props.prefixCls,
         placeholder = props.placeholder,
         clearIcon = props.clearIcon,
-        inputMode = props.inputMode,
-        defaultValue = props.defaultValue;
+        inputMode = props.inputMode;
 
-    console.log('defaultValue', defaultValue);
-    console.log('str', str);
 
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
@@ -3291,7 +3288,8 @@ DateInput.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  defaultValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -3309,12 +3307,13 @@ var _initialiseProps = function _initialiseProps() {
         disabledDate = _props.disabledDate,
         format = _props.format,
         onChange = _props.onChange,
-        selectedValue = _props.selectedValue;
+        selectedValue = _props.selectedValue,
+        defaultValue = _props.defaultValue;
 
     console.log('str', str);
     // 没有内容，合法并直接退出
     if (!str) {
-      onChange(null);
+      onChange(defaultValue);
       _this2.setState({ str: '' });
       return;
     }
