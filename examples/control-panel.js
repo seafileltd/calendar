@@ -3323,7 +3323,8 @@ var _initialiseProps = function _initialiseProps() {
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
-      var changeVal = calendarStr ? value : defaultValue;
+      var changeVal = calendarStr === '' ? defaultValue : value;
+      console.log('changeVal', changeVal);
       onChange(changeVal);
     }
   };
