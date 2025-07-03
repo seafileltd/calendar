@@ -7461,7 +7461,7 @@ var Calendar = function (_React$Component) {
       disabledTime: disabledTime,
       disabledDate: disabledDate,
       onClear: this.onClear,
-      defaultValue: defaultInputValue,
+      defaultInputValue: defaultInputValue,
       prefixCls: prefixCls,
       selectedValue: selectedValue,
       onChange: this.onDateInputChange,
