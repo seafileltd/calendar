@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DateConstants from './DateConstants';
 import { getTitleString, getTodayTime } from '../util/';
+import dayjs from 'dayjs';
 
 const { DATE_ROW_COLUMN_COUNT, DAY_NAME_TO_INDEX } = DateConstants;
 
@@ -41,6 +42,7 @@ export default class DateTBody extends React.Component {
     hoverValue: PropTypes.any,
     showWeekNumber: PropTypes.bool,
     firstDayOfWeek: PropTypes.string,
+    currentStatus: PropTypes.number,
   }
 
   static defaultProps = {
@@ -52,7 +54,7 @@ export default class DateTBody extends React.Component {
     const {
       contentRender, prefixCls, selectedValue, value,
       showWeekNumber, dateRender, disabledDate,
-      hoverValue, firstDayOfWeek,
+      hoverValue, firstDayOfWeek, currentStatus,
     } = props;
     let iIndex;
     let jIndex;
@@ -120,7 +122,11 @@ export default class DateTBody extends React.Component {
       for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         let next = null;
         let last = null;
-        current = dateTable[passed];
+        if (currentStatus === 1) {
+          current = dateTable[passed].hour(dayjs().hour()).minute(dayjs().minute()).second(dayjs().second());  // eslint-disable-line max-len
+        } else {
+          current = dateTable[passed];
+        }
         if (jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT - 1) {
           next = dateTable[passed + 1];
         }

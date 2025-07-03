@@ -60,9 +60,8 @@ class DateInput extends React.Component {
     const { disabledDate, format, onChange, selectedValue } = this.props;
 
     // 没有内容，合法并直接退出
-    if (!str) {
-      onChange(dayjs());
-      this.setState({ str: '' });
+    if (!str || !calendarStr) {
+      this.onClear();
       return;
     }
     const parsed = dayjs(calendarStr, format[0]);
