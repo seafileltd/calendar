@@ -3237,8 +3237,10 @@ var DateInput = function (_React$Component) {
         prefixCls = props.prefixCls,
         placeholder = props.placeholder,
         clearIcon = props.clearIcon,
-        inputMode = props.inputMode;
+        inputMode = props.inputMode,
+        defaultValue = props.defaultValue;
 
+    console.log('defaultValue', defaultValue);
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-input-wrap' },
@@ -3294,7 +3296,6 @@ var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
-    console.log('我走进来了');
     _this2.setState({ str: '' });
     _this2.props.onClear(null);
   };
@@ -7171,7 +7172,8 @@ var Calendar = function (_React$Component) {
         inputMode = props.inputMode,
         showHourAndMinute = props.showHourAndMinute,
         firstDayOfWeek = props.firstDayOfWeek,
-        showWeekNumber = props.showWeekNumber;
+        showWeekNumber = props.showWeekNumber,
+        defaultValue = props.defaultValue;
     var value = state.value,
         selectedValue = state.selectedValue,
         mode = state.mode;
@@ -7210,6 +7212,7 @@ var Calendar = function (_React$Component) {
       disabledTime: disabledTime,
       disabledDate: disabledDate,
       onClear: this.onClear,
+      defaultValue: defaultValue,
       prefixCls: prefixCls,
       selectedValue: selectedValue,
       onChange: this.onDateInputChange,

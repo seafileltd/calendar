@@ -3459,8 +3459,10 @@ var DateInput = function (_React$Component) {
         prefixCls = props.prefixCls,
         placeholder = props.placeholder,
         clearIcon = props.clearIcon,
-        inputMode = props.inputMode;
+        inputMode = props.inputMode,
+        defaultValue = props.defaultValue;
 
+    console.log('defaultValue', defaultValue);
     return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
       'div',
       { className: prefixCls + '-input-wrap' },
@@ -3516,7 +3518,6 @@ var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
-    console.log('我走进来了');
     _this2.setState({ str: '' });
     _this2.props.onClear(null);
   };
