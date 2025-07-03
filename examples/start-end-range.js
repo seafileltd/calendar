@@ -3521,7 +3521,6 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onInputChange = function (event) {
-    console.log(_this2.props.defaultCalendarValue);
     var str = event.target.value;
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
@@ -3533,16 +3532,14 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str) {
-      onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+      onChange(null);
       _this2.setState({ str: '' });
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-    // console.log('calendarStr',calendarStr)
 
-    // console.log('value',value)
     if (!value || disabledDate && disabledDate(value)) {
       _this2.setState({ str: str });
       return;
@@ -7075,7 +7072,6 @@ var _initialiseProps = function _initialiseProps() {
     var extraProps = {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
-      defaultCalendarValue: calendarProps.defaultCalendarValue,
       selectedValue: value,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),
