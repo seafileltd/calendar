@@ -3550,7 +3550,8 @@ var _initialiseProps = function _initialiseProps() {
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
-      onChange(value);
+      var changeVal = calendarStr ? value : defaultValue;
+      onChange(changeVal);
     }
   };
 
