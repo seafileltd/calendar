@@ -1762,7 +1762,7 @@ var _initialiseProps = function _initialiseProps() {
     console.log('calendarStr', !calendarStr);
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
-    console.log('value', value);
+    console.log('defaultValue', defaultValue);
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
     if (!value || disabledDate && disabledDate(value)) {
