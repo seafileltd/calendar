@@ -2630,7 +2630,7 @@ var DateTBody = function (_React$Component) {
         var next = null;
         var last = null;
         if (currentStatus === 1) {
-          current = dateTable[passed].hour(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().hour()).minute(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().minute()).second(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().second());;
+          current = dateTable[passed].hour(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().hour()).minute(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().minute()).second(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().second()); // eslint-disable-line max-len
         } else {
           current = dateTable[passed];
         }
@@ -3523,7 +3523,8 @@ DateInput.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
+  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -3541,11 +3542,16 @@ var _initialiseProps = function _initialiseProps() {
         disabledDate = _props.disabledDate,
         format = _props.format,
         onChange = _props.onChange,
-        selectedValue = _props.selectedValue;
+        selectedValue = _props.selectedValue,
+        shouldDisplayCurrent = _props.shouldDisplayCurrent;
 
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
+      if (shouldDisplayCurrent) {
+        _this2.setState({ str: '' });
+        _this2.onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+      }
       _this2.onClear();
       return;
     }
@@ -7355,6 +7361,7 @@ var _initialiseProps = function _initialiseProps() {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
       selectedValue: value,
+      shouldDisplayCurrent: calendarProps.shouldDisplayCurrent,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),
       onSelect: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onSelect, _this2.onCalendarSelect),
@@ -7589,7 +7596,8 @@ var Calendar = function (_React$Component) {
         inputMode = props.inputMode,
         showHourAndMinute = props.showHourAndMinute,
         firstDayOfWeek = props.firstDayOfWeek,
-        showWeekNumber = props.showWeekNumber;
+        showWeekNumber = props.showWeekNumber,
+        shouldDisplayCurrent = props.shouldDisplayCurrent;
     var value = state.value,
         selectedValue = state.selectedValue,
         mode = state.mode,
@@ -7626,6 +7634,7 @@ var Calendar = function (_React$Component) {
       locale: locale,
       placeholder: calendarInputPlaceholder,
       showClear: true,
+      shouldDisplayCurrent: shouldDisplayCurrent,
       disabledTime: disabledTime,
       disabledDate: disabledDate,
       onClear: this.onClear,
@@ -7766,7 +7775,8 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   inputMode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
   onBlur: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
+  firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool
 });
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_14__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_15__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
