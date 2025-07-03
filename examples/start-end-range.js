@@ -3521,6 +3521,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onInputChange = function (event) {
+    console.log(_this2.props);
     var str = event.target.value;
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
@@ -3530,12 +3531,12 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue;
 
     // 没有内容，合法并直接退出
-    // if (!str) {
-    //   onChange(null);
-    //   this.setState({ str: '' });
-    //   return;
-    // }
 
+    if (!str) {
+      onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+      _this2.setState({ str: '' });
+      return;
+    }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
