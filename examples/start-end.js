@@ -3324,6 +3324,7 @@ var _initialiseProps = function _initialiseProps() {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
         _this2.onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+        return;
       }
       _this2.onClear();
       return;
