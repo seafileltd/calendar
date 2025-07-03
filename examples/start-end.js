@@ -3307,11 +3307,12 @@ var _initialiseProps = function _initialiseProps() {
         onChange = _props.onChange,
         selectedValue = _props.selectedValue;
 
-    // 没有内容，合法并直接退出
+    console.log('calendarStr', !calendarStr);
+    console.log('str', !str);
 
-    if (!str) {
-      onChange(null);
-      _this2.setState({ str: '' });
+    // 没有内容，合法并直接退出
+    if (!str || !calendarStr) {
+      _this2.onClear();
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
