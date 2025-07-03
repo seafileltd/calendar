@@ -3299,7 +3299,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onInputChange = function (event) {
-    console.log(_this2.props);
+    console.log(_this2.props.defaultCalendarValue);
     var str = event.target.value;
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
@@ -3318,9 +3318,9 @@ var _initialiseProps = function _initialiseProps() {
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
-    console.log('calendarStr', calendarStr);
+    // console.log('calendarStr',calendarStr)
 
-    console.log('value', value);
+    // console.log('value',value)
     if (!value || disabledDate && disabledDate(value)) {
       _this2.setState({ str: str });
       return;
@@ -7173,7 +7173,8 @@ var Calendar = function (_React$Component) {
         inputMode = props.inputMode,
         showHourAndMinute = props.showHourAndMinute,
         firstDayOfWeek = props.firstDayOfWeek,
-        showWeekNumber = props.showWeekNumber;
+        showWeekNumber = props.showWeekNumber,
+        defaultCalendarValue = props.defaultCalendarValue;
     var value = state.value,
         selectedValue = state.selectedValue,
         mode = state.mode;
@@ -7213,6 +7214,7 @@ var Calendar = function (_React$Component) {
       disabledDate: disabledDate,
       onClear: this.onClear,
       prefixCls: prefixCls,
+      defaultCalendarValue: defaultCalendarValue,
       selectedValue: selectedValue,
       onChange: this.onDateInputChange,
       onSelect: this.onDateInputSelect,
@@ -7348,7 +7350,8 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   inputMode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
   onBlur: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
+  firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  defaultCalendarValue: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object
 });
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_14__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_15__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
