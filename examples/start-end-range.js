@@ -3541,10 +3541,10 @@ var _initialiseProps = function _initialiseProps() {
         shouldDisplayCurrent = _props.shouldDisplayCurrent;
     // 没有内容，合法并直接退出
 
-    if (!str) {
+    if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        onChange(null);
+        onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
         return;
       }
       _this2.onClear();
