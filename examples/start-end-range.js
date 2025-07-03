@@ -3540,12 +3540,12 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue,
         shouldDisplayCurrent = _props.shouldDisplayCurrent;
 
+    console.log('shouldDisplayCurrent', shouldDisplayCurrent);
     // 没有内容，合法并直接退出
-
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        _this2.onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+        onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
         return;
       }
       _this2.onClear();
