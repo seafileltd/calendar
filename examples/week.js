@@ -3546,7 +3546,7 @@ var _initialiseProps = function _initialiseProps() {
         shouldDisplayCurrent = _props.shouldDisplayCurrent;
     // 没有内容，合法并直接退出
 
-    if (!str || !calendarStr) {
+    if (!str) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
         onChange(null);
