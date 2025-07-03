@@ -7112,6 +7112,7 @@ var _initialiseProps = function _initialiseProps() {
     var props = _this2.props;
     var state = _this2.state;
     var calendarProps = props.calendar.props;
+    console.log('calendarProps', calendarProps);
     var value = state.value;
 
     var defaultValue = value;
