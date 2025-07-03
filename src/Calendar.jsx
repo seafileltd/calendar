@@ -73,6 +73,7 @@ class Calendar extends React.Component {
     onBlur: PropTypes.func,
     onClickRightPanelTime: PropTypes.func,
     firstDayOfWeek: PropTypes.string,
+    shouldDisplayCurrent: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -292,7 +293,7 @@ class Calendar extends React.Component {
       locale, prefixCls, disabledDate,
       dateInputPlaceholder, timePicker, onClickRightPanelTime,
       disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
-      firstDayOfWeek, showWeekNumber,
+      firstDayOfWeek, showWeekNumber, shouldDisplayCurrent,
     } = props;
     const { value, selectedValue, mode, currentStatus } = state;
     const showTimePicker = mode === 'time';
@@ -330,6 +331,7 @@ class Calendar extends React.Component {
         locale={locale}
         placeholder={calendarInputPlaceholder}
         showClear
+        shouldDisplayCurrent={shouldDisplayCurrent}
         disabledTime={disabledTime}
         disabledDate={disabledDate}
         onClear={this.onClear}

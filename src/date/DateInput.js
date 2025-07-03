@@ -29,6 +29,7 @@ class DateInput extends React.Component {
     selectedValue: PropTypes.object,
     clearIcon: PropTypes.node,
     inputMode: PropTypes.string,
+    shouldDisplayCurrent: PropTypes.bool,
   };
 
   constructor(props) {
@@ -57,10 +58,14 @@ class DateInput extends React.Component {
   onInputChange = (event) => {
     const str = event.target.value;
     const calendarStr = initializeStr(str, this.state.localFormat) || '';
-    const { disabledDate, format, onChange, selectedValue } = this.props;
-
+    const { disabledDate, format, onChange, selectedValue, shouldDisplayCurrent } = this.props;
     // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
+      if (shouldDisplayCurrent) {
+        this.setState({ str: '' });
+        onChange(null);
+        return;
+      }
       this.onClear();
       return;
     }
