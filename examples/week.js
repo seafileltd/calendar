@@ -3547,9 +3547,8 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (shouldDisplayCurrent && !calendarStr) {
-      console.log(111);
       _this2.setState({ str: '' });
-      onChange(null);
+      onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
       return;
     } else if (!str || !calendarStr) {
       _this2.onClear();
