@@ -1807,6 +1807,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onKeyDown = function (event) {
+    event.stopPropagation();
     var keyCode = event.keyCode;
     var _props2 = _this2.props,
         onSelect = _props2.onSelect,
