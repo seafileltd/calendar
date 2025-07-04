@@ -2320,9 +2320,9 @@ var Calendar = function (_React$Component) {
       timePickerEle = __WEBPACK_IMPORTED_MODULE_4_react___default.a.cloneElement(timePicker, timePickerProps);
     }
     var calendarInputPlaceholder = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
-    var inputFormat = Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat();
+
     var dateInputElement = props.showDateInput ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_16__date_DateInput__["a" /* default */], {
-      format: inputFormat,
+      format: this.getFormat(),
       key: 'date-input',
       value: value,
       locale: locale,
@@ -2421,7 +2421,7 @@ var Calendar = function (_React$Component) {
           onSelect: this.onDateTableSelect,
           onClickRightPanelTime: onClickRightPanelTime,
           defaultMinutesTime: this.props.defaultMinutesTime,
-          format: inputFormat
+          format: this.getFormat()
         })
       )
     ));
