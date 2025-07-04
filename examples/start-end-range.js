@@ -3493,8 +3493,8 @@ var DateInput = function (_React$Component) {
         'a',
         {
           role: 'button',
-          title: locale.clear
-          // onClick={this.onClear}
+          title: locale.clear,
+          onClick: this.onClear
         },
         clearIcon || __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('span', { className: prefixCls + '-clear-btn' })
       ) : null
@@ -3526,6 +3526,7 @@ var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
+    console.log('onClear');
     _this2.setState({ str: '' });
     _this2.props.onClear(null);
   };
@@ -3542,6 +3543,7 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
+      console.log('没有内容，合法并直接退出');
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
         onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
@@ -3554,10 +3556,10 @@ var _initialiseProps = function _initialiseProps() {
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
-    if (!value || disabledDate && disabledDate(value)) {
-      _this2.setState({ str: str });
-      return;
-    }
+    // if (!value || (disabledDate && disabledDate(value))) {
+    //   this.setState({ str });
+    //   return;
+    // }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
       _this2.setState({ str: str });
