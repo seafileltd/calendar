@@ -1771,7 +1771,7 @@ var _initialiseProps = function _initialiseProps() {
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        onChange(null);
+        onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
         return;
       }
       _this2.onClear();
