@@ -3323,7 +3323,7 @@ var _initialiseProps = function _initialiseProps() {
     console.log('str', str);
     console.log('calendarStr', calendarStr);
 
-    if (!str || !calendarStr) {
+    if (!str) {
       console.log('没有内容，合法并直接退出');
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
