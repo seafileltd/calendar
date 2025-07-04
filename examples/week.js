@@ -7626,7 +7626,8 @@ var Calendar = function (_React$Component) {
       timePickerEle = __WEBPACK_IMPORTED_MODULE_4_react___default.a.cloneElement(timePicker, timePickerProps);
     }
     var calendarInputPlaceholder = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
-    var inputFormat = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()]);
+    var inputFormat = Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()];
+
     var dateInputElement = props.showDateInput ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_16__date_DateInput__["a" /* default */], {
       format: inputFormat,
       key: 'date-input',
