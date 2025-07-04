@@ -1746,7 +1746,8 @@ DateInput.propTypes = {
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
   inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool
+  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool,
+  openValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -1766,12 +1767,13 @@ var _initialiseProps = function _initialiseProps() {
         onChange = _props.onChange,
         selectedValue = _props.selectedValue,
         shouldDisplayCurrent = _props.shouldDisplayCurrent;
-    // 没有内容，合法并直接退出
 
+    console.log('openValue', openValue);
+    // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        onChange(null);
+        onChange(openValue);
         return;
       }
       _this2.onClear();
@@ -2286,7 +2288,8 @@ var Calendar = function (_React$Component) {
         showHourAndMinute = props.showHourAndMinute,
         firstDayOfWeek = props.firstDayOfWeek,
         showWeekNumber = props.showWeekNumber,
-        shouldDisplayCurrent = props.shouldDisplayCurrent;
+        shouldDisplayCurrent = props.shouldDisplayCurrent,
+        openValue = props.openValue;
     var value = state.value,
         selectedValue = state.selectedValue,
         mode = state.mode,
@@ -2332,7 +2335,8 @@ var Calendar = function (_React$Component) {
       onChange: this.onDateInputChange,
       onSelect: this.onDateInputSelect,
       clearIcon: clearIcon,
-      inputMode: inputMode
+      inputMode: inputMode,
+      openValue: openValue
     }) : null;
 
     var children = [];
@@ -2465,7 +2469,8 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   onBlur: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool
+  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool,
+  openValue: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.object
 });
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_14__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_15__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
