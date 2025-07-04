@@ -1759,7 +1759,6 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onInputChange = function (event) {
     var str = event.target.value;
-    console.log(str);
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
@@ -1807,7 +1806,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onKeyDown = function (event) {
-    event.preventDefault();
+    if (event.keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].BACKSPACE || event.keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].DELETE) {
+      event.preventDefault();
+    }
     var keyCode = event.keyCode;
     var _props2 = _this2.props,
         onSelect = _props2.onSelect,
@@ -2495,6 +2496,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onKeyDown = function (event) {
+    console.log(111, event);
     if (event.target.nodeName.toLowerCase() === 'input') {
       return undefined;
     }
