@@ -3317,16 +3317,14 @@ var _initialiseProps = function _initialiseProps() {
         format = _props.format,
         onChange = _props.onChange,
         selectedValue = _props.selectedValue,
-        shouldDisplayCurrent = _props.shouldDisplayCurrent,
-        openValue = _props.openValue,
-        onClear = _props.onClear;
+        shouldDisplayCurrent = _props.shouldDisplayCurrent;
 
     console.log('openValue', openValue);
     // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        onClear(openValue);
+        _this2.props.onClear(openValue, shouldDisplayCurrent);
         return;
       }
       _this2.onClear();
