@@ -3319,13 +3319,12 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue,
         shouldDisplayCurrent = _props.shouldDisplayCurrent,
         openValue = _props.openValue;
-
-    console.log('openValue', openValue);
     // 没有内容，合法并直接退出
+
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        _this2.props.onClear(openValue, shouldDisplayCurrent);
+        _this2.props.onClear(openValue);
         return;
       }
       _this2.onClear();

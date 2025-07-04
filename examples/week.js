@@ -3546,13 +3546,12 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue,
         shouldDisplayCurrent = _props.shouldDisplayCurrent,
         openValue = _props.openValue;
-
-    console.log('openValue', openValue);
     // 没有内容，合法并直接退出
+
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        _this2.props.onClear(openValue, shouldDisplayCurrent);
+        _this2.props.onClear(openValue);
         return;
       }
       _this2.onClear();
@@ -7875,12 +7874,8 @@ var _initialiseProps = function _initialiseProps() {
     }
   };
 
-  this.onClear = function (value, shouldDisplayCurrent) {
-    if (shouldDisplayCurrent) {
-      _this2.onSelect(value || __WEBPACK_IMPORTED_MODULE_9_dayjs___default()());
-    } else {
-      _this2.onSelect(null);
-    }
+  this.onClear = function () {
+    _this2.onSelect(null);
     _this2.props.onClear();
     _this2.setState({ currentStatus: 1 });
   };
