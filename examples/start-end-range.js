@@ -3579,9 +3579,6 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.onKeyDown = function (event) {
-    if (event.keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].BACKSPACE || event.keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].DELETE) {
-      event.preventDefault();
-    }
     var keyCode = event.keyCode;
     var _props2 = _this2.props,
         onSelect = _props2.onSelect,
