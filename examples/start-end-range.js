@@ -3539,7 +3539,8 @@ var _initialiseProps = function _initialiseProps() {
         format = _props.format,
         onChange = _props.onChange,
         selectedValue = _props.selectedValue,
-        shouldDisplayCurrent = _props.shouldDisplayCurrent;
+        shouldDisplayCurrent = _props.shouldDisplayCurrent,
+        openValue = _props.openValue;
 
     console.log('openValue', openValue);
     // 没有内容，合法并直接退出
