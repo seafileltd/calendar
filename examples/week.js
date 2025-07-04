@@ -3498,8 +3498,8 @@ var DateInput = function (_React$Component) {
         'a',
         {
           role: 'button',
-          title: locale.clear,
-          onClick: this.onClear
+          title: locale.clear
+          // onClick={this.onClear}
         },
         clearIcon || __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('span', { className: prefixCls + '-clear-btn' })
       ) : null
