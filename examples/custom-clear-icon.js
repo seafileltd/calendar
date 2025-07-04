@@ -1753,7 +1753,6 @@ var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
-    console.log('onClear');
     _this2.setState({ str: '' });
     _this2.props.onClear(null);
   };
@@ -1769,11 +1768,7 @@ var _initialiseProps = function _initialiseProps() {
         shouldDisplayCurrent = _props.shouldDisplayCurrent;
     // 没有内容，合法并直接退出
 
-    console.log('str', str);
-    console.log('calendarStr', calendarStr);
-
-    if (!str) {
-      console.log('没有内容，合法并直接退出');
+    if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
         onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
@@ -2320,9 +2315,9 @@ var Calendar = function (_React$Component) {
       timePickerEle = __WEBPACK_IMPORTED_MODULE_4_react___default.a.cloneElement(timePicker, timePickerProps);
     }
     var calendarInputPlaceholder = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
-
+    var inputFormat = dateInputPlaceholder || (Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()]);
     var dateInputElement = props.showDateInput ? __WEBPACK_IMPORTED_MODULE_4_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_16__date_DateInput__["a" /* default */], {
-      format: this.getFormat(),
+      format: inputFormat,
       key: 'date-input',
       value: value,
       locale: locale,
@@ -2421,7 +2416,7 @@ var Calendar = function (_React$Component) {
           onSelect: this.onDateTableSelect,
           onClickRightPanelTime: onClickRightPanelTime,
           defaultMinutesTime: this.props.defaultMinutesTime,
-          format: this.getFormat()
+          format: inputFormat
         })
       )
     ));

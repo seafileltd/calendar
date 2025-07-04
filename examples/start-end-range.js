@@ -3526,7 +3526,6 @@ var _initialiseProps = function _initialiseProps() {
   var _this2 = this;
 
   this.onClear = function () {
-    console.log('onClear');
     _this2.setState({ str: '' });
     _this2.props.onClear(null);
   };
@@ -3542,11 +3541,7 @@ var _initialiseProps = function _initialiseProps() {
         shouldDisplayCurrent = _props.shouldDisplayCurrent;
     // 没有内容，合法并直接退出
 
-    console.log('str', str);
-    console.log('calendarStr', calendarStr);
-
-    if (!str) {
-      console.log('没有内容，合法并直接退出');
+    if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
         onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
