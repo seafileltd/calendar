@@ -73,6 +73,7 @@ class Calendar extends React.Component {
     onBlur: PropTypes.func,
     onClickRightPanelTime: PropTypes.func,
     firstDayOfWeek: PropTypes.string,
+    shouldDisplayCurrent: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -98,6 +99,7 @@ class Calendar extends React.Component {
           getMomentObjectIfValid(props.defaultValue) ||
           dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
+      currentStatus: 0,
     };
   }
 
@@ -186,6 +188,7 @@ class Calendar extends React.Component {
   onClear = () => {
     this.onSelect(null);
     this.props.onClear();
+    this.setState({ currentStatus: 1 });
   }
 
   onOk = () => {
@@ -210,6 +213,7 @@ class Calendar extends React.Component {
   onDateTableSelect = (value) => {
     const { timePicker } = this.props;
     const { selectedValue } = this.state;
+    this.setState({ currentStatus: 0 });
     if (!selectedValue && timePicker) {
       const timePickerDefaultValue = timePicker.props.defaultValue;
       if (timePickerDefaultValue) {
@@ -289,9 +293,9 @@ class Calendar extends React.Component {
       locale, prefixCls, disabledDate,
       dateInputPlaceholder, timePicker, onClickRightPanelTime,
       disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
-      firstDayOfWeek, showWeekNumber,
+      firstDayOfWeek, showWeekNumber, shouldDisplayCurrent,
     } = props;
-    const { value, selectedValue, mode } = state;
+    const { value, selectedValue, mode, currentStatus } = state;
     const showTimePicker = mode === 'time';
     const disabledTimeConfig = showTimePicker && disabledTime && timePicker ?
       getTimeConfig(selectedValue, disabledTime) : null;
@@ -318,15 +322,17 @@ class Calendar extends React.Component {
     }
     const calendarInputPlaceholder = dateInputPlaceholder ||
   (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
+    const inputFormat = Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()];
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
-        format={this.getFormat()}
+        format={inputFormat}
         key="date-input"
         value={value}
         locale={locale}
         placeholder={calendarInputPlaceholder}
         showClear
+        shouldDisplayCurrent={shouldDisplayCurrent}
         disabledTime={disabledTime}
         disabledDate={disabledDate}
         onClear={this.onClear}
@@ -378,6 +384,7 @@ class Calendar extends React.Component {
             disabledDate={disabledDate}
             showWeekNumber={showWeekNumber}
             firstDayOfWeek={firstDayOfWeek}
+            currentStatus={currentStatus}
           />
         </div>
 
@@ -413,7 +420,7 @@ class Calendar extends React.Component {
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
-          format={this.getFormat()}
+          format={inputFormat}
         />
       }
     </div>
