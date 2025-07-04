@@ -3544,7 +3544,7 @@ var _initialiseProps = function _initialiseProps() {
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        _this2.props.onClear(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
+        onChange(null);
         return;
       }
       _this2.onClear();
