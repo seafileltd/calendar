@@ -3310,6 +3310,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onInputChange = function (event) {
     var str = event.target.value;
+    console.log(str);
     var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
