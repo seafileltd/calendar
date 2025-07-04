@@ -1767,14 +1767,15 @@ var _initialiseProps = function _initialiseProps() {
         onChange = _props.onChange,
         selectedValue = _props.selectedValue,
         shouldDisplayCurrent = _props.shouldDisplayCurrent,
-        openValue = _props.openValue;
+        openValue = _props.openValue,
+        onClear = _props.onClear;
 
     console.log('openValue', openValue);
     // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         _this2.setState({ str: '' });
-        onChange(openValue);
+        onClear(openValue);
         return;
       }
       _this2.onClear();
