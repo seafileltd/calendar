@@ -63,10 +63,10 @@ class DateInput extends React.Component {
     if (!str || !calendarStr) {
       if (shouldDisplayCurrent) {
         this.setState({ str: '' });
-        onChange(null);
-        return;
+        onChange(dayjs());
+      } else {
+        this.onClear();
       }
-      this.onClear();
       return;
     }
     const parsed = dayjs(calendarStr, format[0]);
