@@ -2007,7 +2007,7 @@ var DateTBody = function (_React$Component) {
       for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         var next = null;
         var last = null;
-        if (currentStatus === 1) {
+        if (currentStatus === 'todayTime') {
           current = dateTable[passed].hour(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().hour()).minute(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().minute()).second(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().second()); // eslint-disable-line max-len
         } else {
           current = dateTable[passed];
@@ -2164,7 +2164,7 @@ DateTBody.propTypes = {
   hoverValue: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.any,
   showWeekNumber: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
   firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
-  currentStatus: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.number
+  currentStatus: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string
 };
 DateTBody.defaultProps = {
   hoverValue: []

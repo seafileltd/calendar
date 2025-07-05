@@ -851,7 +851,7 @@ var DateTBody = function (_React$Component) {
       for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         var next = null;
         var last = null;
-        if (currentStatus === 1) {
+        if (currentStatus === 'todayTime') {
           current = dateTable[passed].hour(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().hour()).minute(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().minute()).second(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().second()); // eslint-disable-line max-len
         } else {
           current = dateTable[passed];
@@ -1008,7 +1008,7 @@ DateTBody.propTypes = {
   hoverValue: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.any,
   showWeekNumber: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.bool,
   firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string,
-  currentStatus: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.number
+  currentStatus: __WEBPACK_IMPORTED_MODULE_4_prop_types___default.a.string
 };
 DateTBody.defaultProps = {
   hoverValue: []
@@ -1745,8 +1745,7 @@ DateInput.propTypes = {
   onSelect: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.func,
   selectedValue: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.object,
   clearIcon: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.node,
-  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string,
-  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.bool
+  inputMode: __WEBPACK_IMPORTED_MODULE_5_prop_types___default.a.string
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -1764,17 +1763,11 @@ var _initialiseProps = function _initialiseProps() {
         disabledDate = _props.disabledDate,
         format = _props.format,
         onChange = _props.onChange,
-        selectedValue = _props.selectedValue,
-        shouldDisplayCurrent = _props.shouldDisplayCurrent;
+        selectedValue = _props.selectedValue;
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
-      if (shouldDisplayCurrent) {
-        _this2.setState({ str: '' });
-        onChange(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()());
-      } else {
-        _this2.onClear();
-      }
+      _this2.onClear();
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
@@ -2240,7 +2233,7 @@ var Calendar = function (_React$Component) {
       mode: _this.props.mode || 'date',
       value: getMomentObjectIfValid(props.value) || getMomentObjectIfValid(props.defaultValue) || __WEBPACK_IMPORTED_MODULE_9_dayjs___default()(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
-      currentStatus: 0
+      currentStatus: 'selectDateTime'
     };
     return _this;
   }
@@ -2285,8 +2278,7 @@ var Calendar = function (_React$Component) {
         inputMode = props.inputMode,
         showHourAndMinute = props.showHourAndMinute,
         firstDayOfWeek = props.firstDayOfWeek,
-        showWeekNumber = props.showWeekNumber,
-        shouldDisplayCurrent = props.shouldDisplayCurrent;
+        showWeekNumber = props.showWeekNumber;
     var value = state.value,
         selectedValue = state.selectedValue,
         mode = state.mode,
@@ -2324,7 +2316,6 @@ var Calendar = function (_React$Component) {
       locale: locale,
       placeholder: calendarInputPlaceholder,
       showClear: true,
-      shouldDisplayCurrent: shouldDisplayCurrent,
       disabledTime: disabledTime,
       disabledDate: disabledDate,
       onClear: this.onClear,
@@ -2465,8 +2456,7 @@ Calendar.propTypes = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__
   inputMode: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
   onBlur: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
   onClickRightPanelTime: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func,
-  firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  shouldDisplayCurrent: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.bool
+  firstDayOfWeek: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
 });
 Calendar.defaultProps = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default()({}, __WEBPACK_IMPORTED_MODULE_14__mixin_CalendarMixin__["a" /* calendarMixinDefaultProps */], __WEBPACK_IMPORTED_MODULE_15__mixin_CommonMixin__["b" /* defaultProp */], {
   showToday: true,
@@ -2561,7 +2551,7 @@ var _initialiseProps = function _initialiseProps() {
   this.onClear = function () {
     _this2.onSelect(null);
     _this2.props.onClear();
-    _this2.setState({ currentStatus: 1 });
+    _this2.setState({ currentStatus: 'todayTime' });
   };
 
   this.onOk = function () {
@@ -2588,7 +2578,7 @@ var _initialiseProps = function _initialiseProps() {
     var timePicker = _this2.props.timePicker;
     var selectedValue = _this2.state.selectedValue;
 
-    _this2.setState({ currentStatus: 0 });
+    _this2.setState({ currentStatus: 'selectDateTime' });
     if (!selectedValue && timePicker) {
       var timePickerDefaultValue = timePicker.props.defaultValue;
       if (timePickerDefaultValue) {

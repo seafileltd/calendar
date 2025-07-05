@@ -6764,7 +6764,6 @@ var _initialiseProps = function _initialiseProps() {
       ref: _this2.saveCalendarRef,
       defaultValue: defaultValue || calendarProps.defaultValue,
       selectedValue: value,
-      shouldDisplayCurrent: calendarProps.shouldDisplayCurrent,
       onKeyDown: _this2.onCalendarKeyDown,
       onOk: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onOk, _this2.onCalendarOk),
       onSelect: Object(__WEBPACK_IMPORTED_MODULE_7_rc_util_es_createChainedFunction__["a" /* default */])(calendarProps.onSelect, _this2.onCalendarSelect),
