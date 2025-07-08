@@ -3435,6 +3435,7 @@ var DateInput = function (_React$Component) {
     _this.state = {
       str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, _this.props.format),
       hasFocus: false,
+      emptyValue: false,
       localFormat: _this.props.format[0]
     };
     return _this;
@@ -3545,9 +3546,11 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
+      _this2.setState({ emptyValue: true });
       _this2.onClear();
       return;
     }
+    if (emptyValue) _this2.setState({ emptyValue: false });
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
@@ -3587,6 +3590,9 @@ var _initialiseProps = function _initialiseProps() {
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
+        if (emptyValue) {
+          onSelect(null);
+        }
         onSelect(value.clone());
       }
       event.preventDefault();
