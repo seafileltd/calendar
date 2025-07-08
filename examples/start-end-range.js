@@ -3540,8 +3540,7 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
-
-      onClear(null);
+      onChange(null);
       _this2.onClear();
       return;
     }
