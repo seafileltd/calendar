@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import DateConstants from './DateConstants';
-import { getTitleString, getTodayTime } from '../util/';
+import { getTitleString, getTodayTime, CURRENTSTATUS } from '../util/';
 import dayjs from 'dayjs';
 
 const { DATE_ROW_COLUMN_COUNT, DAY_NAME_TO_INDEX } = DateConstants;
@@ -122,7 +122,7 @@ export default class DateTBody extends React.Component {
       for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         let next = null;
         let last = null;
-        if (currentStatus === 'todayTime') {
+        if (currentStatus === CURRENTSTATUS.TODAYTIME) {
           current = dateTable[passed].hour(dayjs().hour()).minute(dayjs().minute()).second(dayjs().second());  // eslint-disable-line max-len
         } else {
           current = dateTable[passed];

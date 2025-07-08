@@ -18,6 +18,11 @@ export const DATE_FORMATS = {
   Germany_Russia_etcAndTime: 'DD.MM.YYYY HH:mm',
 };
 
+export const CURRENTSTATUS = {
+  SELECTDATETIME: 'selectDateTime',
+  TODAYTIME: 'todayTime',
+};
+
 const defaultDisabledTime = {
   disabledHours() {
     return [];

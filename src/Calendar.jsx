@@ -16,7 +16,7 @@ import {
 } from './mixin/CalendarMixin';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
-import { getTimeConfig, getTodayTime, syncTime } from './util';
+import { getTimeConfig, getTodayTime, syncTime, CURRENTSTATUS } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 import localeData from 'dayjs/plugin/localeData';
 import utc from 'dayjs/plugin/utc';
@@ -98,7 +98,7 @@ class Calendar extends React.Component {
           getMomentObjectIfValid(props.defaultValue) ||
           dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
-      currentStatus: 'selectDateTime',
+      currentStatus: CURRENTSTATUS.SELECTDATETIME,
     };
   }
 
@@ -187,7 +187,7 @@ class Calendar extends React.Component {
   onClear = () => {
     this.onSelect(null);
     this.props.onClear();
-    this.setState({ currentStatus: 'todayTime' });
+    this.setState({ currentStatus: CURRENTSTATUS.TODAYTIME });
   }
 
   onOk = () => {
@@ -212,7 +212,7 @@ class Calendar extends React.Component {
   onDateTableSelect = (value) => {
     const { timePicker } = this.props;
     const { selectedValue } = this.state;
-    this.setState({ currentStatus: 'selectDateTime' });
+    this.setState({ currentStatus: CURRENTSTATUS.SELECTDATETIME });
     if (!selectedValue && timePicker) {
       const timePickerDefaultValue = timePicker.props.defaultValue;
       if (timePickerDefaultValue) {
