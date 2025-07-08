@@ -73,7 +73,6 @@ class Calendar extends React.Component {
     onBlur: PropTypes.func,
     onClickRightPanelTime: PropTypes.func,
     firstDayOfWeek: PropTypes.string,
-    shouldDisplayCurrent: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -99,7 +98,7 @@ class Calendar extends React.Component {
           getMomentObjectIfValid(props.defaultValue) ||
           dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
-      currentStatus: 0,
+      currentStatus: 'selectDateTime',
     };
   }
 
@@ -188,7 +187,7 @@ class Calendar extends React.Component {
   onClear = () => {
     this.onSelect(null);
     this.props.onClear();
-    this.setState({ currentStatus: 1 });
+    this.setState({ currentStatus: 'todayTime' });
   }
 
   onOk = () => {
@@ -213,7 +212,7 @@ class Calendar extends React.Component {
   onDateTableSelect = (value) => {
     const { timePicker } = this.props;
     const { selectedValue } = this.state;
-    this.setState({ currentStatus: 0 });
+    this.setState({ currentStatus: 'selectDateTime' });
     if (!selectedValue && timePicker) {
       const timePickerDefaultValue = timePicker.props.defaultValue;
       if (timePickerDefaultValue) {
@@ -293,7 +292,7 @@ class Calendar extends React.Component {
       locale, prefixCls, disabledDate,
       dateInputPlaceholder, timePicker, onClickRightPanelTime,
       disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
-      firstDayOfWeek, showWeekNumber, shouldDisplayCurrent,
+      firstDayOfWeek, showWeekNumber,
     } = props;
     const { value, selectedValue, mode, currentStatus } = state;
     const showTimePicker = mode === 'time';
@@ -332,7 +331,6 @@ class Calendar extends React.Component {
         locale={locale}
         placeholder={calendarInputPlaceholder}
         showClear
-        shouldDisplayCurrent={shouldDisplayCurrent}
         disabledTime={disabledTime}
         disabledDate={disabledDate}
         onClear={this.onClear}

@@ -42,7 +42,7 @@ export default class DateTBody extends React.Component {
     hoverValue: PropTypes.any,
     showWeekNumber: PropTypes.bool,
     firstDayOfWeek: PropTypes.string,
-    currentStatus: PropTypes.number,
+    currentStatus: PropTypes.string,
   }
 
   static defaultProps = {
@@ -122,7 +122,7 @@ export default class DateTBody extends React.Component {
       for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         let next = null;
         let last = null;
-        if (currentStatus === 1) {
+        if (currentStatus === 'todayTime') {
           current = dateTable[passed].hour(dayjs().hour()).minute(dayjs().minute()).second(dayjs().second());  // eslint-disable-line max-len
         } else {
           current = dateTable[passed];

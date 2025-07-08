@@ -29,7 +29,6 @@ class DateInput extends React.Component {
     selectedValue: PropTypes.object,
     clearIcon: PropTypes.node,
     inputMode: PropTypes.string,
-    shouldDisplayCurrent: PropTypes.bool,
   };
 
   constructor(props) {
@@ -39,6 +38,7 @@ class DateInput extends React.Component {
     this.state = {
       str: formatDate(selectedValue, this.props.format),
       hasFocus: false,
+      emptyValue: false,
       localFormat: this.props.format[0],
     };
   }
@@ -58,17 +58,14 @@ class DateInput extends React.Component {
   onInputChange = (event) => {
     const str = event.target.value;
     const calendarStr = initializeStr(str, this.state.localFormat) || '';
-    const { disabledDate, format, onChange, selectedValue, shouldDisplayCurrent } = this.props;
+    const { disabledDate, format, onChange, selectedValue } = this.props;
     // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
-      if (shouldDisplayCurrent) {
-        this.setState({ str: '' });
-        onChange(dayjs());
-      } else {
-        this.onClear();
-      }
+      this.setState({ emptyValue: true });
+      this.onClear();
       return;
     }
+    if (this.state.emptyValue) this.setState({ emptyValue: false });
     const parsed = dayjs(calendarStr, format[0]);
     let value = this.props.value.clone();
     value = value
@@ -109,7 +106,11 @@ class DateInput extends React.Component {
     if (keyCode === KeyCode.ENTER && onSelect) {
       const validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
-        onSelect(value.clone());
+        if (this.state.emptyValue) {
+          onSelect(null);
+        } else {
+          onSelect(value.clone());
+        }
       }
       event.preventDefault();
     }
