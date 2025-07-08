@@ -3317,6 +3317,8 @@ var _initialiseProps = function _initialiseProps() {
         selectedValue = _props.selectedValue;
     // 没有内容，合法并直接退出
 
+    console.log('str', str);
+    console.log('calendarStr', calendarStr);
     if (!str || !calendarStr) {
       _this2.onClear();
       return;
