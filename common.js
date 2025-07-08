@@ -385,26 +385,27 @@ exports.default = _assign2.default || function (target) {
 /* unused harmony export getCurrentYear */
 /* unused harmony export getCurrentTime */
 /* unused harmony export DATE_FORMATS */
-/* harmony export (immutable) */ __webpack_exports__["e"] = getTodayTime;
-/* harmony export (immutable) */ __webpack_exports__["d"] = getTitleString;
-/* harmony export (immutable) */ __webpack_exports__["f"] = getTodayTimeStr;
-/* harmony export (immutable) */ __webpack_exports__["b"] = getMonthName;
-/* harmony export (immutable) */ __webpack_exports__["i"] = syncTime;
-/* harmony export (immutable) */ __webpack_exports__["c"] = getTimeConfig;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CURRENTSTATUS; });
+/* harmony export (immutable) */ __webpack_exports__["f"] = getTodayTime;
+/* harmony export (immutable) */ __webpack_exports__["e"] = getTitleString;
+/* harmony export (immutable) */ __webpack_exports__["g"] = getTodayTimeStr;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getMonthName;
+/* harmony export (immutable) */ __webpack_exports__["j"] = syncTime;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getTimeConfig;
 /* unused harmony export isTimeValidByConfig */
 /* unused harmony export isTimeValid */
-/* harmony export (immutable) */ __webpack_exports__["h"] = isAllowedDate;
-/* harmony export (immutable) */ __webpack_exports__["a"] = formatDate;
+/* harmony export (immutable) */ __webpack_exports__["i"] = isAllowedDate;
+/* harmony export (immutable) */ __webpack_exports__["b"] = formatDate;
 /* unused harmony export isLeapYear */
 /* unused harmony export validateCalendarDay */
-/* harmony export (immutable) */ __webpack_exports__["j"] = tokenizeFormattedDate;
+/* harmony export (immutable) */ __webpack_exports__["k"] = tokenizeFormattedDate;
 /* unused harmony export hasSpecialChar */
 /* unused harmony export validateTime */
 /* unused harmony export delimate */
 /* unused harmony export validateCalendarYear */
 /* unused harmony export validateAndNormalizeDate */
 /* unused harmony export getDatePart */
-/* harmony export (immutable) */ __webpack_exports__["g"] = initializeStr;
+/* harmony export (immutable) */ __webpack_exports__["h"] = initializeStr;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_helpers_extends__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_dayjs__ = __webpack_require__(10);
@@ -438,6 +439,11 @@ var DATE_FORMATS = {
   EuropeanAndTime: 'DD/MM/YYYY HH:mm',
   Germany_Russia_etc: 'DD.MM.YYYY',
   Germany_Russia_etcAndTime: 'DD.MM.YYYY HH:mm'
+};
+
+var CURRENTSTATUS = {
+  SELECTDATETIME: 'selectDateTime',
+  TODAYTIME: 'todayTime'
 };
 
 var defaultDisabledTime = {
@@ -2463,7 +2469,7 @@ var MonthTable = function (_Component) {
       months[rowIndex] = [];
       for (var colIndex = 0; colIndex < COL; colIndex++) {
         current = current.month(index);
-        var content = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["b" /* getMonthName */])(current);
+        var content = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["c" /* getMonthName */])(current);
         months[rowIndex][colIndex] = {
           value: index,
           content: content,
@@ -2480,7 +2486,7 @@ var MonthTable = function (_Component) {
 
     var props = this.props;
     var value = this.state.value;
-    var today = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["e" /* getTodayTime */])(value);
+    var today = Object(__WEBPACK_IMPORTED_MODULE_6__util_index__["f" /* getTodayTime */])(value);
     var months = this.months();
     var currentMonth = value.month();
     var prefixCls = props.prefixCls,

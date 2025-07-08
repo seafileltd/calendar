@@ -905,7 +905,7 @@ function TodayButton(_ref) {
       text = _ref.text;
 
   var localeNow = (!text && timePicker ? locale.now : text) || locale.today;
-  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["h" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["e" /* getTodayTime */])(value), disabledDate);
+  var disabledToday = disabledDate && !Object(__WEBPACK_IMPORTED_MODULE_1__util___["i" /* isAllowedDate */])(Object(__WEBPACK_IMPORTED_MODULE_1__util___["f" /* getTodayTime */])(value), disabledDate);
   var isDisabled = disabledToday || disabled;
   var disabledTodayClass = isDisabled ? prefixCls + '-today-btn-disabled' : '';
   return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -914,7 +914,7 @@ function TodayButton(_ref) {
       className: prefixCls + '-today-btn ' + disabledTodayClass,
       role: 'button',
       onClick: isDisabled ? null : onToday,
-      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["f" /* getTodayTimeStr */])(value)
+      title: Object(__WEBPACK_IMPORTED_MODULE_1__util___["g" /* getTodayTimeStr */])(value)
     },
     localeNow
   );
@@ -2567,7 +2567,7 @@ var DateTBody = function (_React$Component) {
     var jIndex = void 0;
     var current = void 0;
     var dateTable = [];
-    var today = Object(__WEBPACK_IMPORTED_MODULE_7__util___["e" /* getTodayTime */])(value);
+    var today = Object(__WEBPACK_IMPORTED_MODULE_7__util___["f" /* getTodayTime */])(value);
     var cellClass = prefixCls + '-cell';
     var weekNumberCellClass = prefixCls + '-week-number-cell';
     var dateClass = prefixCls + '-date';
@@ -2629,7 +2629,7 @@ var DateTBody = function (_React$Component) {
       for (jIndex = 0; jIndex < DATE_ROW_COLUMN_COUNT.DATE_COL_COUNT; jIndex++) {
         var next = null;
         var last = null;
-        if (currentStatus === 'todayTime') {
+        if (currentStatus === __WEBPACK_IMPORTED_MODULE_7__util___["a" /* CURRENTSTATUS */].TODAYTIME) {
           current = dateTable[passed].hour(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().hour()).minute(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().minute()).second(__WEBPACK_IMPORTED_MODULE_8_dayjs___default()().second()); // eslint-disable-line max-len
         } else {
           current = dateTable[passed];
@@ -2746,7 +2746,7 @@ var DateTBody = function (_React$Component) {
             onClick: disabled ? undefined : props.onSelect.bind(null, current),
             onMouseEnter: disabled ? undefined : props.onDayHover && props.onDayHover.bind(null, current) || undefined,
             role: 'gridcell',
-            title: Object(__WEBPACK_IMPORTED_MODULE_7__util___["d" /* getTitleString */])(current),
+            title: Object(__WEBPACK_IMPORTED_MODULE_7__util___["e" /* getTitleString */])(current),
             className: cls
           },
           dateHtml
@@ -3433,9 +3433,9 @@ var DateInput = function (_React$Component) {
     var selectedValue = props.selectedValue;
 
     _this.state = {
-      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, _this.props.format),
+      str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* formatDate */])(selectedValue, _this.props.format),
       hasFocus: false,
-      emptyValue: false,
+      isEmpty: false,
       localFormat: _this.props.format[0]
     };
     return _this;
@@ -3457,7 +3457,7 @@ var DateInput = function (_React$Component) {
     // when popup show, click body will call this, bug!
     var selectedValue = nextProps.selectedValue;
     if (!state.hasFocus) {
-      newState = { str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(selectedValue, nextProps.format) };
+      newState = { str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* formatDate */])(selectedValue, nextProps.format) };
     }
 
     return newState;
@@ -3537,7 +3537,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onInputChange = function (event) {
     var str = event.target.value;
-    var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["g" /* initializeStr */])(str, _this2.state.localFormat) || '';
+    var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* initializeStr */])(str, _this2.state.localFormat) || '';
     var _props = _this2.props,
         disabledDate = _props.disabledDate,
         format = _props.format,
@@ -3546,11 +3546,11 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
-      _this2.setState({ emptyValue: true });
+      _this2.setState({ isEmpty: true });
       _this2.onClear();
       return;
     }
-    if (_this2.state.emptyValue) _this2.setState({ emptyValue: false });
+    if (_this2.state.isEmpty) _this2.setState({ isEmpty: false });
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
@@ -3574,7 +3574,7 @@ var _initialiseProps = function _initialiseProps() {
     _this2.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
-        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["a" /* formatDate */])(prevProps.value, prevProps.format)
+        str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* formatDate */])(prevProps.value, prevProps.format)
       };
     });
   };
@@ -3589,7 +3589,7 @@ var _initialiseProps = function _initialiseProps() {
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
-        if (_this2.state.emptyValue) {
+        if (_this2.state.isEmpty) {
           onSelect(null);
         } else {
           onSelect(value.clone());
@@ -6876,7 +6876,7 @@ function noop() {}
 function getNowByCurrentStateValue(value) {
   var ret = void 0;
   if (value) {
-    ret = Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["e" /* getTodayTime */])(value);
+    ret = Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["f" /* getTodayTime */])(value);
   } else {
     ret = __WEBPACK_IMPORTED_MODULE_6_dayjs___default()();
   }
@@ -6957,7 +6957,7 @@ var calendarMixinWrapper = function calendarMixinWrapper(ComposeComponent) {
       }, _this.isAllowedDate = function (value) {
         var disabledDate = _this.props.disabledDate;
         var disabledTime = _this.props.disabledTime;
-        return Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["h" /* isAllowedDate */])(value, disabledDate, disabledTime);
+        return Object(__WEBPACK_IMPORTED_MODULE_7__util_index__["i" /* isAllowedDate */])(value, disabledDate, disabledTime);
       }, _temp), __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_possibleConstructorReturn___default()(_this, _ret);
     }
 
@@ -7550,7 +7550,7 @@ var Calendar = function (_React$Component) {
       mode: _this.props.mode || 'date',
       value: getMomentObjectIfValid(props.value) || getMomentObjectIfValid(props.defaultValue) || __WEBPACK_IMPORTED_MODULE_9_dayjs___default()(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
-      currentStatus: 'selectDateTime'
+      currentStatus: __WEBPACK_IMPORTED_MODULE_17__util__["a" /* CURRENTSTATUS */].SELECTDATETIME
     };
     return _this;
   }
@@ -7602,7 +7602,7 @@ var Calendar = function (_React$Component) {
         currentStatus = state.currentStatus;
 
     var showTimePicker = mode === 'time';
-    var disabledTimeConfig = showTimePicker && disabledTime && timePicker ? Object(__WEBPACK_IMPORTED_MODULE_17__util__["c" /* getTimeConfig */])(selectedValue, disabledTime) : null;
+    var disabledTimeConfig = showTimePicker && disabledTime && timePicker ? Object(__WEBPACK_IMPORTED_MODULE_17__util__["d" /* getTimeConfig */])(selectedValue, disabledTime) : null;
 
     var timePickerEle = null;
 
@@ -7868,7 +7868,7 @@ var _initialiseProps = function _initialiseProps() {
   this.onClear = function () {
     _this2.onSelect(null);
     _this2.props.onClear();
-    _this2.setState({ currentStatus: 'todayTime' });
+    _this2.setState({ currentStatus: __WEBPACK_IMPORTED_MODULE_17__util__["a" /* CURRENTSTATUS */].TODAYTIME });
   };
 
   this.onOk = function () {
@@ -7895,11 +7895,11 @@ var _initialiseProps = function _initialiseProps() {
     var timePicker = _this2.props.timePicker;
     var selectedValue = _this2.state.selectedValue;
 
-    _this2.setState({ currentStatus: 'selectDateTime' });
+    _this2.setState({ currentStatus: __WEBPACK_IMPORTED_MODULE_17__util__["a" /* CURRENTSTATUS */].SELECTDATETIME });
     if (!selectedValue && timePicker) {
       var timePickerDefaultValue = timePicker.props.defaultValue;
       if (timePickerDefaultValue) {
-        Object(__WEBPACK_IMPORTED_MODULE_17__util__["i" /* syncTime */])(timePickerDefaultValue, value);
+        Object(__WEBPACK_IMPORTED_MODULE_17__util__["j" /* syncTime */])(timePickerDefaultValue, value);
       }
     }
     _this2.onSelect(value);
@@ -7908,7 +7908,7 @@ var _initialiseProps = function _initialiseProps() {
   this.onToday = function () {
     var value = _this2.state.value;
 
-    var now = Object(__WEBPACK_IMPORTED_MODULE_17__util__["e" /* getTodayTime */])(value);
+    var now = Object(__WEBPACK_IMPORTED_MODULE_17__util__["f" /* getTodayTime */])(value);
     _this2.onSelect(now, {
       source: 'todayButton'
     });
@@ -8060,7 +8060,7 @@ var CalendarRightPanel = function (_React$Component) {
           'ul',
           null,
           this.times.map(function (time) {
-            var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["j" /* tokenizeFormattedDate */])(selectedDate, _this2.state.localeFormat);
+            var parts = Object(__WEBPACK_IMPORTED_MODULE_6__util__["k" /* tokenizeFormattedDate */])(selectedDate, _this2.state.localeFormat);
             var current = __WEBPACK_IMPORTED_MODULE_5_dayjs___default()(selectedDate + ' ' + time).year(parts[0]).month(parts[1] - 1).date(parts[2]); // eslint-disable-line max-len
             current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
             return __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
