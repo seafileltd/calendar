@@ -2538,6 +2538,7 @@ var _initialiseProps = function _initialiseProps() {
         return 1;
       case __WEBPACK_IMPORTED_MODULE_7_rc_util_es_KeyCode__["a" /* default */].ENTER:
         if (!disabledDate || !disabledDate(value)) {
+          console.log('11111KeyCode', value);
           _this2.onSelect(value, {
             source: 'keyboard'
           });
