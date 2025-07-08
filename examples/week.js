@@ -3550,7 +3550,7 @@ var _initialiseProps = function _initialiseProps() {
       _this2.onClear();
       return;
     }
-    if (emptyValue) _this2.setState({ emptyValue: false });
+    if (_this2.state.emptyValue) _this2.setState({ emptyValue: false });
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
     var value = _this2.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
@@ -3590,10 +3590,11 @@ var _initialiseProps = function _initialiseProps() {
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
-        if (emptyValue) {
+        if (_this2.state.emptyValue) {
           onSelect(null);
+        } else {
+          onSelect(value.clone());
         }
-        onSelect(value.clone());
       }
       event.preventDefault();
     }
