@@ -3547,7 +3547,7 @@ var _initialiseProps = function _initialiseProps() {
     if (!str || !calendarStr) {
       console.log(123);
       onChange(null);
-      // this.onClear();
+      _this2.onClear();
       return;
     }
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
