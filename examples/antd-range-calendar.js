@@ -3359,7 +3359,6 @@ var _initialiseProps = function _initialiseProps() {
         value = _props2.value,
         disabledDate = _props2.disabledDate;
 
-    console.log('keyCode', keyCode, value);
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
