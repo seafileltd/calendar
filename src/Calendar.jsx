@@ -16,7 +16,7 @@ import {
 } from './mixin/CalendarMixin';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
-import { getTimeConfig, getTodayTime, syncTime } from './util';
+import { getTimeConfig, getTodayTime, syncTime, CALENDAR_STATUS } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 import localeData from 'dayjs/plugin/localeData';
 import utc from 'dayjs/plugin/utc';
@@ -98,6 +98,7 @@ class Calendar extends React.Component {
           getMomentObjectIfValid(props.defaultValue) ||
           dayjs(),
       selectedValue: props.selectedValue || props.defaultSelectedValue,
+      currentStatus: CALENDAR_STATUS.SPECIFIC_TIME,
     };
   }
 
@@ -186,6 +187,7 @@ class Calendar extends React.Component {
   onClear = () => {
     this.onSelect(null);
     this.props.onClear();
+    this.setState({ currentStatus: CALENDAR_STATUS.CURRENT_TIME });
   }
 
   onOk = () => {
@@ -210,6 +212,7 @@ class Calendar extends React.Component {
   onDateTableSelect = (value) => {
     const { timePicker } = this.props;
     const { selectedValue } = this.state;
+    this.setState({ currentStatus: CALENDAR_STATUS.SPECIFIC_TIME });
     if (!selectedValue && timePicker) {
       const timePickerDefaultValue = timePicker.props.defaultValue;
       if (timePickerDefaultValue) {
@@ -291,7 +294,7 @@ class Calendar extends React.Component {
       disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
       firstDayOfWeek, showWeekNumber,
     } = props;
-    const { value, selectedValue, mode } = state;
+    const { value, selectedValue, mode, currentStatus } = state;
     const showTimePicker = mode === 'time';
     const disabledTimeConfig = showTimePicker && disabledTime && timePicker ?
       getTimeConfig(selectedValue, disabledTime) : null;
@@ -318,10 +321,11 @@ class Calendar extends React.Component {
     }
     const calendarInputPlaceholder = dateInputPlaceholder ||
   (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
+    const inputFormat = Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()];
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
-        format={this.getFormat()}
+        format={inputFormat}
         key="date-input"
         value={value}
         locale={locale}
@@ -378,6 +382,7 @@ class Calendar extends React.Component {
             disabledDate={disabledDate}
             showWeekNumber={showWeekNumber}
             firstDayOfWeek={firstDayOfWeek}
+            currentStatus={currentStatus}
           />
         </div>
 
@@ -413,7 +418,7 @@ class Calendar extends React.Component {
           onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
-          format={this.getFormat()}
+          format={inputFormat}
         />
       }
     </div>
