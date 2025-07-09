@@ -18,9 +18,16 @@ export const DATE_FORMATS = {
   Germany_Russia_etcAndTime: 'DD.MM.YYYY HH:mm',
 };
 
-export const CURRENTSTATUS = {
-  SELECTDATETIME: 'selectDateTime',
-  TODAYTIME: 'todayTime',
+export const CALENDAR_STATUS = {
+  SPECIFIC_TIME: 'specific_time',
+  CURRENT_TIME: 'current_time',
+};
+
+export const syncCurrentTime = (date, status) => {
+  if (status === CALENDAR_STATUS.CURRENT_TIME) {
+    return date.hour(dayjs().hour()).minute(dayjs().minute()).second(dayjs().second());
+  }
+  return date;
 };
 
 const defaultDisabledTime = {
