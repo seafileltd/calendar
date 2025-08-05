@@ -3178,6 +3178,7 @@ DecadePanel.defaultProps = {
 
 
 
+
 var customParseFormat = __webpack_require__(82);
 
 __WEBPACK_IMPORTED_MODULE_8_dayjs___default.a.extend(customParseFormat);
@@ -3206,6 +3207,17 @@ var DateInput = function (_React$Component) {
     };
     return _this;
   }
+
+  DateInput.prototype.componentDidMount = function componentDidMount() {
+    var _this2 = this;
+
+    setTimeout(function () {
+      _this2.focus();
+    }, 1);
+    setTimeout(function () {
+      _this2.focus();
+    }, 1000);
+  };
 
   DateInput.prototype.componentDidUpdate = function componentDidUpdate() {
     if (dateInputInstance && this.state.hasFocus && !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
@@ -3258,10 +3270,11 @@ var DateInput = function (_React$Component) {
           onKeyDown: this.onKeyDown,
           onFocus: this.onFocus,
           onBlur: this.onBlur,
-          inputMode: inputMode
+          inputMode: inputMode,
+          tabIndex: '0'
         })
       ),
-      props.showClear ? __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
+      props.showClear && __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement(
         'a',
         {
           role: 'button',
@@ -3269,7 +3282,7 @@ var DateInput = function (_React$Component) {
           onClick: this.onClear
         },
         clearIcon || __WEBPACK_IMPORTED_MODULE_3_react___default.a.createElement('span', { className: prefixCls + '-clear-btn' })
-      ) : null
+      )
     );
   };
 
@@ -3294,17 +3307,17 @@ DateInput.propTypes = {
 };
 
 var _initialiseProps = function _initialiseProps() {
-  var _this2 = this;
+  var _this3 = this;
 
   this.onClear = function () {
-    _this2.setState({ str: '' });
-    _this2.props.onClear(null);
+    _this3.setState({ str: '' });
+    _this3.props.onClear(null);
   };
 
   this.onInputChange = function (event) {
     var str = event.target.value;
-    var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* initializeStr */])(str, _this2.state.localFormat) || '';
-    var _props = _this2.props,
+    var calendarStr = Object(__WEBPACK_IMPORTED_MODULE_9__util__["h" /* initializeStr */])(str, _this3.state.localFormat) || '';
+    var _props = _this3.props,
         disabledDate = _props.disabledDate,
         format = _props.format,
         onChange = _props.onChange,
@@ -3313,36 +3326,37 @@ var _initialiseProps = function _initialiseProps() {
     // 没有内容，合法并直接退出
 
     if (!str || !calendarStr) {
-      _this2.setState({ isInputEmpty: true });
-      _this2.onClear();
+      console.log('没有内容，合法并直接退出');
+      _this3.setState({ isInputEmpty: true });
+      _this3.onClear();
       return;
     }
 
-    if (_this2.state.isInputEmpty) {
-      _this2.setState({ isInputEmpty: false });
+    if (_this3.state.isInputEmpty) {
+      _this3.setState({ isInputEmpty: false });
     }
 
     var parsed = __WEBPACK_IMPORTED_MODULE_8_dayjs___default()(calendarStr, format[0]);
-    var value = _this2.props.value.clone();
+    var value = _this3.props.value.clone();
     value = value.year(parsed.year()).month(parsed.month()).date(parsed.date()).hour(parsed.hour()).minute(parsed.minute()).second(parsed.second());
 
     if (!value || disabledDate && disabledDate(value)) {
-      _this2.setState({ str: str });
+      _this3.setState({ str: str });
       return;
     }
 
     if (selectedValue !== value || selectedValue && value && !selectedValue.isSame(value)) {
-      _this2.setState({ str: str });
+      _this3.setState({ str: str });
       onChange(value);
     }
   };
 
   this.onFocus = function () {
-    _this2.setState({ hasFocus: true });
+    _this3.setState({ hasFocus: true });
   };
 
   this.onBlur = function () {
-    _this2.setState(function (prevState, prevProps) {
+    _this3.setState(function (prevState, prevProps) {
       return {
         hasFocus: false,
         str: Object(__WEBPACK_IMPORTED_MODULE_9__util__["b" /* formatDate */])(prevProps.value, prevProps.format)
@@ -3352,7 +3366,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.onKeyDown = function (event) {
     var keyCode = event.keyCode;
-    var _props2 = _this2.props,
+    var _props2 = _this3.props,
         onSelect = _props2.onSelect,
         value = _props2.value,
         disabledDate = _props2.disabledDate;
@@ -3360,7 +3374,7 @@ var _initialiseProps = function _initialiseProps() {
     if (keyCode === __WEBPACK_IMPORTED_MODULE_6_rc_util_es_KeyCode__["a" /* default */].ENTER && onSelect) {
       var validateDate = !disabledDate || !disabledDate(value);
       if (validateDate) {
-        if (_this2.state.isInputEmpty) {
+        if (_this3.state.isInputEmpty) {
           onSelect(null);
         } else {
           onSelect(value.clone());
@@ -3371,7 +3385,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.getRootDOMNode = function () {
-    return __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.findDOMNode(_this2);
+    return __WEBPACK_IMPORTED_MODULE_4_react_dom___default.a.findDOMNode(_this3);
   };
 
   this.focus = function () {

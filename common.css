@@ -260,7 +260,7 @@
 }
 .rc-calendar-header > a:hover {
   cursor: pointer;
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-header .rc-calendar-prev-month-btn {
   position: absolute;
@@ -290,7 +290,7 @@
 .rc-calendar-month-select:hover,
 .rc-calendar-day-select:hover {
   cursor: pointer;
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-year-select.rc-calendar-time-status:hover,
 .rc-calendar-month-select.rc-calendar-time-status:hover,
@@ -316,7 +316,7 @@
 .rc-calendar-next-month-btn:hover,
 .rc-calendar-prev-year-btn:hover,
 .rc-calendar-next-year-btn:hover {
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-next-year-btn {
   right: 0;
@@ -526,7 +526,7 @@
 .rc-calendar-ok-btn:hover,
 .rc-calendar-time-picker-btn:hover {
   cursor: pointer;
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-today-btn-disabled,
 .rc-calendar-ok-btn-disabled,
@@ -556,11 +556,11 @@
   width: 40px;
 }
 .rc-calendar-time-input:hover {
-  border-color: #f09f4g;
+  border-color: #f09f4f;
 }
 .rc-calendar-time-input:focus {
-  border-color: #f09f4g;
-  box-shadow: 0 0 3px #f09f4g;
+  border-color: #f09f4f;
+  box-shadow: 0 0 3px #f09f4f;
 }
 .rc-calendar-time-panel {
   left: 0;
@@ -668,7 +668,7 @@
 }
 .rc-calendar-month-panel-header > a:hover {
   cursor: pointer;
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-month-panel-prev-year-btn,
 .rc-calendar-month-panel-next-year-btn {
@@ -795,7 +795,7 @@
 }
 .rc-calendar-year-panel-header > a:hover {
   cursor: pointer;
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-year-panel-prev-decade-btn,
 .rc-calendar-year-panel-next-decade-btn {
@@ -908,7 +908,7 @@
 }
 .rc-calendar-decade-panel-header > a:hover {
   cursor: pointer;
-  color: #f09f4g;
+  color: #f09f4f;
 }
 .rc-calendar-decade-panel-prev-century-btn,
 .rc-calendar-decade-panel-next-century-btn {
@@ -1113,8 +1113,7 @@
   display: inline-block;
 }
 .rc-calendar-full-header-switcher-normal:hover {
-  border-color: #f09f4g;
-  box-shadow: 0 0 2px rgba(45, 183, 245, 0.8);
+  border-color: #f09f4f;
   cursor: pointer;
 }
 .rc-calendar-full-header-switcher-focus {
