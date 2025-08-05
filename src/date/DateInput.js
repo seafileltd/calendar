@@ -5,13 +5,10 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
 import dayjs from 'dayjs';
 import { formatDate, initializeStr } from '../util';
+
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 
 dayjs.extend(customParseFormat);
-
-let cachedSelectionStart;
-let cachedSelectionEnd;
-let dateInputInstance;
 
 class DateInput extends React.Component {
   static propTypes = {
@@ -41,12 +38,21 @@ class DateInput extends React.Component {
       isInputEmpty: false,
       localFormat: this.props.format[0],
     };
+    this.dateInputInstance = React.createRef();
+    this.cachedSelectionStart = null;
+    this.cachedSelectionEnd = null;
+  }
+  
+  componentDidMount() {
+    setTimeout(() => {
+      this.focus();
+    }, 1);
   }
 
   componentDidUpdate() {
-    if (dateInputInstance && this.state.hasFocus &&
-      !(cachedSelectionStart === 0 && cachedSelectionEnd === 0)) {
-      dateInputInstance.setSelectionRange(cachedSelectionStart, cachedSelectionEnd);
+    if (this.dateInputInstance.current && this.state.hasFocus &&
+      !(this.cachedSelectionStart === 0 && this.cachedSelectionEnd === 0)) {
+      this.dateInputInstance.current.setSelectionRange(this.cachedSelectionStart, this.cachedSelectionEnd);
     }
   }
 
@@ -60,7 +66,6 @@ class DateInput extends React.Component {
     const calendarStr = initializeStr(str, this.state.localFormat) || '';
     const { disabledDate, format, onChange, selectedValue } = this.props;
 
-    // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
       this.setState({ isInputEmpty: true });
       this.onClear();
@@ -124,9 +129,9 @@ class DateInput extends React.Component {
   static getDerivedStateFromProps(nextProps, state) {
     let newState = {};
 
-    if (dateInputInstance) {
-      cachedSelectionStart = dateInputInstance.selectionStart;
-      cachedSelectionEnd = dateInputInstance.selectionEnd;
+    if (this.dateInputInstance.current) {
+      this.cachedSelectionStart = this.dateInputInstance.current.selectionStart;
+      this.cachedSelectionEnd = this.dateInputInstance.current.selectionEnd;
     }
     // when popup show, click body will call this, bug!
     const selectedValue = nextProps.selectedValue;
@@ -138,7 +143,7 @@ class DateInput extends React.Component {
   }
 
   static getInstance() {
-    return dateInputInstance;
+    return this.dateInputInstance.current;
   }
 
   getRootDOMNode = () => {
@@ -146,13 +151,9 @@ class DateInput extends React.Component {
   }
 
   focus = () => {
-    if (dateInputInstance) {
-      dateInputInstance.focus();
+    if (this.dateInputInstance.current) {
+      this.dateInputInstance.current.focus();
     }
-  }
-
-  saveDateInput = (dateInput) => {
-    dateInputInstance = dateInput;
   }
 
   render() {
@@ -163,7 +164,7 @@ class DateInput extends React.Component {
       <div className={`${prefixCls}-input-wrap`}>
         <div className={`${prefixCls}-date-input-wrap`}>
           <input
-            ref={this.saveDateInput}
+            ref={this.dateInputInstance}
             className={`${prefixCls}-input`}
             value={str}
             disabled={props.disabled}
@@ -175,7 +176,7 @@ class DateInput extends React.Component {
             inputMode={inputMode}
           />
         </div>
-        {props.showClear ? (
+        {props.showClear &&
           <a
             role="button"
             title={locale.clear}
@@ -183,7 +184,7 @@ class DateInput extends React.Component {
           >
             {clearIcon || <span className={`${prefixCls}-clear-btn`} />}
           </a>
-        ) : null}
+        }
       </div>
     );
   }
