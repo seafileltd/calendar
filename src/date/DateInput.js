@@ -174,6 +174,7 @@ class DateInput extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             inputMode={inputMode}
+            tabIndex="0"
           />
         </div>
         {props.showClear &&
