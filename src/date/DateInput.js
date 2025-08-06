@@ -5,6 +5,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
 import dayjs from 'dayjs';
 import { formatDate, initializeStr } from '../util';
+
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 
 dayjs.extend(customParseFormat);
@@ -41,6 +42,12 @@ class DateInput extends React.Component {
       isInputEmpty: false,
       localFormat: this.props.format[0],
     };
+  }
+  
+  componentDidMount() {
+    setTimeout(() => {
+      this.focus();
+    }, 100);
   }
 
   componentDidUpdate() {
@@ -173,9 +180,10 @@ class DateInput extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             inputMode={inputMode}
+            tabIndex="0"
           />
         </div>
-        {props.showClear ? (
+        {props.showClear &&
           <a
             role="button"
             title={locale.clear}
@@ -183,7 +191,7 @@ class DateInput extends React.Component {
           >
             {clearIcon || <span className={`${prefixCls}-clear-btn`} />}
           </a>
-        ) : null}
+        }
       </div>
     );
   }
