@@ -3,9 +3,8 @@
   outline: none;
   font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans-serif;
   width: fit-content;
-  border: 1px solid #ccc;
   list-style: none;
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
   background-color: #fff;
   border-radius: 3px;
@@ -14,83 +13,135 @@
   border: 1px solid #ccc;
   line-height: 1.5;
 
-
-  &-date-panel, &-date-panel-container {
+  /* Layout wrappers */
+  &-panel {
+    display: flex;
+    flex-direction: column;
+  }
+  &-date-panel-container {
     display: flex;
   }
-
-  &-date-panel, &-panel {
-    position: relative;
-    outline: none;
+  &-date-panel {
     display: block;
+    min-width: 288px;
   }
 
-  &-week-number {
-    width: 286px;
-
-    &-cell {
-      text-align: center;
-    }
+  /* Top inputs row */
+  &-inputs {
+    display: flex;
+    align-items: stretch;
+    border-bottom: 1px solid #eee;
+  }
+  &-date-input-col {
+    flex: 1 1 auto;
+  }
+  &-time-input-col {
+    width: 122px;
+    border-left: 1px solid #eee;
+  }
+  &-date-input,
+  &-time-input-outer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  &-date-input {
+    padding: 10px;
+  }
+  &-time-input-outer {
+    padding: 10px;
+    width: 100%;
+  }
+  &-date-input input {
+    height: 30px;
+    width: 100%;
+    padding: 4px 10px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    line-height: 1.5;
+  }
+  &-date-input input:focus {
+    border-color: #ed7109;
+    box-shadow: 0 0 3px #ed7109;
+    outline: none;
+  }
+  /* Shared header text input */
+  &-text-input {
+    height: 30px;
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    background: #fff;
+    color: #666;
+    line-height: 1.5;
+    transition: border 0.3s, background 0.3s, box-shadow 0.3s;
+  }
+  &-text-input:focus {
+    border-color: #ed7109;
+    box-shadow: 0 0 3px #ed7109;
+    outline: none;
   }
 
   &-header {
     padding: 0 10px;
-    height: 34px;
-    line-height: 30px;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
     user-select: none;
     -webkit-user-select: none;
-    border-bottom: 1px solid #ccc;
-
-    > a {
-      font-weight: bold;
-      display: inline-block;
-      padding: 0px 5px;
-      line-height: 34px;
-      text-align: center;
-      width: 30px;
-
-      &:hover {
-        cursor: pointer;
-        color: #f09f4f;
-      }
-    }
-
-    .@{prefixClass}-prev-month-btn {
-      position: absolute;
-      left: 25px;
-
-      &:after {
-        content: '‹'
-      }
-    }
-
-    .@{prefixClass}-next-month-btn {
-      position: absolute;
-      right: 25px;
-
-      &:after {
-        content: '›'
-      }
-    }
+    border-bottom: 1px solid #eee;
+  }
+  &-header > a {
+    font-weight: 600;
+    display: inline-block;
+    padding: 0 5px;
+    line-height: 40px;
+    text-align: center;
+    width: 30px;
+  }
+  &-header > a:hover {
+    cursor: pointer;
+    color: #ed7109;
+  }
+  &-prev-month-btn {
+    position: absolute;
+    left: 25px;
+  }
+  &-prev-month-btn:after {
+    content: '‹';
+  }
+  &-next-month-btn {
+    position: absolute;
+    right: 25px;
+  }
+  &-next-month-btn:after {
+    content: '›';
   }
 
-  &-year-select, &-month-select, &-day-select {
+  &-year-select,
+  &-month-select,
+  &-day-select {
     display: inline-block;
-    font-size: 12px;
-    font-weight: bold;
-    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    color: #212529;
     padding: 0 8px;
-    line-height: 34px;
-
-    &:hover {
-      cursor: pointer;
-      color: #f09f4f;
-    }
-    &.@{prefixClass}-time-status:hover{
-      cursor: pointer;
-      color: #666;
-    }
+    line-height: 40px;
+  }
+  &-year-select:hover,
+  &-month-select:hover,
+  &-day-select:hover {
+    cursor: pointer;
+    color: #f09f4f;
+  }
+  &-year-select.@{prefixClass}-time-status:hover,
+  &-month-select.@{prefixClass}-time-status:hover,
+  &-day-select.@{prefixClass}-time-status:hover {
+    cursor: pointer;
+    color: #666;
   }
 
   &-prev-month-btn,
@@ -101,261 +152,224 @@
     top: 0;
     cursor: pointer;
     color: #999;
-    font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+    font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei',
+      'Microsoft Sans Serif', sans-serif;
     padding: 0 5px;
     font-size: 16px;
     display: inline-block;
-    line-height: 34px;
-
-    &:hover {
-      color: #f09f4f;
-    }
+    line-height: 40px;
   }
-
+  &-prev-month-btn:hover,
+  &-next-month-btn:hover,
+  &-prev-year-btn:hover,
+  &-next-year-btn:hover {
+    color: #555;
+  }
   &-next-year-btn {
     right: 0;
-
-    &:after {
-      content: '»'
-    }
   }
-
+  &-next-year-btn:after {
+    content: '»';
+  }
   &-prev-year-btn {
     left: 0;
-
-    &:after {
-      content: '«'
-    }
+  }
+  &-prev-year-btn:after {
+    content: '«';
   }
 
+  /* Date grid area */
   &-body {
-    padding: 9px 10px 10px;
-    height: 217px;
+    padding: 8px 18px;
+    height: 268px;
   }
-
-  &-right-panel {
-    width: 68px;
-    height: inherit;
-  }
-
-  &-right-panel-header {
-    height: 34px;
-    line-height: 34px;
-    span {
-      transform: rotate(-90deg);
-    }
-  }
-
-  &-right-panel-body {
-    height: 217px;
-    border-left: 1px solid #ccc;
-    overflow-y: scroll;
-    ul {
-      list-style: none;
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
-    ul li {
-      text-align: center;
-      padding: 8px 0;
-      cursor: pointer;
-    }
-    ul li:hover {
-      color: #e8bf6a;
-    }
-    .@{prefixClass}-selected-time {
-      color: #f09f3f;
-    }
-    &::-webkit-scrollbar {
-      width: 0;
-    }
-  }
-
-  &-right-panel-footer {
-    height: 39px;
-    line-height: 34px;
-    border-left: 1px solid #ccc;
-    span {
-      transform: rotate(90deg);
-    }
-  }
-
-  &-right-panel-header, &-right-panel-footer {
-    display: flex;
-    justify-content: center;
-    cursor: pointer;
-    color: #999;
-    font-size: 16px;
-    span:after {
-      content: '›';
-    }
-  }
-
   table {
     border-collapse: collapse;
     max-width: 100%;
     background-color: transparent;
     width: 100%;
   }
-
-  table, td, th, td {
+  table,
+  td,
+  th,
+  td {
     border: none;
   }
-
   &-table {
     border-spacing: 0;
     margin-bottom: 0;
   }
-
   &-column-header {
     line-height: 18px;
-    padding: 6px 0;
-    width: 33px;
+    height: 36px;
+    width: 36px;
     text-align: center;
-    .@{prefixClass}-column-header-inner {
-      display: block;
-      font-weight: normal;
-    }
   }
-
-  &-week-number-header {
-    .@{prefixClass}-column-header-inner {
-      display: none;
-    }
+  &-column-header-inner {
+    display: block;
+    font-weight: normal;
+    color: #999;
   }
-
+  &-week-number-header .@{prefixClass}-column-header-inner {
+    display: none;
+  }
   &-cell {
-    padding: 1px 0;
+    height: 36px;
+    padding: 0;
   }
-
   &-date {
     display: block;
     margin: 0 auto;
-    color: #666;
-    border-radius: 4px 4px;
-    width: 26px;
-    height: 26px;
+    color: #212529;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     background: transparent;
-    line-height: 26px;
+    line-height: 24px;
     text-align: center;
-
-    &:hover {
-      background: #fcecd9;
-      cursor: pointer;
-    }
   }
-
-  &-selected-day &-date {
-    background: tint(#f09f3f, 80%);
+  &-date:hover {
+    background: #fcecd9;
+    cursor: pointer;
   }
-
   &-selected-date &-date {
-    background: #f09f3f;
+    background: #ed7109;
     color: #fff;
-    &:hover {
-      background: #f09f3f;
-    }
   }
-
-  &-today &-date {
-    border: 1px solid #f09f3f;
+  &-selected-date &-date:hover {
+    background: #ed7109;
   }
-
   &-disabled-cell &-date {
     cursor: not-allowed;
     color: #bcbcbc;
     background: #f3f3f3;
     border-radius: 0;
     width: auto;
-
-    &:hover {
-      background: #f3f3f3;
-    }
   }
-
+  &-disabled-cell &-date:hover {
+    background: #f3f3f3;
+  }
   &-disabled-cell-first-of-row &-date {
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
   }
-
   &-disabled-cell-last-of-row &-date {
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
   }
-
-  &-last-month-cell &-date, &-next-month-btn-day &-date {
+  &-last-month-cell &-date,
+  &-next-month-btn-day &-date {
     color: #bbb;
   }
+  &-today &-date {
+    position: relative;
+  }
+  &-today &-date::before {
+    content: '';
+    background: #ed7109;
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    left: 45%;
+    bottom: 0%;
+    display: inline-block;
+  }
 
+  /* Right time panel */
+  &-right-panel {
+    height: inherit;
+    border-left: 1px solid #eee;
+  }
+  &-right-panel-time-header {
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: 600;
+    color: #212529;
+    border-bottom: 1px solid #eee;
+  }
+  &-right-panel-body {
+    height: 268px;
+    display: flex;
+    padding: 4px;
+    scrollbar-color: auto;
+  }
+  &-right-panel-col {
+    overflow-y: auto;
+  }
+  &-right-panel-col:last-child {
+    border-left: 1px solid #eee;
+  }
+  &-right-panel-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 4px;
+  }
+  &-right-panel-item {
+    width: 48px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    cursor: pointer;
+    color: #212529;
+    font-weight: 400;
+    border-radius: 3px;
+  }
+  &-right-panel-item:hover {
+    background: fade(#ed7109, 10%);
+  }
+  &-right-panel-item-selected {
+    background: fade(#ed7109, 10%);
+    border-radius: 3px;
+    color: #212529;
+  }
+  &-right-panel-col::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  /* Footer */
   &-footer {
-    border-top: 1px solid #ccc;
-    padding: 10px 0;
+    border-top: 1px solid #eee;
+    padding: 8px 0;
     text-align: center;
     position: relative;
-
-    .@{timePickerClass} {
-      width: 90px;
-      &-input {
-        height: 24px;
-      }
-    }
-    &-show-ok {
-      text-align: right;
-      .@{prefixClass} {
-        &-footer-btn {
-          padding-right: 12px;
-        }
-
-        &-time-picker-btn {
-          margin-left: 0;
-          padding: 0 12px;
-        }
-        &-today-btn {
-          float: left;
-          padding-left: 12px;
-        }
-      }
-    }
   }
-
-  &-footer-btn {
-    margin-top: 2px;
-
-    &:after {
-      content: 'x';
-      height: 0;
-      font-size: 0;
-      overflow: hidden;
-      clear: both;
-    }
+  &-footer-show-ok {
+    text-align: right;
   }
-
+  &-footer-btn:after {
+    content: 'x';
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+    clear: both;
+  }
   &-time-picker-btn {
     margin-left: 10px;
   }
-
-  &-today-btn, &-ok-btn, &-time-picker-btn {
+  &-today-btn,
+  &-ok-btn,
+  &-time-picker-btn {
     display: inline-block;
     text-align: center;
-    color: #f46830;
-
-    &:hover {
-      cursor: pointer;
-      color: #f09f4f;
-    }
-
-    &-disabled {
-      color: #bbb;
-      &:hover {
-        color: #bbb;
-      }
-    }
+    color: #ed7109;
   }
-
+  &-today-btn:hover,
+  &-ok-btn:hover,
+  &-time-picker-btn:hover {
+    cursor: pointer;
+    color: #f09f4f;
+  }
+  &-today-btn-disabled,
+  &-ok-btn-disabled,
+  &-time-picker-btn-disabled {
+    color: #bbb;
+  }
   &-today-btn {
-    padding-left: 10px;
+    padding-left: 0;
+    font-weight: 600;
   }
 }

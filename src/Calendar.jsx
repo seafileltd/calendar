@@ -16,6 +16,7 @@ import {
 } from './mixin/CalendarMixin';
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
+import TimeInput from './time/TimeInput';
 import { getTimeConfig, getTodayTime, syncTime, CALENDAR_STATUS } from './util';
 import { goStartMonth, goEndMonth, goTime } from './util/toTime';
 import localeData from 'dayjs/plugin/localeData';
@@ -233,10 +234,12 @@ class Calendar extends React.Component {
   onBlur = (event) => {
     setTimeout(() => {
       const dateInput = DateInput.getInstance();
+      const timeInput = TimeInput.getInstance && TimeInput.getInstance();
       const rootInstance = this.rootInstance;
 
       if (!rootInstance || rootInstance.contains(document.activeElement) ||
-      (dateInput && dateInput.contains(document.activeElement))) {
+      (dateInput && dateInput.contains(document.activeElement)) ||
+      (timeInput && timeInput.contains && timeInput.contains(document.activeElement))) {
         // focused element is still part of Calendar
         return;
       }
@@ -267,6 +270,14 @@ class Calendar extends React.Component {
     return newState;
   }
 
+  onTimeInputChange = (value) => {
+    this.onSelect(value, { source: 'timeInputChange' });
+  }
+
+  onTimeInputSelect = (value) => {
+    this.onSelect(value, { source: 'timeInputSelect' });
+  }
+
   getRootDOMNode = () => {
     return ReactDOM.findDOMNode(this);
   }
@@ -290,7 +301,7 @@ class Calendar extends React.Component {
     const { props, state } = this;
     const {
       locale, prefixCls, disabledDate,
-      dateInputPlaceholder, timePicker, onClickRightPanelTime,
+      timePicker, onClickRightPanelTime,
       disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
       firstDayOfWeek, showWeekNumber,
     } = props;
@@ -319,18 +330,22 @@ class Calendar extends React.Component {
 
       timePickerEle = React.cloneElement(timePicker, timePickerProps);
     }
-    const calendarInputPlaceholder = dateInputPlaceholder ||
-  (Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat());
+
+    const baseFormat = Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat();
+    const headerDatePlaceholder = baseFormat.replace(/\s*HH:mm(?::ss)?\s*/,'').trim() || 'YYYY-MM-DD';
     const inputFormat = Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()];
+    // For the date input, strip any time tokens from formats so date and time are shown separately
+    const stripTime = f => (typeof f === 'string' ? f.replace(/\s*HH:mm(?::ss)?\s*/, '').trim() : f);
+    const dateOnlyFormats = Array.isArray(this.getFormat()) ? this.getFormat().map(stripTime) : [stripTime(this.getFormat())];
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
-        format={inputFormat}
+        format={dateOnlyFormats}
         key="date-input"
         value={value}
         locale={locale}
-        placeholder={calendarInputPlaceholder}
-        showClear
+        placeholder={headerDatePlaceholder}
+        showClear={false}
         disabledTime={disabledTime}
         disabledDate={disabledDate}
         onClear={this.onClear}
@@ -343,12 +358,35 @@ class Calendar extends React.Component {
       />
     ) : null;
 
+    const timeInputTopElement = (
+      <TimeInput
+        key="time-input-top"
+        prefixCls={prefixCls}
+        value={value}
+        selectedValue={selectedValue}
+        onChange={this.onTimeInputChange}
+        onSelect={this.onTimeInputSelect}
+        inputMode="numeric"
+      />
+    );
+
     const children = [];
     if (props.renderSidebar) {
       children.push(props.renderSidebar());
     }
     children.push(<div className={`${prefixCls}-panel`} key="panel">
-      {dateInputElement}
+      <div className={`${prefixCls}-inputs`}>
+        <div className={`${prefixCls}-date-input-col`}>
+          <div className={`${prefixCls}-date-input`}>
+            {dateInputElement}
+          </div>
+        </div>
+        {showHourAndMinute && (
+          <div className={`${prefixCls}-time-input-col`}>
+          {timeInputTopElement}
+        </div>
+        )}
+      </div>
       <div className={`${prefixCls}-date-panel-container`}>
       <div
         tabIndex={this.props.focusablePanel ? 0 : undefined}
@@ -386,42 +424,43 @@ class Calendar extends React.Component {
           />
         </div>
 
-        <CalendarFooter
-          showOk={props.showOk}
-          mode={mode}
-          renderFooter={props.renderFooter}
-          locale={locale}
-          prefixCls={prefixCls}
-          showToday={props.showToday}
-          disabledTime={disabledTime}
-          showTimePicker={showTimePicker}
-          showDateInput={props.showDateInput}
-          timePicker={timePicker}
-          selectedValue={selectedValue}
-          value={value}
-          disabledDate={disabledDate}
-          okDisabled={
-            props.showOk !== false && (!selectedValue || !this.isAllowedDate(selectedValue))
-          }
-          onOk={this.onOk}
-          onSelect={this.onSelect}
-          onToday={this.onToday}
-          onOpenTimePicker={this.openTimePicker}
-          onCloseTimePicker={this.closeTimePicker}
-        />
       </div>
       {showHourAndMinute &&
         <CalendarRightPanel
           prefixCls={prefixCls}
           value={value}
+          selectedValue={selectedValue}
           locale={locale}
-          onSelect={this.onDateTableSelect}
+          onSelect={(v) => this.onDateTableSelect(v)}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
           format={inputFormat}
         />
       }
     </div>
+      <CalendarFooter
+        showOk={props.showOk}
+        mode={mode}
+        renderFooter={props.renderFooter}
+        locale={locale}
+        prefixCls={prefixCls}
+        showToday={props.showToday}
+        disabledTime={disabledTime}
+        showTimePicker={showTimePicker}
+        showDateInput={props.showDateInput}
+        timePicker={timePicker}
+        selectedValue={selectedValue}
+        value={value}
+        disabledDate={disabledDate}
+        okDisabled={
+          props.showOk !== false && (!selectedValue || !this.isAllowedDate(selectedValue))
+        }
+        onOk={this.onOk}
+        onSelect={this.onSelect}
+        onToday={this.onToday}
+        onOpenTimePicker={this.openTimePicker}
+        onCloseTimePicker={this.closeTimePicker}
+      />
     </div>);
 
     return this.renderRoot({

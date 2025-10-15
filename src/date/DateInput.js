@@ -43,7 +43,7 @@ class DateInput extends React.Component {
       localFormat: this.props.format[0],
     };
   }
-  
+
   componentDidMount() {
     setTimeout(() => {
       this.focus();
@@ -67,7 +67,6 @@ class DateInput extends React.Component {
     const calendarStr = initializeStr(str, this.state.localFormat) || '';
     const { disabledDate, format, onChange, selectedValue } = this.props;
 
-    // 没有内容，合法并直接退出
     if (!str || !calendarStr) {
       this.setState({ isInputEmpty: true });
       this.onClear();
