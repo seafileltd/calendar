@@ -2,7 +2,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  right: 0;
+  right: auto;
+  width: 288px;
   background: #ffffff;
   z-index: 10;
   position: absolute;
@@ -30,15 +31,19 @@
   border-bottom: 1px solid #ccc;
 
   > a {
+    height: 100%;
     font-weight: bold;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     padding: 4px 5px;
     text-align: center;
     width: 30px;
+    color: #212529;
 
     &:hover {
       cursor: pointer;
-      color: #f09f4f;
+      color: #ed7109;
     }
   }
 }
@@ -102,7 +107,7 @@
   display: block;
   width: 46px;
   margin: 0 auto;
-  color: #666;
+  color: #212529;
   border-radius: 4px 4px;
   height: 36px;
   padding: 0;
@@ -111,17 +116,18 @@
   text-align: center;
 
   &:hover {
+    color: #212529;
     background: #fcecd9;
     cursor: pointer;
   }
 }
 
 .@{prefixClass}-year-panel-selected-cell .@{prefixClass}-year-panel-year {
-  background: #ed7109;
+  background: #ff9800;
   color: #fff;
 
   &:hover {
-    background: #ed7109;
+    background: #ff9800;
     color: #fff;
   }
 }

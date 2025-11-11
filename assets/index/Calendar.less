@@ -61,8 +61,8 @@
     line-height: 1.5;
   }
   &-date-input input:focus {
-    border-color: #ed7109;
-    box-shadow: 0 0 3px #ed7109;
+    border-color: #1991eb;
+    box-shadow: 0 0 0 2px rgba(70, 127, 207, .25);
     outline: none;
   }
   /* Shared header text input */
@@ -80,8 +80,8 @@
     transition: border 0.3s, background 0.3s, box-shadow 0.3s;
   }
   &-text-input:focus {
-    border-color: #ed7109;
-    box-shadow: 0 0 3px #ed7109;
+    border-color: #1991eb;
+    box-shadow: 0 0 0 2px rgba(70, 127, 207, .25);
     outline: none;
   }
 
@@ -135,7 +135,7 @@
   &-month-select:hover,
   &-day-select:hover {
     cursor: pointer;
-    color: #f09f4f;
+    color: #ed7109;
   }
   &-year-select.@{prefixClass}-time-status:hover,
   &-month-select.@{prefixClass}-time-status:hover,
@@ -163,7 +163,7 @@
   &-next-month-btn:hover,
   &-prev-year-btn:hover,
   &-next-year-btn:hover {
-    color: #555;
+    color: #ed7109;
   }
   &-next-year-btn {
     right: 0;
@@ -234,11 +234,11 @@
     cursor: pointer;
   }
   &-selected-date &-date {
-    background: #ed7109;
+    background: #ff9800;
     color: #fff;
   }
   &-selected-date &-date:hover {
-    background: #ed7109;
+    background: #ff9800;
   }
   &-disabled-cell &-date {
     cursor: not-allowed;
@@ -267,7 +267,7 @@
   }
   &-today &-date::before {
     content: '';
-    background: #ed7109;
+    background: #ff9800;
     position: absolute;
     width: 4px;
     height: 4px;
@@ -318,12 +318,14 @@
     border-radius: 3px;
   }
   &-right-panel-item:hover {
-    background: fade(#ed7109, 10%);
-  }
-  &-right-panel-item-selected {
-    background: fade(#ed7109, 10%);
-    border-radius: 3px;
+    background: fade(#ff9800, 10%);
     color: #212529;
+  }
+  &-right-panel-item-selected,
+  &-right-panel-item-selected:hover {
+    background: #ff9800;
+    border-radius: 3px;
+    color: #fff;
   }
   &-right-panel-col::-webkit-scrollbar {
     width: 0;

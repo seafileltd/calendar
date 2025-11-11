@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
+import localeData from 'dayjs/plugin/localeData';
 
 dayjs.extend(utc);
+dayjs.extend(localeData);
 export const getCurrentDate = () => dayjs().date();
 export const getCurrentMonth = () => dayjs().month() + 1;
 export const getCurrentYear = () => dayjs().year();

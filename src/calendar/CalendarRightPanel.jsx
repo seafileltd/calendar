@@ -167,6 +167,7 @@ export default class CalendarRightPanel extends React.Component {
                   key={h}
                   onClick={() => this.onSelectHour(h)}
                   className={`${prefixCls}-right-panel-item ${h === selectedHour ? `${prefixCls}-right-panel-item-selected` : ''}`}
+                  title={h}
                 >{h}
                 </li>
               ))}
@@ -179,6 +180,7 @@ export default class CalendarRightPanel extends React.Component {
                   key={m}
                   onClick={() => this.onSelectMinute(m)}
                   className={`${prefixCls}-right-panel-item ${m === selectedMinute ? `${prefixCls}-right-panel-item-selected` : ''}`}
+                  title={m}
                 >{m}
                 </li>
               ))}
