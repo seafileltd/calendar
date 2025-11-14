@@ -374,6 +374,9 @@ class Calendar extends React.Component {
     if (props.renderSidebar) {
       children.push(props.renderSidebar());
     }
+
+    const showTimeControls = showHourAndMinute && mode === 'date';
+
     children.push(<div className={`${prefixCls}-panel`} key="panel">
       <div className={`${prefixCls}-inputs`}>
         <div className={`${prefixCls}-date-input-col`}>
@@ -381,7 +384,7 @@ class Calendar extends React.Component {
             {dateInputElement}
           </div>
         </div>
-        {showHourAndMinute && (
+        {showTimeControls && (
           <div className={`${prefixCls}-time-input-col`}>
           {timeInputTopElement}
         </div>
@@ -425,7 +428,7 @@ class Calendar extends React.Component {
         </div>
 
       </div>
-      {showHourAndMinute &&
+      {showTimeControls &&
         <CalendarRightPanel
           prefixCls={prefixCls}
           value={value}

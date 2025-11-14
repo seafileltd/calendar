@@ -2,7 +2,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  right: 0;
+  right: auto;
+  width: 288px;
   background: #ffffff;
   z-index: 10;
   position: absolute;
@@ -19,6 +20,9 @@
   padding: 0 10px;
   height: 34px;
   line-height: 34px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   text-align: center;
   user-select: none;
@@ -26,15 +30,19 @@
   border-bottom: 1px solid #ccc;
 
   > a {
+    height: 100%;
     font-weight: bold;
-    display: inline-block;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     padding: 1px 5px;
     text-align: center;
     width: 30px;
+    color: #212529;
 
     &:hover {
       cursor: pointer;
-      color: #f09f4f;
+      color: #ed7109;
     }
   }
 }
@@ -82,12 +90,17 @@
 
 .@{prefixClass}-decade-panel-cell {
   text-align: center;
+  color: #212529;
+
+  a:hover {
+    color: inherit;
+  }
 }
 
 .@{prefixClass}-decade-panel-decade {
   display: block;
   margin: 0 auto;
-  color: #666;
+  color: #212529;
   border-radius: 4px 4px;
   height: 36px;
   padding: 0;
@@ -102,7 +115,7 @@
 }
 
 .@{prefixClass}-decade-panel-selected-cell .@{prefixClass}-decade-panel-decade {
-  background: #f09f3f;
+  background: #ff9800;
   color: #fff;
 
   &:hover {
