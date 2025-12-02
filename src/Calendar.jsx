@@ -199,26 +199,30 @@ class Calendar extends React.Component {
   }
 
   onDateInputChange = (value) => {
+    const now = dayjs();
+    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
+      value = value.hour(now.hour()).minute(now.minute()).second(now.second());
+    }
     this.onSelect(value, {
       source: 'dateInput',
     });
   }
 
   onDateInputSelect = (value) => {
+    const now = dayjs();
+    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
+      value = value.hour(now.hour()).minute(now.minute()).second(now.second());
+    }
     this.onSelect(value, {
       source: 'dateInputSelect',
     });
   }
 
   onDateTableSelect = (value) => {
-    const { timePicker } = this.props;
-    const { selectedValue } = this.state;
     this.setState({ currentStatus: CALENDAR_STATUS.SPECIFIC_TIME });
-    if (!selectedValue && timePicker) {
-      const timePickerDefaultValue = timePicker.props.defaultValue;
-      if (timePickerDefaultValue) {
-        syncTime(timePickerDefaultValue, value);
-      }
+    const now = dayjs();
+    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
+      value = value.hour(now.hour()).minute(now.minute()).second(now.second());
     }
     this.onSelect(value);
   }
@@ -386,8 +390,10 @@ class Calendar extends React.Component {
         </div>
         {showTimeControls && (
           <div className={`${prefixCls}-time-input-col`}>
-          {timeInputTopElement}
-        </div>
+            <div className={`${prefixCls}-time-input`}>
+              {timeInputTopElement}
+            </div>
+          </div>
         )}
       </div>
       <div className={`${prefixCls}-date-panel-container`}>
@@ -434,7 +440,7 @@ class Calendar extends React.Component {
           value={value}
           selectedValue={selectedValue}
           locale={locale}
-          onSelect={(v) => this.onDateTableSelect(v)}
+          onSelect={this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
           format={inputFormat}

@@ -299,9 +299,10 @@ ReactDOM.render((<div
         disabledDate={disabledDate}
         onSelect={onStandaloneSelect}
         renderFooter={(mode) => (<span>{mode} extra footer</span>)}
+        showHourAndMinute={true}
       />
     </div>
-    <div style={{ float: 'left', width: 300 }}>
+    {/* <div style={{ float: 'left', width: 300 }}>
       <Demo defaultValue={now} />
     </div>
     <div style={{ float: 'right', width: 300 }}>
@@ -310,6 +311,6 @@ ReactDOM.render((<div
     <div style={{ clear: 'both' }}></div>
     <div>
       <DemoMultiFormat />
-    </div>
+    </div> */}
   </div>
 </div>), document.getElementById('__react-content'));

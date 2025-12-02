@@ -19,7 +19,7 @@ export default class CalendarRightPanel extends React.Component {
     super(props);
     const format = Array.isArray(this.props.format) ? this.props.format[0] : this.props.format;
     this.state = {
-      highlightTime: this.props.selectedValue || this.props.value || null,
+      highlightTime: this.props.selectedValue || null,
       localeFormat: format,
     };
 
@@ -41,9 +41,9 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   componentDidMount() {
-  const { defaultMinutesTime, value, selectedValue } = this.props;
-  const baseTime = defaultMinutesTime || ((selectedValue || value) ? (selectedValue || value).format('HH:mm') : '00:00');
-  const base = baseTime.split(':');
+    const { defaultMinutesTime, selectedValue } = this.props;
+    const baseTime = defaultMinutesTime || (selectedValue ? selectedValue.format('HH:mm') : dayjs().format('HH:mm'));
+    const base = baseTime.split(':');
     const hIdx = this.hours.findIndex(h => h === base[0]);
     const mIdx = this.minutes.findIndex(m => m === base[1]);
     const hourIndex = hIdx > -1 ? hIdx : 0;
@@ -61,8 +61,8 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const prevV = prevState.highlightTime || prevProps.selectedValue || prevProps.value;
-    const currV = this.state.highlightTime || this.props.selectedValue || this.props.value;
+    const prevV = prevState.highlightTime || prevProps.selectedValue || dayjs();
+    const currV = this.state.highlightTime || this.props.selectedValue || dayjs();
 
     const prevH = prevV ? prevV.format('HH') : '00';
     const prevM = prevV ? prevV.format('mm') : '00';
@@ -110,9 +110,10 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   onSelectMinute = (minute) => {
-    const base = this.props.selectedValue || this.props.value || this.state.highlightTime || dayjs();
-    const h = parseInt(this.getSelectedHour(), 10) || 0;
-    const m = parseInt(minute, 10) || 0;
+    const base = this.props.selectedValue || this.state.highlightTime || this.props.value || dayjs();
+    const selectedHour = this.getSelectedHour();
+    const h = selectedHour !== null ? parseInt(selectedHour, 10) : dayjs().hour();
+    const m = parseInt(minute, 10);
     const current = base.clone().hour(h).minute(m);
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
@@ -123,9 +124,10 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   onSelectHour = (hour) => {
-    const base = this.props.selectedValue || this.props.value || this.state.highlightTime || dayjs();
-    const h = parseInt(hour, 10) || 0;
-    const m = parseInt(this.getSelectedMinute(), 10) || 0;
+    const base = this.props.selectedValue || this.state.highlightTime || dayjs();
+    const h = parseInt(hour, 10);
+    const selectedMinute = this.getSelectedMinute();
+    const m = selectedMinute !== null ? parseInt(selectedMinute, 10) : dayjs().minute();
     const current = base.clone().hour(h).minute(m);
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
@@ -138,52 +140,73 @@ export default class CalendarRightPanel extends React.Component {
 
   getSelectedHour = () => {
     const { highlightTime } = this.state;
-    const { value, selectedValue } = this.props;
-    const v = highlightTime || selectedValue || value;
-    return v ? v.format('HH') : '00';
+    const { selectedValue } = this.props;
+    const v = highlightTime || selectedValue || null;
+    return v ? v.format('HH') : null;
   }
 
   getSelectedMinute = () => {
     const { highlightTime } = this.state;
-    const { value, selectedValue } = this.props;
-    const v = highlightTime || selectedValue || value;
-    return v ? v.format('mm') : '00';
+    const { selectedValue } = this.props;
+    const v = highlightTime || selectedValue || null;
+    return v ? v.format('mm') : null;
   }
 
   render() {
     const { prefixCls } = this.props;
     const selectedHour = this.getSelectedHour();
     const selectedMinute = this.getSelectedMinute();
+    const currentHour = dayjs().format('HH');
+    const currentMinute = dayjs().format('mm');
+    const displayHour = selectedHour || currentHour;
+    const displayMinute = selectedMinute || currentMinute;
+
     return (
       <div className={`${prefixCls}-right-panel`}>
-        <div className={`${prefixCls}-right-panel-time-header`}>
-          {selectedHour}:{selectedMinute}
+        <div className={`${prefixCls}-right-panel-header ${prefixCls}-header`}>
+          {displayHour}:{displayMinute}
         </div>
         <div className={`${prefixCls}-right-panel-body`}>
           <div className={`${prefixCls}-right-panel-col`} ref={this.hoursRef}>
             <ul>
-              {this.hours.map((h) => (
-                <li
-                  key={h}
-                  onClick={() => this.onSelectHour(h)}
-                  className={`${prefixCls}-right-panel-item ${h === selectedHour ? `${prefixCls}-right-panel-item-selected` : ''}`}
-                  title={h}
-                >{h}
-                </li>
-              ))}
+              {this.hours.map((h) => {
+                const isSelected = selectedHour && h === selectedHour;
+                const isCurrent = !selectedHour && h === currentHour;
+                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                return (
+                  <li
+                    key={h}
+                    onClick={() => this.onSelectHour(h)}
+                    className={`${prefixCls}-right-panel-item`}
+                    title={h}
+                  >
+                    <span className={className}>
+                      {h}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <div className={`${prefixCls}-right-panel-col`} ref={this.minutesRef}>
             <ul>
-              {this.minutes.map((m) => (
-                <li
-                  key={m}
-                  onClick={() => this.onSelectMinute(m)}
-                  className={`${prefixCls}-right-panel-item ${m === selectedMinute ? `${prefixCls}-right-panel-item-selected` : ''}`}
-                  title={m}
-                >{m}
-                </li>
-              ))}
+              {this.minutes.map((m) => {
+                const isSelected = selectedMinute && m === selectedMinute;
+                const isCurrent = !selectedMinute && m === currentMinute;
+                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                return (
+                  <li
+                    key={m}
+                    onClick={() => this.onSelectMinute(m)}
+                    className={`${prefixCls}-right-panel-item`}
+                    title={m}
+                  >
+                    <span className={className}>
+                      {m}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
