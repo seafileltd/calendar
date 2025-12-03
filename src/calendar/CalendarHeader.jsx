@@ -198,7 +198,7 @@ export default class CalendarHeader extends React.Component {
     }
 
     return (<div className={`${prefixCls}-header`}>
-      <div style={{ position: 'relative', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className={`${prefixCls}-header-nav-wrap`}>
         {showIf(enablePrev && !showTimePicker,
           <a
             className={`${prefixCls}-prev-year-btn`}

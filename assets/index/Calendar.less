@@ -68,6 +68,13 @@
     user-select: none;
     -webkit-user-select: none;
   }
+  &-header-nav-wrap {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &-header > a {
     font-weight: 600;
     display: inline-block;
@@ -111,7 +118,7 @@
   &-month-select:hover,
   &-day-select:hover {
     cursor: pointer;
-    color: #ff7600;
+    color: #ff9800;
   }
   &-year-select.@{prefixClass}-time-status:hover,
   &-month-select.@{prefixClass}-time-status:hover,
@@ -324,13 +331,13 @@
   &-time-picker-btn {
     display: inline-block;
     text-align: center;
-    color: #ed7107;
+    color: #ed7109;
   }
   &-today-btn:hover,
   &-ok-btn:hover,
   &-time-picker-btn:hover {
     cursor: pointer;
-    color: #ff7600;
+    color: #ff9800;
   }
   &-today-btn-disabled,
   &-ok-btn-disabled,
