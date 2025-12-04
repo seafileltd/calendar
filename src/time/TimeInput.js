@@ -144,21 +144,24 @@ class TimeInput extends React.Component {
 
   render() {
     const { prefixCls, placeholder, inputMode, disabled, className } = this.props;
-    const inputCls = className || `${prefixCls}-time-input ${prefixCls}-text-input`;
+    const inputCls = className || `${prefixCls}-input`;
     return (
-      <div className={`${prefixCls}-time-input-outer`}>
-        <input
-          ref={this.saveRef}
-          className={inputCls}
-          value={this.state.str}
-          disabled={disabled}
-          placeholder={placeholder}
-          onChange={this.onInputChange}
-          onKeyDown={this.onKeyDown}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          inputMode={inputMode}
-        />
+      <div className={`${prefixCls}-input-wrap`}>
+        <div className={`${prefixCls}-time-input-wrap`}>
+          <input
+            id="time-input"
+            ref={this.saveRef}
+            className={inputCls}
+            value={this.state.str}
+            disabled={disabled}
+            placeholder={placeholder}
+            onChange={this.onInputChange}
+            onKeyDown={this.onKeyDown}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            inputMode={inputMode}
+          />
+        </div>
       </div>
     );
   }

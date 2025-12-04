@@ -35,7 +35,7 @@ export default class DecadePanel extends React.Component {
 
   render() {
     const value = this.state.value;
-    const { locale, renderFooter } = this.props;
+    const { locale, renderFooter, showHourAndMinute } = this.props;
     const currentYear = value.year();
     const startYear = parseInt(currentYear / 100, 10) * 100;
     const preYear = startYear - 10;
@@ -43,10 +43,12 @@ export default class DecadePanel extends React.Component {
     const decades = [];
     let index = 0;
     const prefixCls = this.prefixCls;
+    const col = showHourAndMinute ? 3 : 2;
+    const row = showHourAndMinute ? 4 : 5;
 
-    for (let rowIndex = 0; rowIndex < ROW; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < row; rowIndex++) {
       decades[rowIndex] = [];
-      for (let colIndex = 0; colIndex < COL; colIndex++) {
+      for (let colIndex = 0; colIndex < col; colIndex++) {
         const startDecade = preYear + index * 10;
         const endDecade = preYear + index * 10 + 9;
         decades[rowIndex][colIndex] = {
@@ -97,7 +99,7 @@ export default class DecadePanel extends React.Component {
     });
 
     return (
-      <div className={this.prefixCls}>
+      <div className={prefixCls}>
         <div className={`${prefixCls}-header`}>
           <a
             className={`${prefixCls}-prev-century-btn`}
@@ -138,6 +140,7 @@ DecadePanel.propTypes = {
   defaultValue: PropTypes.object,
   rootPrefixCls: PropTypes.string,
   renderFooter: PropTypes.func,
+  showHourAndMinute: PropTypes.bool,
 };
 
 DecadePanel.defaultProps = {

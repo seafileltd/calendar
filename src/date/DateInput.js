@@ -169,6 +169,7 @@ class DateInput extends React.Component {
       <div className={`${prefixCls}-input-wrap`}>
         <div className={`${prefixCls}-date-input-wrap`}>
           <input
+            id="date-input"
             ref={this.saveDateInput}
             className={`${prefixCls}-input`}
             value={str}

@@ -2,7 +2,7 @@
   position: relative;
   outline: none;
   font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", "WenQuanYi Micro Hei", sans-serif;
-  width: fit-content;
+  width: 260px;
   list-style: none;
   font-size: 14px;
   text-align: left;
@@ -12,6 +12,10 @@
   background-clip: padding-box;
   border: 1px solid #ccc;
   line-height: 1.5;
+
+  &-with-time-panel {
+    width: 349px;
+  }
 
   /* Layout wrappers */
   &-panel {
@@ -23,76 +27,57 @@
   }
   &-date-panel {
     display: block;
-    min-width: 288px;
+    width: 260px;
   }
 
   /* Top inputs row */
   &-inputs {
     display: flex;
     align-items: stretch;
-    border-bottom: 1px solid #eee;
   }
   &-date-input-col {
     flex: 1 1 auto;
   }
   &-time-input-col {
-    width: 122px;
+    width: 89px;
     border-left: 1px solid #eee;
   }
   &-date-input,
-  &-time-input-outer {
+  &-time-input {
     display: flex;
     align-items: center;
     height: 100%;
+    padding: 12px 12px 0 12px;
   }
-  &-date-input {
-    padding: 10px;
-  }
-  &-time-input-outer {
-    padding: 10px;
-    width: 100%;
-  }
-  &-date-input input {
+  &-date-input input,
+  &-time-input input {
     height: 30px;
     width: 100%;
-    padding: 4px 10px;
+    padding: 4px 6px;
     border: 1px solid #eee;
     border-radius: 3px;
     line-height: 1.5;
   }
-  &-date-input input:focus {
+  &-date-input input:focus,
+  &-time-input input:focus {
     border-color: #1991eb;
     box-shadow: 0 0 0 2px rgba(70, 127, 207, .25);
     outline: none;
   }
-  /* Shared header text input */
-  &-text-input {
-    height: 30px;
-    display: inline-block;
-    width: 100%;
-    margin: 0;
-    padding: 4px 10px;
-    border-radius: 6px;
-    border: 1px solid #eee;
-    background: #fff;
-    color: #666;
-    line-height: 1.5;
-    transition: border 0.3s, background 0.3s, box-shadow 0.3s;
-  }
-  &-text-input:focus {
-    border-color: #1991eb;
-    box-shadow: 0 0 0 2px rgba(70, 127, 207, .25);
-    outline: none;
-  }
-
   &-header {
-    padding: 0 10px;
-    height: 40px;
-    line-height: 40px;
+    padding: 0 12px;
+    height: 48px;
+    line-height: 24px;
     text-align: center;
     user-select: none;
     -webkit-user-select: none;
-    border-bottom: 1px solid #eee;
+  }
+  &-header-nav-wrap {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   &-header > a {
     font-weight: 600;
@@ -111,6 +96,7 @@
     left: 25px;
   }
   &-prev-month-btn:after {
+    width: 20px;
     content: '‹';
   }
   &-next-month-btn {
@@ -118,6 +104,7 @@
     right: 25px;
   }
   &-next-month-btn:after {
+    width: 20px;
     content: '›';
   }
 
@@ -129,13 +116,13 @@
     font-weight: 600;
     color: #212529;
     padding: 0 8px;
-    line-height: 40px;
+    line-height: 48px;
   }
   &-year-select:hover,
   &-month-select:hover,
   &-day-select:hover {
     cursor: pointer;
-    color: #ed7109;
+    color: #ff9800;
   }
   &-year-select.@{prefixClass}-time-status:hover,
   &-month-select.@{prefixClass}-time-status:hover,
@@ -148,46 +135,55 @@
   &-next-month-btn,
   &-prev-year-btn,
   &-next-year-btn {
+    width: 20px;
+    height: 20px;
     position: absolute;
-    top: 0;
+    top: 14px;
     cursor: pointer;
     color: #999;
     font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei',
       'Microsoft Sans Serif', sans-serif;
-    padding: 0 5px;
     font-size: 16px;
-    display: inline-block;
-    line-height: 40px;
+    display: flex;
+    line-height: 18px;
+    border-radius: 4px;
   }
   &-prev-month-btn:hover,
   &-next-month-btn:hover,
   &-prev-year-btn:hover,
   &-next-year-btn:hover {
-    color: #ed7109;
+    color: #999;
+    background-color: #f5f5f5;
   }
   &-next-year-btn {
     right: 0;
   }
   &-next-year-btn:after {
+    width: 20px;
     content: '»';
   }
   &-prev-year-btn {
     left: 0;
   }
   &-prev-year-btn:after {
+    width: 20px;
     content: '«';
   }
 
   /* Date grid area */
   &-body {
-    padding: 8px 18px;
-    height: 268px;
+    padding: 0 12px;
+    height: 240px;
   }
   table {
     border-collapse: collapse;
     max-width: 100%;
     background-color: transparent;
     width: 100%;
+
+    td {
+      padding: 0;
+    }
   }
   table,
   td,
@@ -201,8 +197,8 @@
   }
   &-column-header {
     line-height: 18px;
-    height: 36px;
-    width: 36px;
+    height: 32px;
+    width: 32px;
     text-align: center;
   }
   &-column-header-inner {
@@ -214,67 +210,44 @@
     display: none;
   }
   &-cell {
-    height: 36px;
-    padding: 0;
+    width: 32px;
+    height: auto;
   }
   &-date {
     display: block;
-    margin: 0 auto;
     color: #212529;
     border-radius: 4px;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     padding: 0;
     background: transparent;
-    line-height: 24px;
+    line-height: 32px;
     text-align: center;
   }
   &-date:hover {
-    background: #fcecd9;
+    background: #f5f5f5;
+    border-radius: 50%;
     cursor: pointer;
   }
   &-selected-date &-date {
     background: #ff9800;
+    border-radius: 50%;
     color: #fff;
   }
   &-selected-date &-date:hover {
     background: #ff9800;
+    border-radius: 50%;
   }
   &-disabled-cell &-date {
     cursor: not-allowed;
-    color: #bcbcbc;
-    background: #f3f3f3;
-    border-radius: 0;
-    width: auto;
-  }
-  &-disabled-cell &-date:hover {
-    background: #f3f3f3;
-  }
-  &-disabled-cell-first-of-row &-date {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-  }
-  &-disabled-cell-last-of-row &-date {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
   }
   &-last-month-cell &-date,
   &-next-month-btn-day &-date {
     color: #bbb;
   }
   &-today &-date {
-    position: relative;
-  }
-  &-today &-date::before {
-    content: '';
-    background: #ff9800;
-    position: absolute;
-    width: 4px;
-    height: 4px;
+    border: 1px solid #ff9800;
     border-radius: 50%;
-    left: 45%;
-    bottom: 0%;
-    display: inline-block;
   }
 
   /* Right time panel */
@@ -282,25 +255,21 @@
     height: inherit;
     border-left: 1px solid #eee;
   }
-  &-right-panel-time-header {
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    font-weight: 600;
+  &-right-panel-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #212529;
-    border-bottom: 1px solid #eee;
+    font-weight: 600;
   }
   &-right-panel-body {
-    height: 268px;
+    height: 240px;
     display: flex;
-    padding: 4px;
+    padding: 0 4px 16px;
     scrollbar-color: auto;
   }
   &-right-panel-col {
     overflow-y: auto;
-  }
-  &-right-panel-col:last-child {
-    border-left: 1px solid #eee;
   }
   &-right-panel-col ul {
     list-style: none;
@@ -308,28 +277,38 @@
     padding: 4px;
   }
   &-right-panel-item {
-    width: 48px;
-    height: 28px;
-    line-height: 28px;
-    text-align: center;
+    width: 32px;
+    height: 32px;
+    padding: 4px 0;
     cursor: pointer;
+  }
+  &-right-panel-item-text {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    text-align: center;
+    line-height: 24px;
     color: #212529;
     font-weight: 400;
     border-radius: 3px;
   }
-  &-right-panel-item:hover {
-    background: fade(#ff9800, 10%);
+  &-right-panel-item-text:hover {
+    background: #f5f5f5;
     color: #212529;
   }
   &-right-panel-item-selected,
   &-right-panel-item-selected:hover {
     background: #ff9800;
-    border-radius: 3px;
+    border-radius: 4px;
     color: #fff;
   }
   &-right-panel-col::-webkit-scrollbar {
     width: 0;
     height: 0;
+  }
+  &-right-panel-item-current {
+    border: 1px solid #ff9800;
+    border-radius: 4px;
   }
 
   /* Footer */
@@ -363,7 +342,7 @@
   &-ok-btn:hover,
   &-time-picker-btn:hover {
     cursor: pointer;
-    color: #f09f4f;
+    color: #ff9800;
   }
   &-today-btn-disabled,
   &-ok-btn-disabled,
