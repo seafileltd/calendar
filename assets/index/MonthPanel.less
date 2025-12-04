@@ -2,8 +2,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  right: auto;
-  width: 260px;
+  right: 0;
+  width: 100%;
   background: #ffffff;
   z-index: 10;
   position: absolute;
@@ -51,19 +51,20 @@
   border-radius: 4px;
   color: #999;
   position: absolute;
-  top: 12px;
+  top: 14px;
 }
 
 .@{prefixClass}-month-panel-prev-year-btn:hover,
 .@{prefixClass}-month-panel-next-year-btn:hover {
+  color: #999;
   background-color: #f5f5f5;
 }
 
 .@{prefixClass}-month-panel-next-year-btn {
   right: 16px;
   &:after {
-    width: 20px;
     content: '»';
+    transform: translateY(-1px);
   }
 }
 
@@ -71,8 +72,8 @@
   user-select: none;
   left: 16px;
   &:after {
-    width: 20px;
     content: '«';
+    transform: translateY(-1px);
   }
 }
 
@@ -110,10 +111,10 @@
 
   .@{prefixClass}-month-panel-month {
     display: block;
-    width: 46px;
+    width: 64px;
     margin: 0 auto;
     color: #212529;
-    border-radius: 4px 4px;
+    border-radius: 4px;
     height: 36px;
     padding: 0;
     background: transparent;

@@ -299,6 +299,7 @@ ReactDOM.render((<div
         disabledDate={disabledDate}
         onSelect={onStandaloneSelect}
         renderFooter={(mode) => (<span>{mode} extra footer</span>)}
+        showHourAndMinute={true}
       />
     </div>
     <div style={{ float: 'left', width: 300 }}>

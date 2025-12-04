@@ -410,6 +410,7 @@ class Calendar extends React.Component {
           renderFooter={renderFooter}
           showTimePicker={showTimePicker}
           prefixCls={prefixCls}
+          showHourAndMinute={showHourAndMinute}
         />
         {timePicker && showTimePicker ?
           (<div className={`${prefixCls}-time-picker`}>
@@ -474,7 +475,7 @@ class Calendar extends React.Component {
 
     return this.renderRoot({
       children,
-      className: props.showWeekNumber ? `${prefixCls}-week-number` : '',
+      className: `${props.showWeekNumber ? `${prefixCls}-week-number` : ''} ${showHourAndMinute ? `${prefixCls}-with-time-panel` : ''}`.trim(),
     });
   }
 }

@@ -2,8 +2,8 @@
   left: 0;
   top: 0;
   bottom: 0;
-  right: auto;
-  width: 260px;
+  right: 0;
+  width: 100%;
   background: #ffffff;
   z-index: 10;
   position: absolute;
@@ -49,20 +49,22 @@
   width: 20px;
   height: 20px;
   position: absolute;
-  top: 12px;
+  top: 14px;
   border-radius: 4px;
   color: #999;
 }
 
 .@{prefixClass}-year-panel-prev-decade-btn:hover,
 .@{prefixClass}-year-panel-next-decade-btn:hover {
+  color: #999;
   background-color: #f5f5f5;
 }
 
 .@{prefixClass}-year-panel-next-decade-btn {
+  right: 16px;
   &:after {
-    width: 20px;
     content: '»';
+    transform: translateY(-1px);
   }
 }
 
@@ -71,8 +73,8 @@
   left: 16px;
 
   &:after {
-    width: 20px;
     content: '«';
+    transform: translateY(-1px);
   }
 }
 
@@ -112,7 +114,7 @@
 
 .@{prefixClass}-year-panel-year {
   display: block;
-  width: 46px;
+  width: 64px;
   margin: 0 auto;
   color: #212529;
   border-radius: 4px;

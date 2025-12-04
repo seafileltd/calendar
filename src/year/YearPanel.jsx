@@ -40,9 +40,11 @@ export default class YearPanel extends React.Component {
     const previousYear = startYear - 1;
     const years = [];
     let index = 0;
-    for (let rowIndex = 0; rowIndex < ROW; rowIndex++) {
+    const col = this.props.showHourAndMinute ? 4 : 3;
+    const row = this.props.showHourAndMinute ? 3 : 4;
+    for (let rowIndex = 0; rowIndex < row; rowIndex++) {
       years[rowIndex] = [];
-      for (let colIndex = 0; colIndex < COL; colIndex++) {
+      for (let colIndex = 0; colIndex < col; colIndex++) {
         const year = previousYear + index;
         const content = String(year);
         years[rowIndex][colIndex] = {
@@ -92,7 +94,7 @@ export default class YearPanel extends React.Component {
     const footer = renderFooter && renderFooter('year');
 
     return (
-      <div className={this.prefixCls}>
+      <div className={prefixCls}>
         <div>
           <div className={`${prefixCls}-header`}>
             <a
@@ -142,6 +144,7 @@ YearPanel.propTypes = {
   value: PropTypes.object,
   defaultValue: PropTypes.object,
   renderFooter: PropTypes.func,
+  showHourAndMinute: PropTypes.bool,
 };
 
 YearPanel.defaultProps = {

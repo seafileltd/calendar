@@ -34,6 +34,7 @@ export default class CalendarHeader extends React.Component {
     disabledMonth: PropTypes.func,
     renderFooter: PropTypes.func,
     onMonthSelect: PropTypes.func,
+    showHourAndMinute: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -182,6 +183,7 @@ export default class CalendarHeader extends React.Component {
           onSelect={this.onYearSelect}
           onDecadePanelShow={this.showDecadePanel}
           renderFooter={renderFooter}
+          showHourAndMinute={props.showHourAndMinute}
         />
       );
     }
@@ -193,6 +195,7 @@ export default class CalendarHeader extends React.Component {
           rootPrefixCls={prefixCls}
           onSelect={this.onDecadeSelect}
           renderFooter={renderFooter}
+          showHourAndMinute={props.showHourAndMinute}
         />
       );
     }
