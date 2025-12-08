@@ -122,55 +122,9 @@ class Calendar extends React.Component {
       return undefined;
     }
     const keyCode = event.keyCode;
-    // mac
-    const ctrlKey = event.ctrlKey || event.metaKey;
     const { disabledDate } = this.props;
     const { value } = this.state;
     switch (keyCode) {
-      case KeyCode.DOWN:
-        this.goTime(1, 'weeks');
-        event.preventDefault();
-        return 1;
-      case KeyCode.UP:
-        this.goTime(-1, 'weeks');
-        event.preventDefault();
-        return 1;
-      case KeyCode.LEFT:
-        if (ctrlKey) {
-          this.goTime(-1, 'years');
-        } else {
-          this.goTime(-1, 'days');
-        }
-        event.preventDefault();
-        return 1;
-      case KeyCode.RIGHT:
-        if (ctrlKey) {
-          this.goTime(1, 'years');
-        } else {
-          this.goTime(1, 'days');
-        }
-        event.preventDefault();
-        return 1;
-      case KeyCode.HOME:
-        this.setValue(
-          goStartMonth(this.state.value),
-        );
-        event.preventDefault();
-        return 1;
-      case KeyCode.END:
-        this.setValue(
-          goEndMonth(this.state.value),
-        );
-        event.preventDefault();
-        return 1;
-      case KeyCode.PAGE_DOWN:
-        this.goTime(1, 'month');
-        event.preventDefault();
-        return 1;
-      case KeyCode.PAGE_UP:
-        this.goTime(-1, 'month');
-        event.preventDefault();
-        return 1;
       case KeyCode.ENTER:
         if (!disabledDate || !disabledDate(value)) {
           this.onSelect(value, {
@@ -180,6 +134,7 @@ class Calendar extends React.Component {
         event.preventDefault();
         return 1;
       default:
+        event.stopPropagation();
         this.props.onKeyDown(event);
         return 1;
     }
