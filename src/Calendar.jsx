@@ -134,6 +134,7 @@ class Calendar extends React.Component {
         event.preventDefault();
         return 1;
       default:
+        event.preventDefault();
         event.stopPropagation();
         this.props.onKeyDown(event);
         return 1;
