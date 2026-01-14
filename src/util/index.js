@@ -190,7 +190,7 @@ export function validateTime(inputTime) {
     return getCurrentTime();
   }
   const trimmed = inputTime.trim();
-  const timeRegex = /^(\d{2}):(\d{2})$/;
+  const timeRegex = /^(\d{1,2}):(\d{2})$/;
   const match = trimmed.match(timeRegex);
   if (!match) {
     return getCurrentTime();
@@ -200,7 +200,7 @@ export function validateTime(inputTime) {
   if (hour > 23 || minute > 59) {
     return getCurrentTime();
   }
-  return `${match[1]}:${match[2]}`;
+  return `${String(hour).padStart(2, '0')}:${match[2]}`;
 }
 
 export function delimate(format) {
