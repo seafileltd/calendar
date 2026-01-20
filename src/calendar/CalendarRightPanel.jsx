@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
-import { tokenizeFormattedDate } from '../util';
 
 export default class CalendarRightPanel extends React.Component {
 
@@ -62,7 +60,6 @@ export default class CalendarRightPanel extends React.Component {
 
   render() {
     const { value, prefixCls, locale } = this.props;
-    const selectedDate = value.format().slice(0, String(value.format()).indexOf('T'));
     const highlight = this.state.highlightTime;
     const highlightTime = highlight ? highlight.format().slice(11, 16) : null;
     const isZhcn = (locale && locale.today === '今天');
@@ -74,8 +71,8 @@ export default class CalendarRightPanel extends React.Component {
         <div className={`${prefixCls}-right-panel-body`} ref={this.timeRef}>
           <ul>
             {this.times.map((time) => {
-              const parts = tokenizeFormattedDate(selectedDate, this.state.localeFormat);
-              let current = dayjs(`${selectedDate} ${time}`).year(parts[0]).month(parts[1] - 1).date(parts[2]); // eslint-disable-line max-len
+              const [hour, minute] = time.split(':');
+              let current = value.clone().hour(parseInt(hour, 10)).minute(parseInt(minute, 10)).second(0);
               current = isZhcn ? current.locale('zh-cn') : current.locale('en-gb');
               return (
                 <li
