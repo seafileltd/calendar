@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-const ROW = 4;
-const COL = 3;
 import classnames from 'classnames';
+import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from '../icons';
 
 function goYear(direction) {
   let next = this.state.value.clone();
@@ -106,7 +105,9 @@ export default class DecadePanel extends React.Component {
             role="button"
             onClick={this.previousCentury}
             title={locale.previousCentury}
-          />
+          >
+            <DoubleArrowLeftIcon />
+          </a>
 
           <div className={`${prefixCls}-century`}>
             {startYear}-{endYear}
@@ -116,7 +117,9 @@ export default class DecadePanel extends React.Component {
             role="button"
             onClick={this.nextCentury}
             title={locale.nextCentury}
-          />
+          >
+            <DoubleArrowRightIcon />
+          </a>
         </div>
         <div className={`${prefixCls}-body`}>
           <table className={`${prefixCls}-table`} cellSpacing="0" role="grid">

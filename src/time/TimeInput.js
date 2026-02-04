@@ -47,8 +47,6 @@ function initializeTime(str) {
 }
 
 let timeInputInstance;
-let cachedSelectionStart;
-let cachedSelectionEnd;
 
 class TimeInput extends React.Component {
   static propTypes = {
@@ -79,11 +77,6 @@ class TimeInput extends React.Component {
 
   static getDerivedStateFromProps(nextProps, state) {
     let newState = null;
-    if (timeInputInstance) {
-      cachedSelectionStart = timeInputInstance.selectionStart;
-      cachedSelectionEnd = timeInputInstance.selectionEnd;
-    }
-
     if (!state.hasFocus) {
       const base = nextProps.selectedValue || null;
       newState = { str: base ? formatTime(base, nextProps.format) : '' };

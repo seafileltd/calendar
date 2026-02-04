@@ -46,12 +46,13 @@
 
 .@{prefixClass}-year-panel-prev-decade-btn,
 .@{prefixClass}-year-panel-next-decade-btn {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   position: absolute;
   top: 14px;
   border-radius: 4px;
   color: #999;
+  user-select: none;
 }
 
 .@{prefixClass}-year-panel-prev-decade-btn:hover,
@@ -62,20 +63,10 @@
 
 .@{prefixClass}-year-panel-next-decade-btn {
   right: 16px;
-  &:after {
-    content: '»';
-    transform: translateY(-1px);
-  }
 }
 
 .@{prefixClass}-year-panel-prev-decade-btn {
-  user-select: none;
   left: 16px;
-
-  &:after {
-    content: '«';
-    transform: translateY(-1px);
-  }
 }
 
 .@{prefixClass}-year-panel .@{prefixClass}-year-panel-decade-select {

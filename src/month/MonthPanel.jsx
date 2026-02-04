@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import MonthTable from './MonthTable';
+import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from '../icons';
 
 function goYear(direction) {
   this.props.changeYear(direction);
@@ -83,7 +84,9 @@ class MonthPanel extends React.Component {
               role="button"
               onClick={this.previousYear}
               title={locale.previousYear}
-            />
+            >
+              <DoubleArrowLeftIcon />
+            </a>
 
             <a
               className={`${prefixCls}-year-select`}
@@ -100,7 +103,9 @@ class MonthPanel extends React.Component {
               role="button"
               onClick={this.nextYear}
               title={locale.nextYear}
-            />
+            >
+              <DoubleArrowRightIcon />
+            </a>
           </div>
           <div className={`${prefixCls}-body`}>
             <MonthTable
