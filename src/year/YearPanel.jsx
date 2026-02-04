@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-const ROW = 4;
-const COL = 3;
+import { DoubleArrowLeftIcon, DoubleArrowRightIcon } from '../icons';
 
 function goYear(direction) {
   let value = this.state.value.clone();
@@ -102,7 +101,10 @@ export default class YearPanel extends React.Component {
               role="button"
               onClick={this.previousDecade}
               title={locale.previousDecade}
-            />
+            >
+              <DoubleArrowLeftIcon />
+            </a>
+
             <a
               className={`${prefixCls}-decade-select`}
               role="button"
@@ -120,7 +122,10 @@ export default class YearPanel extends React.Component {
               role="button"
               onClick={this.nextDecade}
               title={locale.nextDecade}
-            />
+            >
+              <DoubleArrowRightIcon />
+            </a>
+
           </div>
           <div className={`${prefixCls}-body`}>
             <table className={`${prefixCls}-table`} cellSpacing="0" role="grid">

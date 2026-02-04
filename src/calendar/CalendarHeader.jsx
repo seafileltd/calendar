@@ -4,6 +4,12 @@ import toFragment from 'rc-util/lib/Children/mapSelf';
 import MonthPanel from '../month/MonthPanel';
 import YearPanel from '../year/YearPanel';
 import DecadePanel from '../decade/DecadePanel';
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  DoubleArrowLeftIcon,
+  DoubleArrowRightIcon,
+} from '../icons';
 
 function goMonth(direction) {
   let next = this.props.value.clone();
@@ -208,27 +214,35 @@ export default class CalendarHeader extends React.Component {
             role="button"
             onClick={this.previousYear}
             title={locale.previousYear}
-          />)}
+          >
+            <DoubleArrowLeftIcon />
+          </a>)}
         {showIf(enablePrev && !showTimePicker,
           <a
             className={`${prefixCls}-prev-month-btn`}
             role="button"
             onClick={this.previousMonth}
             title={locale.previousMonth}
-          />)}
+          >
+            <ArrowLeftIcon />
+          </a>)}
         {this.monthYearElement(showTimePicker)}
         {showIf(enableNext && !showTimePicker,
           <a
             className={`${prefixCls}-next-month-btn`}
             onClick={this.nextMonth}
             title={locale.nextMonth}
-          />)}
+          >
+            <ArrowRightIcon />
+          </a>)}
         {showIf(enableNext && !showTimePicker,
           <a
             className={`${prefixCls}-next-year-btn`}
             onClick={this.nextYear}
             title={locale.nextYear}
-          />)}
+          >
+            <DoubleArrowRightIcon />
+          </a>)}
       </div>
       {panel}
     </div>);

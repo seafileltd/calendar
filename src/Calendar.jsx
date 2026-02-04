@@ -17,11 +17,12 @@ import {
 import { commonMixinWrapper, propType, defaultProp } from './mixin/CommonMixin';
 import DateInput from './date/DateInput';
 import TimeInput from './time/TimeInput';
-import { getTimeConfig, getTodayTime, syncTime, CALENDAR_STATUS } from './util';
-import { goStartMonth, goEndMonth, goTime } from './util/toTime';
+import { getTimeConfig, getTodayTime, CALENDAR_STATUS } from './util';
+import { goTime } from './util/toTime';
 import localeData from 'dayjs/plugin/localeData';
 import utc from 'dayjs/plugin/utc';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+
 dayjs.extend(utc);
 dayjs.extend(localeData);
 dayjs.extend(weekOfYear);
