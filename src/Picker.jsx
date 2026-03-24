@@ -101,7 +101,9 @@ class Picker extends React.Component {
       cause.source === 'dateInputSelect' ||
       (!props.calendar.props.timePicker && cause.source !== 'dateInput') ||
       cause.source === 'todayButton') {
-      this.close(this.focus);
+        if (!this.props.isRemainOpen) {
+          this.close(this.focus);
+        }
     }
     props.onChange(value);
   }
