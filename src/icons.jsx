@@ -26,9 +26,17 @@ const DoubleArrowRightIcon = () => (
   </svg>
 );
 
+const CloseIcon = () => (
+  <svg width="12" height="12" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <path d="M489.6 444.8l294.4-294.4 67.2 67.2-294.4 294.4 294.4 294.4-67.2 67.2-294.4-294.4-272 272-67.2-67.2 272-272-272-272 67.2-67.2z" p-id="18369" fill="currentColor"></path>
+  </svg>
+);
+
+
 export {
   ArrowLeftIcon,
   ArrowRightIcon,
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
+  CloseIcon,
 };

@@ -5,6 +5,7 @@ import KeyCode from 'rc-util/lib/KeyCode';
 import { polyfill } from 'react-lifecycles-compat';
 import dayjs from 'dayjs';
 import { formatDate, initializeStr } from '../util';
+import { CloseIcon } from '../icons';
 
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 
@@ -189,7 +190,7 @@ class DateInput extends React.Component {
             title={locale.clear}
             onClick={this.onClear}
           >
-            {clearIcon || <span className={`${prefixCls}-clear-btn`} />}
+            {clearIcon || <span className={`${prefixCls}-clear-btn`} ><CloseIcon /></span>}
           </a>
         }
       </div>
