@@ -306,7 +306,7 @@ class Calendar extends React.Component {
         value={value}
         locale={locale}
         placeholder={headerDatePlaceholder}
-        showClear={false}
+        showClear
         disabledTime={disabledTime}
         disabledDate={disabledDate}
         onClear={this.onClear}
