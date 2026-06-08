@@ -120,7 +120,7 @@ class Picker extends React.Component {
   }
 
   onCalendarClear = () => {
-    this.close(this.focus);
+    // Click clear button, do not close the time picker
   }
 
   onCalendarBlur = () => {
