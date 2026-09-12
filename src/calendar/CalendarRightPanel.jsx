@@ -158,56 +158,55 @@ export default class CalendarRightPanel extends React.Component {
     const selectedMinute = this.getSelectedMinute();
     const currentHour = dayjs().format('HH');
     const currentMinute = dayjs().format('mm');
-    const displayHour = selectedHour || currentHour;
-    const displayMinute = selectedMinute || currentMinute;
 
     return (
       <div className={`${prefixCls}-right-panel`}>
-        <div className={`${prefixCls}-right-panel-header ${prefixCls}-header`}>
-          {displayHour}:{displayMinute}
-        </div>
         <div className={`${prefixCls}-right-panel-body`}>
-          <div className={`${prefixCls}-right-panel-col`} ref={this.hoursRef}>
-            <ul>
-              {this.hours.map((h) => {
-                const isSelected = selectedHour && h === selectedHour;
-                const isCurrent = !selectedHour && h === currentHour;
-                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
-                return (
-                  <li
-                    key={h}
-                    onClick={() => this.onSelectHour(h)}
-                    className={`${prefixCls}-right-panel-item`}
-                    title={h}
-                  >
-                    <span className={className}>
-                      {h}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+          <div className={`${prefixCls}-right-panel-col ${prefixCls}-right-panel-col-hour`} ref={this.hoursRef}>
+            <div className={`${prefixCls}-right-panel-col-item`}>
+              <ul>
+                {this.hours.map((h) => {
+                  const isSelected = selectedHour && h === selectedHour;
+                  const isCurrent = !selectedHour && h === currentHour;
+                  const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                  return (
+                    <li
+                      key={h}
+                      onClick={() => this.onSelectHour(h)}
+                      className={`${prefixCls}-right-panel-item`}
+                      title={h}
+                    >
+                      <span className={className}>
+                        {h}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
           <div className={`${prefixCls}-right-panel-col`} ref={this.minutesRef}>
-            <ul>
-              {this.minutes.map((m) => {
-                const isSelected = selectedMinute && m === selectedMinute;
-                const isCurrent = !selectedMinute && m === currentMinute;
-                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
-                return (
-                  <li
-                    key={m}
-                    onClick={() => this.onSelectMinute(m)}
-                    className={`${prefixCls}-right-panel-item`}
-                    title={m}
-                  >
-                    <span className={className}>
-                      {m}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+            <div className={`${prefixCls}-right-panel-col-item`}>
+              <ul>
+                {this.minutes.map((m) => {
+                  const isSelected = selectedMinute && m === selectedMinute;
+                  const isCurrent = !selectedMinute && m === currentMinute;
+                  const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                  return (
+                    <li
+                      key={m}
+                      onClick={() => this.onSelectMinute(m)}
+                      className={`${prefixCls}-right-panel-item`}
+                      title={m}
+                    >
+                      <span className={className}>
+                        {m}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

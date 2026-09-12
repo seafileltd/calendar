@@ -14,7 +14,7 @@
   overflow: hidden;
 
   &-with-time-panel {
-    width: 367px;
+    width: fit-content;
   }
 
   /* Layout wrappers */
@@ -37,9 +37,11 @@
   }
   &-date-input-col {
     flex: 1 1 auto;
+    max-width: 276px;
   }
   &-time-input-col {
-    width: 89px;
+    min-width: 0;
+    flex: 1;
     border-left: 1px solid #eee;
   }
   &-date-input,
@@ -47,8 +49,11 @@
     display: flex;
     align-items: center;
     height: 100%;
-    padding: 12px 12px 0 12px;
+    padding: 12px;
     margin-bottom: 4px;
+  }
+  &-time-input {
+    border-bottom: 1px solid #eee;
   }
   &-date-input input,
   &-time-input input {
@@ -261,26 +266,25 @@
     height: inherit;
     border-left: 1px solid #eee;
   }
-  &-right-panel-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #212529;
-    font-weight: 600;
-  }
   &-right-panel-body {
-    height: 260px;
+    height: 308px;
     display: flex;
-    padding: 0 4px 16px;
-    scrollbar-color: auto;
+    padding: 0;
   }
   &-right-panel-col {
     overflow-y: auto;
   }
+  &-right-panel-col-hour {
+    border-right: 1px solid #eee;
+  }
+  &-right-panel-col-item {
+    overflow-y: auto;
+    margin-bottom: 16px;
+  }
   &-right-panel-col ul {
     list-style: none;
     margin: 0;
-    padding: 4px;
+    padding: 0 16px 0 16px;
   }
   &-right-panel-item {
     width: 32px;
@@ -307,10 +311,6 @@
     background: #ff9800;
     border-radius: 4px;
     color: #fff;
-  }
-  &-right-panel-col::-webkit-scrollbar {
-    width: 0;
-    height: 0;
   }
   &-right-panel-item-current {
     border: 1px solid #ff9800;
