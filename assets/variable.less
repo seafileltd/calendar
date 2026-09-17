@@ -1,70 +1,72 @@
 .@{prefixClass} {
-  --rc-calendar-body-color: #212529;
-  --rc-calendar-icon-secondary-color: #999;
-  --rc-calendar-icon-color: #666;
-  --rc-calendar-icon-btn-hover-bg-color: rgba(0, 0, 0, .04);
-  --rc-calendar-input-focus-border-color: #3e84f7;
-  --rc-calendar-popover-bg: #fff;
   --rc-calendar-sf-orange: #FF8000;
   --rc-calendar-sf-orange-2: #ED7109;
+  --rc-calendar-popover-bg: #fff;
+  --rc-calendar-body-color: #212529;
+  --rc-calendar-icon-color: #666;
+  --rc-calendar-icon-secondary-color: #999;
+  --rc-calendar-icon-btn-hover-bg-color: rgba(0, 0, 0, .04);
+
+  --rc-calendar-input-border-color: rgba(0, 40, 100, .12);
+  --rc-calendar-input-focus-border-color: #3e84f7;
 
   --rc-calendar-divider-color: #eee;
   --rc-calendar-disabled-bg: rgba(0, 0, 0, .05);
   --rc-calendar-disabled-color: #c2c2c2;
   --rc-calendar-out-range-color: #c2c2c2;
-  --rc-calendar-border-color: rgba(0, 40, 100, .12);
-  --rc-calendar-time-section-border: rgba(0, 40, 100, .12);
 }
 
 @media (prefers-color-scheme: dark) {
   .@{prefixClass} {
-    --rc-calendar-body-color: rgba(255, 255, 255, .9);
-    --rc-calendar-icon-secondary-color: rgba(255, 255, 255, 0.5);
-    --rc-calendar-icon-color: #adb5bd;
-    --rc-calendar-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
-    --rc-calendar-input-focus-border-color: #3e84f7;
     --rc-calendar-popover-bg: rgba(28, 29, 31, 1);
+    --rc-calendar-body-color: rgba(255, 255, 255, .9);
+    --rc-calendar-icon-color: rgba(255, 255, 255, 0.7);
+    --rc-calendar-icon-secondary-color: rgba(255, 255, 255, 0.5);
+    --rc-calendar-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
+
+    --rc-calendar-input-border-color: rgba(255, 255, 255, .1);
+    --rc-calendar-input-focus-border-color: #3e84f7;
 
     --rc-calendar-divider-color: rgba(255, 255, 255, .1);
     --rc-calendar-disabled-bg: rgba(255, 255, 255, .08);
     --rc-calendar-disabled-color: rgba(255, 255, 255, .2);
     --rc-calendar-out-range-color: rgba(255, 255, 255, .2);
-    --rc-calendar-border-color: rgba(255, 255, 255, .16);
-    --rc-calendar-time-section-border: rgba(255, 255, 255, .16);
   }
 }
 
 /* Explicit theme values take precedence over the system preference. */
 [data-bs-theme='light'] .@{prefixClass},
 .@{prefixClass}[data-bs-theme='light'] {
-  --rc-calendar-body-color: #212529;
-  --rc-calendar-icon-secondary-color: #999;
-  --rc-calendar-icon-color: #666;
-  --rc-calendar-icon-btn-hover-bg-color: rgba(0, 0, 0, .04);
-  --rc-calendar-input-focus-border-color: #3e84f7;
-  --rc-calendar-popover-bg: #fff;
   --rc-calendar-sf-orange: #FF8000;
   --rc-calendar-sf-orange-2: #ED7109;
+  --rc-calendar-popover-bg: #fff;
+  --rc-calendar-body-color: #212529;
+  --rc-calendar-icon-color: #666;
+  --rc-calendar-icon-secondary-color: #999;
+  --rc-calendar-icon-btn-hover-bg-color: rgba(0, 0, 0, .04);
 
+  --rc-calendar-input-border-color: rgba(0, 40, 100, .12);
+  --rc-calendar-input-focus-border-color: #3e84f7;
+
+  --rc-calendar-divider-color: #eee;
   --rc-calendar-disabled-bg: rgba(0, 0, 0, .05);
   --rc-calendar-disabled-color: #c2c2c2;
   --rc-calendar-out-range-color: #c2c2c2;
-  --rc-calendar-border-color: rgba(0, 40, 100, .12);
-  --rc-calendar-time-section-border: rgba(0, 40, 100, .12);
 }
 
 [data-bs-theme='dark'] .@{prefixClass},
 .@{prefixClass}[data-bs-theme='dark'] {
-  --rc-calendar-body-color: rgba(255, 255, 255, .9);
-  --rc-calendar-icon-secondary-color: rgba(255, 255, 255, 0.5);
-  --rc-calendar-icon-color: #adb5bd;
-  --rc-calendar-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
-  --rc-calendar-input-focus-border-color: #3e84f7;
-  --rc-calendar-popover-bg: rgba(28, 29, 31, 1);
+    --rc-calendar-popover-bg: rgba(28, 29, 31, 1);
+    --rc-calendar-body-color: rgba(255, 255, 255, .9);
+    --rc-calendar-icon-color: rgba(255, 255, 255, 0.7);
+    --rc-calendar-icon-secondary-color: rgba(255, 255, 255, 0.5);
+    --rc-calendar-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
 
-  --rc-calendar-disabled-bg: rgba(255, 255, 255, .08);
-  --rc-calendar-disabled-color: rgba(255, 255, 255, .2);
-  --rc-calendar-out-range-color: rgba(255, 255, 255, .2);
-  --rc-calendar-border-color: rgba(255, 255, 255, .16);
-  --rc-calendar-time-section-border: rgba(255, 255, 255, .16);
+    --rc-calendar-input-border-color: rgba(255, 255, 255, .1);
+    --rc-calendar-input-focus-border-color: #3e84f7;
+
+    --rc-calendar-divider-color: rgba(255, 255, 255, .1);
+    --rc-calendar-disabled-bg: rgba(255, 255, 255, .08);
+    --rc-calendar-disabled-color: rgba(255, 255, 255, .2);
+    --rc-calendar-out-range-color: rgba(255, 255, 255, .2);
 }
