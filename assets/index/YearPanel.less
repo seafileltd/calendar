@@ -4,7 +4,7 @@
   bottom: 0;
   right: 0;
   width: 100%;
-  background: var(--bs-popover-bg, #fff);
+  background: var(--rc-calendar-popover-bg, #fff);
   z-index: 10;
   position: absolute;
   outline: none;
@@ -29,7 +29,7 @@
   text-align: center;
   user-select: none;
   -webkit-user-select: none;
-  border-bottom: 1px solid var(--bs-calendar-divider-color, #eee);
+  border-bottom: 1px solid var(--rc-calendar-divider-color, #eee);
 
   > a {
     display: inline-flex;
@@ -41,7 +41,7 @@
 }
 
 .@{prefixClass}-year-panel-decade-select:hover {
-  color: var(--bs-sf-orange-2, #ed7109);
+  color: var(--rc-calendar-sf-orange-2, #ed7109);
 }
 
 .@{prefixClass}-year-panel-prev-decade-btn,
@@ -52,14 +52,14 @@
   top: 50%;
   transform: translateY(-50%);
   border-radius: 4px;
-  color: var(--bs-icon-secondary-color, #999);
+  color: var(--rc-calendar-icon-secondary-color, #999);
   user-select: none;
 }
 
 .@{prefixClass}-year-panel-prev-decade-btn:hover,
 .@{prefixClass}-year-panel-next-decade-btn:hover {
-  color: var(--bs-icon-secondary-color, #999);
-  background-color: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
+  color: var(--rc-calendar-icon-secondary-color, #999);
+  background-color: var(--rc-calendar-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
 }
 
 .@{prefixClass}-year-panel-next-decade-btn {
@@ -89,7 +89,7 @@
 }
 
 .@{prefixClass}-year-panel-footer {
-  border-top: 1px solid var(--bs-calendar-divider-color);
+  border-top: 1px solid var(--rc-calendar-divider-color);
   line-height: 38px;
 }
 
@@ -108,7 +108,7 @@
   display: block;
   width: 64px;
   margin: 0 auto;
-  color: var(--bs-body-color, #212529);
+  color: var(--rc-calendar-body-color, #212529);
   border-radius: 4px;
   height: 36px;
   padding: 0;
@@ -117,18 +117,18 @@
   text-align: center;
 
   &:hover {
-    color: var(--bs-body-color, #212529);
-    background: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
+    color: var(--rc-calendar-body-color, #212529);
+    background: var(--rc-calendar-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
     cursor: pointer;
   }
 }
 
 .@{prefixClass}-year-panel-selected-cell .@{prefixClass}-year-panel-year {
-  background: var(--bs-sf-orange, #FF8000);
+  background: var(--rc-calendar-sf-orange, #FF8000);
   color: #fff;
 
   &:hover {
-    background: var(--bs-sf-orange, #FF8000);
+    background: var(--rc-calendar-sf-orange, #FF8000);
     color: #fff;
   }
 }
