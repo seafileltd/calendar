@@ -18,6 +18,10 @@
     width: fit-content;
   }
 
+  &-tbody tr:first-child td {
+    padding-top: 2px;
+  }
+
   /* Layout wrappers */
   &-panel {
     display: flex;
@@ -25,6 +29,28 @@
   }
   &-date-panel-container {
     display: flex;
+    height: 316px;
+  }
+  &-date-time-panel {
+    display: flex;
+    height: 356px;
+  }
+  &-date-panel-column,
+  &-time-panel-column {
+    display: flex;
+    flex-direction: column;
+  }
+  &-date-panel-column {
+    flex: 0 0 272px;
+    width: 272px;
+  }
+  &-time-panel-column {
+    flex: 0 0 130px;
+    width: 130px;
+    min-width: 0;
+  }
+  &-date-panel-column &-date-panel {
+    width: 272px;
   }
   &-date-panel {
     display: block;
@@ -35,6 +61,7 @@
   &-inputs {
     display: flex;
     align-items: stretch;
+    height: 44px;
   }
   &-date-input-col {
     flex: 1 1 auto;
@@ -45,13 +72,22 @@
     flex: 1;
     border-left: 1px solid #eee;
   }
-  &-date-input,
+  &-date-panel-column &-date-input-col,
+  &-time-panel-column &-time-input-col {
+    height: 44px;
+  }
+  &-date-input {
+    display: flex;
+    align-items: center;
+    padding: 12px 12px 0 12px;
+  }
   &-time-input {
     display: flex;
     align-items: center;
-    height: 100%;
     padding: 12px;
-    margin-bottom: 4px;
+  }
+  &-time-input &-input-wrap {
+    min-width: 0;
   }
   &-time-input {
     border-bottom: 1px solid #eee;
@@ -63,6 +99,7 @@
     width: 100%;
     border: 1px solid #eee;
     border-radius: 4px;
+    padding-top: 12px;
   }
   &-date-input input {
     padding: 4px 16px;
@@ -83,6 +120,7 @@
     text-align: center;
     user-select: none;
     -webkit-user-select: none;
+    margin-top: 4px;
   }
   &-header-nav-wrap {
     position: relative;
@@ -171,7 +209,7 @@
 
   /* Date grid area */
   &-body {
-    padding: 0 12px;
+    padding: 0 12px 12px;
     height: 260px;
   }
   table {
@@ -199,6 +237,12 @@
     height: 32px;
     width: 32px;
     text-align: center;
+  }
+  &-week-date-header {
+    height: 32px;
+  }
+  &-column-header-box {
+    margin-bottom: 2px;
   }
   &-column-header-inner {
     display: block;
@@ -267,12 +311,18 @@
     height: inherit;
     border-left: 1px solid #eee;
   }
+  &-time-panel-column &-right-panel {
+    height: 312px;
+  }
   &-right-panel-body {
-    height: 308px;
+    height: 300px;
     display: flex;
     padding: 0;
+    margin-top: 12px;
   }
   &-right-panel-col {
+    flex: 0 0 64px;
+    width: 64px;
     overflow-y: auto;
   }
   &-right-panel-col-hour {
@@ -280,18 +330,21 @@
   }
   &-right-panel-col-item {
     overflow-y: auto;
-    margin-bottom: 16px;
   }
   &-right-panel-col ul {
     list-style: none;
-    margin: 0;
-    padding: 0 16px 0 16px;
+    padding: 4px 16px 12px 16px;
   }
   &-right-panel-item {
     width: 32px;
     height: 32px;
     padding: 4px 0;
     cursor: pointer;
+    margin-top: 4px;
+
+    &:first-child {
+      margin-top: 0;
+    }
   }
   &-right-panel-item-text {
     width: 100%;
@@ -325,8 +378,19 @@
     text-align: center;
     position: relative;
   }
+  &-with-time-panel &-footer {
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   &-footer-show-ok {
     text-align: right;
+  }
+  &-with-time-panel &-footer-show-ok {
+    justify-content: flex-end;
+    padding: 0 12px;
   }
   &-footer-btn:after {
     content: 'x';

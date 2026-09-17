@@ -337,23 +337,14 @@ class Calendar extends React.Component {
     }
 
     const showTimeControls = showHourAndMinute && mode === 'date';
-
-    children.push(<div className={`${prefixCls}-panel`} key="panel">
-      <div className={`${prefixCls}-inputs`}>
-        <div className={`${prefixCls}-date-input-col`}>
-          <div className={`${prefixCls}-date-input`}>
-            {dateInputElement}
-          </div>
+    const dateInputColumnElement = (
+      <div className={`${prefixCls}-date-input-col`}>
+        <div className={`${prefixCls}-date-input`}>
+          {dateInputElement}
         </div>
-        {showTimeControls && (
-          <div className={`${prefixCls}-time-input-col`}>
-            <div className={`${prefixCls}-time-input`}>
-              {timeInputTopElement}
-            </div>
-          </div>
-        )}
       </div>
-      <div className={`${prefixCls}-date-panel-container`}>
+    );
+    const datePanelElement = (
       <div
         tabIndex={this.props.focusablePanel ? 0 : undefined}
         className={`${prefixCls}-date-panel`}
@@ -390,21 +381,46 @@ class Calendar extends React.Component {
             currentStatus={currentStatus}
           />
         </div>
-
       </div>
-      {showTimeControls &&
-        <CalendarRightPanel
-          prefixCls={prefixCls}
-          value={value}
-          selectedValue={selectedValue}
-          locale={locale}
-          onSelect={this.onDateTableSelect}
-          onClickRightPanelTime={onClickRightPanelTime}
-          defaultMinutesTime={this.props.defaultMinutesTime}
-          format={inputFormat}
-        />
-      }
-    </div>
+    );
+
+    const dateTimePanelElement = showTimeControls ? (
+      <div className={`${prefixCls}-date-time-panel`}>
+        <div className={`${prefixCls}-date-panel-column`}>
+          {dateInputColumnElement}
+          {datePanelElement}
+        </div>
+        <div className={`${prefixCls}-time-panel-column`}>
+          <div className={`${prefixCls}-time-input-col`}>
+            <div className={`${prefixCls}-time-input`}>
+              {timeInputTopElement}
+            </div>
+          </div>
+          <CalendarRightPanel
+            prefixCls={prefixCls}
+            value={value}
+            selectedValue={selectedValue}
+            locale={locale}
+            onSelect={this.onDateTableSelect}
+            onClickRightPanelTime={onClickRightPanelTime}
+            defaultMinutesTime={this.props.defaultMinutesTime}
+            format={inputFormat}
+          />
+        </div>
+      </div>
+    ) : (
+      <React.Fragment>
+        <div className={`${prefixCls}-inputs`}>
+          {dateInputColumnElement}
+        </div>
+        <div className={`${prefixCls}-date-panel-container`}>
+          {datePanelElement}
+        </div>
+      </React.Fragment>
+    );
+
+    children.push(<div className={`${prefixCls}-panel`} key="panel">
+      {dateTimePanelElement}
       <CalendarFooter
         showOk={props.showOk}
         mode={mode}

@@ -51,7 +51,7 @@ export default class DateTHead extends React.Component {
         </th>);
     });
     return (<thead>
-    <tr role="row">
+    <tr role="row" className={`${prefixCls}-week-date-header`}>
       {showWeekNumberEl}
       {weekDaysEls}
     </tr>
