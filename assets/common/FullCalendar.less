@@ -5,7 +5,7 @@
     text-align: center;
     user-select: none;
     -webkit-user-select: none;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--bs-calendar-divider-color, #eee);
     overflow: hidden;
 
     &-month-select,
@@ -31,9 +31,9 @@
         float: left;
         height: 28px;
         line-height: 24px;
-        border: 1px solid #d9d9d9;
+        border: 1px solid var(--bs-calendar-border-color);
         padding: 0 10px;
-        color: #666;
+        color: var(--bs-icon-color, #666);
         &:first-child {
           border-top-left-radius: 4px;
           border-bottom-left-radius: 4px;
@@ -72,14 +72,14 @@
       border-radius: 0;
       margin: 0 4px;
       border: none;
-      border-top: 2px solid #eee;
+      border-top: 2px solid var(--bs-calendar-divider-color);
       text-align: right;
       padding-right: 8px;
     }
     &-selected-day .@{prefixClass}-date,
     &-month-panel-selected-cell .@{prefixClass}-month-panel-month {
       background-color: #fcecd9;
-      color: #666;
+      color: var(--bs-icon-color, #666);
     }
     &-today .@{prefixClass}-date,
     &-month-panel-selected-cell .@{prefixClass}-month-panel-month {

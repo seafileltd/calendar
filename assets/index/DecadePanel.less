@@ -4,7 +4,7 @@
   bottom: 0;
   right: 0;
   width: 100%;
-  background: #ffffff;
+  background: var(--bs-popover-bg, #fff);
   z-index: 10;
   position: absolute;
   outline: none;
@@ -26,7 +26,7 @@
   text-align: center;
   user-select: none;
   -webkit-user-select: none;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--bs-calendar-divider-color, #eee);
 
   > a {
     display: inline-flex;
@@ -37,7 +37,7 @@
 }
 
 .@{prefixClass}-decade-panel-century {
-  color: #212529;
+  color: var(--bs-body-color, #212529);
 }
 
 .@{prefixClass}-decade-panel-prev-century-btn,
@@ -45,7 +45,7 @@
   width: 24px;
   height: 24px;
   border-radius: 4px;
-  color: #999;
+  color: var(--bs-icon-secondary-color, #999);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -53,8 +53,8 @@
 
 .@{prefixClass}-decade-panel-prev-century-btn:hover,
 .@{prefixClass}-decade-panel-next-century-btn:hover {
-  color: #999;
-  background-color: #f5f5f5;
+  color: var(--bs-icon-secondary-color, #999);
+  background-color: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
 }
 
 .@{prefixClass}-decade-panel-next-century-btn {
@@ -71,7 +71,7 @@
 }
 
 .@{prefixClass}-decade-panel-footer {
-  border-top: 1px solid #ccc;
+  border-top: 1px solid var(--bs-calendar-divider-color, #eee);
   line-height: 38px;
 }
 
@@ -84,7 +84,7 @@
 
 .@{prefixClass}-decade-panel-cell {
   text-align: center;
-  color: #212529;
+  color: var(--bs-body-color, #212529);
 
   a:hover {
     color: inherit;
@@ -94,7 +94,7 @@
 .@{prefixClass}-decade-panel-decade {
   display: block;
   margin: 0 auto;
-  color: #212529;
+  color: var(--bs-body-color, #212529);
   border-radius: 4px;
   height: 36px;
   padding: 0;
@@ -104,17 +104,17 @@
   width: 105px;
 
   &:hover {
-    background: #f5f5f5;
+    background: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
     cursor: pointer;
   }
 }
 
 .@{prefixClass}-decade-panel-selected-cell .@{prefixClass}-decade-panel-decade {
-  background: #ff8000;
+  background: var(--bs-sf-orange, #FF8000);
   color: #fff;
 
   &:hover {
-    background: #ff8000;
+    background: var(--bs-sf-orange, #FF8000);
     color: #fff;
   }
 }
@@ -123,6 +123,6 @@
   .@{prefixClass}-decade-panel-decade{
     user-select: none;
     -webkit-user-select: none;
-    color: rgba(0, 0, 0, 0.25);
+    color: var(--bs-calendar-out-range-color);
   }
 }

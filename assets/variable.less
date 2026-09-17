@@ -1,0 +1,69 @@
+:root {
+  --bs-body-color: #212529;
+  --bs-icon-secondary-color: #999;
+  --bs-icon-color: #666;
+  --bs-icon-btn-hover-bg-color: rgba(0, 0, 0, .04);
+  --bs-input-focus-border-color: #3e84f7;
+  --bs-popover-bg: #fff;
+  --bs-sf-orange: #FF8000;
+  --bs-sf-orange-2: #ED7109;
+
+
+  --bs-calendar-divider-color: #eee;
+  --bs-calendar-disabled-bg: rgba(0, 0, 0, .05);
+  --bs-calendar-disabled-color: #c2c2c2;
+  --bs-calendar-out-range-color: #c2c2c2;
+  --bs-calendar-border-color: rgba(0, 40, 100, .12);
+  --bs-calendar-time-section-border: rgba(0, 40, 100, .12);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bs-body-color: rgba(255, 255, 255, .9);
+    --bs-icon-secondary-color: rgba(255, 255, 255, 0.5);
+    --bs-icon-color: #adb5bd;
+    --bs-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
+    --bs-input-focus-border-color: #3e84f7;
+    --bs-popover-bg: rgba(28, 29, 31, 1);
+
+    --bs-calendar-divider-color: rgba(255, 255, 255, .1);
+    --bs-calendar-disabled-bg: rgba(255, 255, 255, .08);
+    --bs-calendar-disabled-color: rgba(255, 255, 255, .2);
+    --bs-calendar-out-range-color: rgba(255, 255, 255, .2);
+    --bs-calendar-border-color: rgba(255, 255, 255, .16);
+    --bs-calendar-time-section-border: rgba(255, 255, 255, .16);
+  }
+}
+
+/* Explicit theme values take precedence over the system preference. */
+[data-bs-theme='light'] {
+  --bs-body-color: #212529;
+  --bs-icon-secondary-color: #999;
+  --bs-icon-color: #666;
+  --bs-icon-btn-hover-bg-color: rgba(0, 0, 0, .04);
+  --bs-input-focus-border-color: #3e84f7;
+  --bs-popover-bg: #fff;
+  --bs-sf-orange: #FF8000;
+  --bs-sf-orange-2: #ED7109;
+
+  --bs-calendar-disabled-bg: rgba(0, 0, 0, .05);
+  --bs-calendar-disabled-color: #c2c2c2;
+  --bs-calendar-out-range-color: #c2c2c2;
+  --bs-calendar-border-color: rgba(0, 40, 100, .12);
+  --bs-calendar-time-section-border: rgba(0, 40, 100, .12);
+}
+
+[data-bs-theme='dark'] {
+  --bs-body-color: rgba(255, 255, 255, .9);
+  --bs-icon-secondary-color: rgba(255, 255, 255, 0.5);
+  --bs-icon-color: #adb5bd;
+  --bs-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
+  --bs-input-focus-border-color: #3e84f7;
+  --bs-popover-bg: rgba(28, 29, 31, 1);
+
+  --bs-calendar-disabled-bg: rgba(255, 255, 255, .08);
+  --bs-calendar-disabled-color: rgba(255, 255, 255, .2);
+  --bs-calendar-out-range-color: rgba(255, 255, 255, .2);
+  --bs-calendar-border-color: rgba(255, 255, 255, .16);
+  --bs-calendar-time-section-border: rgba(255, 255, 255, .16);
+}

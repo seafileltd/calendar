@@ -3,7 +3,7 @@
   top: 0;
   bottom: 0;
   right: 0;
-  background: #ffffff;
+  background: var(--bs-popover-bg, #fff);
   z-index: 10;
   position: absolute;
   outline: none;
@@ -17,7 +17,7 @@
   text-align: center;
   user-select: none;
   -webkit-user-select: none;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--bs-calendar-divider-color, #eee);
 }
 
 .@{prefixClass}-time-panel-body {
@@ -64,11 +64,11 @@
 
 
 .@{prefixClass}-time-panel-selected-cell .@{prefixClass}-time-panel-time {
-  background: #f09f3f;
+  background: var(--bs-sf-orange, #FF8000);
   color: #fff;
 
   &:hover {
-    background: #f09f3f;
+    background: var(--bs-sf-orange, #FF8000);
     color: #fff;
   }
 }

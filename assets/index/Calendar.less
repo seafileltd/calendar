@@ -5,7 +5,7 @@
   list-style: none;
   font-size: 14px;
   text-align: left;
-  background-color: #fff;
+  background-color: var(--bs-popover-bg, #fff);
   border-radius: 8px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
   background-clip: padding-box;
@@ -40,7 +40,7 @@
   }
   &-time-input-col {
     width: 89px;
-    border-left: 1px solid #eee;
+    border-left: 1px solid var(--bs-calendar-divider-color, #eee);
   }
   &-date-input,
   &-time-input {
@@ -55,19 +55,20 @@
     height: 32px;
     line-height: 32px;
     width: 100%;
-    border: 1px solid #eee;
+    border: 1px solid var(--bs-calendar-border-color);
+    box-shadow: none;
     border-radius: 4px;
   }
   &-date-input input {
-    padding: 4px 16px;
+    padding: 0px 12px;
   }
   &-time-input input {
-    padding: 4px 6px;
+    padding: 0px 12px;
   }
   &-date-input input:focus,
   &-time-input input:focus {
-    border-color: #1991eb;
-    box-shadow: 0 0 0 2px rgba(70, 127, 207, .25);
+    border-color: var(--bs-input-focus-border-color, #3e84f7);
+    box-shadow: none;
     outline: none;
   }
   &-header {
@@ -95,7 +96,7 @@
   }
   &-header > a:hover {
     cursor: pointer;
-    color: #ed7109;
+    color: var(--bs-sf-orange-2, #ed7109);
   }
   &-prev-month-btn {
     position: absolute;
@@ -112,7 +113,7 @@
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
-    color: #212529;
+    color: var(--bs-body-color, #212529);
     padding: 0 8px;
     line-height: 48px;
   }
@@ -120,13 +121,13 @@
   &-month-select:hover,
   &-day-select:hover {
     cursor: pointer;
-    color: #ff9800;
+    color: var(--bs-sf-orange, #ff8000);
   }
   &-year-select.@{prefixClass}-time-status:hover,
   &-month-select.@{prefixClass}-time-status:hover,
   &-day-select.@{prefixClass}-time-status:hover {
     cursor: pointer;
-    color: #666;
+    color: var(--bs-icon-color, #666);
   }
 
   &-prev-month-btn,
@@ -139,7 +140,7 @@
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #999;
+    color: var(--bs-icon-secondary-color, #999);
     font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei',
       'Microsoft Sans Serif', sans-serif;
     font-size: 16px;
@@ -153,8 +154,8 @@
   &-next-month-btn:hover,
   &-prev-year-btn:hover,
   &-next-year-btn:hover {
-    color: #999;
-    background-color: rgba(0, 0, 0, 0.04);
+    color: var(--bs-icon-secondary-color, #999);
+    background-color: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
   }
   &-next-year-btn {
     right: 0;
@@ -169,6 +170,7 @@
     height: 260px;
   }
   table {
+    table-layout: auto;
     border-collapse: collapse;
     max-width: 100%;
     background-color: transparent;
@@ -176,6 +178,10 @@
 
     td {
       padding: 0;
+    }
+
+    tr {
+      height: 1.75rem !important;
     }
   }
   table,
@@ -197,7 +203,7 @@
   &-column-header-inner {
     display: block;
     font-weight: normal;
-    color: #999;
+    color: var(--bs-icon-secondary-color, #999);
   }
   &-week-number-header .@{prefixClass}-column-header-inner {
     display: none;
@@ -208,7 +214,7 @@
   }
   &-date {
     display: block;
-    color: #212529;
+    color: var(--bs-body-color, #212529);
     border-radius: 4px;
     width: 32px;
     height: 32px;
@@ -219,25 +225,26 @@
     margin: 2px;
   }
   &-date:hover {
-    background: #f5f5f5;
+    background: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
     border-radius: 50%;
     cursor: pointer;
   }
   &-selected-date &-date {
-    background: #ff9800;
+    background: var(--bs-sf-orange, #ff8000);
     border-radius: 50%;
     color: #fff;
   }
   &-selected-date &-date:hover {
-    background: #ff9800;
+    background: var(--bs-sf-orange, #ff8000);
     border-radius: 50%;
   }
   &-disabled-cell &-date {
     cursor: not-allowed;
-    background: #f3f3f3;
+    background: var(--bs-calendar-disabled-bg);
     border-radius: 0;
-    color: #bcbcbc;
+    color: var(--bs-calendar-disabled-color);
     width: auto;
+    margin: 2px 0;
   }
   &-disabled-cell-first-of-row &-date {
     border-bottom-left-radius: 4px;
@@ -249,23 +256,23 @@
   }
   &-last-month-cell &-date,
   &-next-month-btn-day &-date {
-    color: #bbb;
+    color: var(--bs-calendar-out-range-color);
   }
   &-today &-date {
-    border: 1px solid #ff9800;
+    border: 1px solid var(--bs-sf-orange, #ff8000);
     border-radius: 50%;
   }
 
   /* Right time panel */
   &-right-panel {
     height: inherit;
-    border-left: 1px solid #eee;
+    border-left: 1px solid var(--bs-calendar-time-section-border);
   }
   &-right-panel-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #212529;
+    color: var(--bs-body-color, #212529);
     font-weight: 600;
   }
   &-right-panel-body {
@@ -294,17 +301,17 @@
     display: inline-block;
     text-align: center;
     line-height: 24px;
-    color: #212529;
+    color: var(--bs-body-color, #212529);
     font-weight: 400;
     border-radius: 4px;
   }
   &-right-panel-item-text:hover {
-    background: #f5f5f5;
-    color: #212529;
+    color: var(--bs-body-color, #212529);
+    background: var(--bs-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
   }
   &-right-panel-item-selected,
   &-right-panel-item-selected:hover {
-    background: #ff9800;
+    background: var(--bs-sf-orange, #ff8000);
     border-radius: 4px;
     color: #fff;
   }
@@ -313,13 +320,13 @@
     height: 0;
   }
   &-right-panel-item-current {
-    border: 1px solid #ff9800;
+    border: 1px solid var(--bs-sf-orange, #ff8000);
     border-radius: 4px;
   }
 
   /* Footer */
   &-footer {
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--bs-calendar-divider-color, #eee);
     padding: 8px 0;
     text-align: center;
     position: relative;
@@ -342,18 +349,18 @@
   &-time-picker-btn {
     display: inline-block;
     text-align: center;
-    color: #ed7109;
+    color: var(--bs-sf-orange-2, #ed7109);
   }
   &-today-btn:hover,
   &-ok-btn:hover,
   &-time-picker-btn:hover {
     cursor: pointer;
-    color: #ff9800;
+    color: var(--bs-sf-orange-2, #ed7109);
   }
   &-today-btn-disabled,
   &-ok-btn-disabled,
   &-time-picker-btn-disabled {
-    color: #bbb;
+    color: var(--bs-calendar-disabled-color);
   }
   &-today-btn {
     padding-left: 0;
