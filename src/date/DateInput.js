@@ -187,7 +187,7 @@ class DateInput extends React.Component {
         {props.showClear && !!str &&
           <a
             role="button"
-            title={locale.clear}
+            title={clearIcon ? undefined : locale.clear}
             onClick={this.onClear}
           >
             {clearIcon || <span className={`${prefixCls}-clear-btn`} ><CloseIcon /></span>}
