@@ -2,9 +2,22 @@
   &-input-wrap {
     width: 100%;
     position: relative;
+
     &:after {
       content: '';
       clear: both;
+    }
+
+    a {
+      position: absolute;
+      top: 0;
+      right: 12px;
+      bottom: 0;
+      height: 32px;
+      line-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 
@@ -14,20 +27,25 @@
     top: 34px;
     background-color: var(--rc-calendar-popover-bg, #fff);
     height: 217px;
+
     &-panel {
       width: 100%;
       position: relative;
+
       .@{timePickerClass}-panel {
         &-input-wrap {
           display: none;
         }
+
         &-inner {
           border: none;
           box-shadow: none;
         }
+
         &-select {
           width: 84px;
           max-height: 217px;
+
           li {
             text-align: center;
             padding: 0;
@@ -36,6 +54,7 @@
       }
     }
   }
+
   &-time-picker-wrap {
     float: left;
     width: 100%;
@@ -75,21 +94,18 @@
   }
 
   &-clear-btn {
-    z-index: inherit;
-    position: absolute;
-    right: 6px;
-    cursor: pointer;
-    overflow: hidden;
     width: 20px;
     height: 20px;
-    top: 6px;
-    margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    overflow: hidden;
   }
 
   &-clear-btn svg {
+    height: 14px;
+    width: 14px;
     color: var(--rc-calendar-icon-color, #666);
   }
 
