@@ -19,27 +19,6 @@
   --rc-calendar-out-range-color: #c2c2c2;
 }
 
-@media (prefers-color-scheme: dark) {
-  .@{prefixClass} {
-    --rc-calendar-popover-bg: rgba(28, 29, 31, 1);
-    --rc-calendar-popover-border-color: rgba(255, 255, 255, .1);
-    --rc-calendar-popover-box-shadow: none;
-
-    --rc-calendar-body-color: rgba(255, 255, 255, .9);
-    --rc-calendar-icon-color: rgba(255, 255, 255, 0.7);
-    --rc-calendar-icon-secondary-color: rgba(255, 255, 255, 0.5);
-    --rc-calendar-icon-btn-hover-bg-color: rgba(255, 255, 255, 0.1);
-
-    --rc-calendar-input-border-color: rgba(255, 255, 255, .1);
-    --rc-calendar-input-focus-border-color: #3e84f7;
-
-    --rc-calendar-divider-color: rgba(255, 255, 255, .1);
-    --rc-calendar-disabled-bg: rgba(255, 255, 255, .08);
-    --rc-calendar-disabled-color: rgba(255, 255, 255, .2);
-    --rc-calendar-out-range-color: rgba(255, 255, 255, .2);
-  }
-}
-
 /* Explicit theme values take precedence over the system preference. */
 [data-bs-theme='light'] .@{prefixClass},
 .@{prefixClass}[data-bs-theme='light'] {
