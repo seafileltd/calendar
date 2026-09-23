@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 
+const MIN_SCROLLBAR_THUMB_HEIGHT = 24;
+
 export default class CalendarRightPanel extends React.Component {
 
   static propTypes = {
@@ -21,6 +23,10 @@ export default class CalendarRightPanel extends React.Component {
     this.state = {
       highlightTime: this.props.selectedValue || null,
       localeFormat: format,
+      scrollbars: {
+        hour: { visible: false, top: 0, height: 0 },
+        minute: { visible: false, top: 0, height: 0 },
+      },
     };
 
     this.hoursRef = React.createRef();
@@ -29,6 +35,8 @@ export default class CalendarRightPanel extends React.Component {
     this.minutes = this.getMinutes();
 
     this.skipScrollUpdates = 0;
+    this.scrollbarTimeouts = {};
+    this.draggingScrollbar = null;
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -97,6 +105,87 @@ export default class CalendarRightPanel extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    Object.keys(this.scrollbarTimeouts).forEach((type) => {
+      clearTimeout(this.scrollbarTimeouts[type]);
+    });
+    this.removeScrollbarDragListeners();
+  }
+
+  getTimeColumnContainer = (type) => {
+    return type === 'hour' ? this.hoursRef.current : this.minutesRef.current;
+  }
+
+  onTimeColumnScroll = (type, container) => {
+    const { clientHeight, scrollHeight, scrollTop } = container;
+    if (scrollHeight <= clientHeight) return;
+
+    const trackHeight = clientHeight;
+    const height = Math.min(
+      trackHeight,
+      Math.max(MIN_SCROLLBAR_THUMB_HEIGHT, (clientHeight / scrollHeight) * trackHeight)
+    );
+    const maxTop = trackHeight - height;
+    const maxScrollTop = scrollHeight - clientHeight;
+    const top = maxScrollTop > 0 ? (scrollTop / maxScrollTop) * maxTop : 0;
+
+    clearTimeout(this.scrollbarTimeouts[type]);
+    this.setState((prevState) => ({
+      scrollbars: {
+        ...prevState.scrollbars,
+        [type]: { visible: true, top, height },
+      },
+    }));
+    this.scrollbarTimeouts[type] = setTimeout(() => {
+      this.setState((prevState) => ({
+        scrollbars: {
+          ...prevState.scrollbars,
+          [type]: { ...prevState.scrollbars[type], visible: false },
+        },
+      }));
+    }, 800);
+  }
+
+  onScrollbarThumbMouseDown = (type, event) => {
+    const container = this.getTimeColumnContainer(type);
+    const { top, height } = this.state.scrollbars[type];
+    if (!container || !height) return;
+
+    event.preventDefault();
+    this.draggingScrollbar = {
+      type,
+      startClientY: event.clientY,
+      startTop: top,
+    };
+    window.addEventListener('mousemove', this.onScrollbarThumbMouseMove);
+    window.addEventListener('mouseup', this.onScrollbarThumbMouseUp);
+  }
+
+  onScrollbarThumbMouseMove = (event) => {
+    if (!this.draggingScrollbar) return;
+
+    const { type, startClientY, startTop } = this.draggingScrollbar;
+    const container = this.getTimeColumnContainer(type);
+    const { height } = this.state.scrollbars[type];
+    if (!container) return;
+
+    const maxTop = Math.max(0, container.clientHeight - height);
+    const top = Math.max(0, Math.min(maxTop, startTop + event.clientY - startClientY));
+    const maxScrollTop = container.scrollHeight - container.clientHeight;
+    container.scrollTop = maxTop > 0 ? (top / maxTop) * maxScrollTop : 0;
+    this.onTimeColumnScroll(type, container);
+  }
+
+  onScrollbarThumbMouseUp = () => {
+    this.draggingScrollbar = null;
+    this.removeScrollbarDragListeners();
+  }
+
+  removeScrollbarDragListeners = () => {
+    window.removeEventListener('mousemove', this.onScrollbarThumbMouseMove);
+    window.removeEventListener('mouseup', this.onScrollbarThumbMouseUp);
+  }
+
   centerScroll = (container, index) => {
     if (!container || index < 0) return;
     const firstItem = container.querySelector('li');
@@ -152,62 +241,90 @@ export default class CalendarRightPanel extends React.Component {
     return v ? v.format('mm') : null;
   }
 
+  renderScrollbar = (type, prefixCls) => {
+    const { visible, top, height } = this.state.scrollbars[type];
+    const visibleClassName = `${prefixCls}-right-panel-scrollbar-visible`;
+    const className = `${prefixCls}-right-panel-scrollbar${visible ? ` ${visibleClassName}` : ''}`;
+    return (
+      <div className={className} aria-hidden="true">
+        <div
+          className={`${prefixCls}-right-panel-scrollbar-thumb`}
+          style={{ height, transform: `translateY(${top}px)` }}
+          onMouseDown={(event) => this.onScrollbarThumbMouseDown(type, event)}
+        />
+      </div>
+    );
+  }
+
   render() {
     const { prefixCls } = this.props;
     const selectedHour = this.getSelectedHour();
     const selectedMinute = this.getSelectedMinute();
     const currentHour = dayjs().format('HH');
     const currentMinute = dayjs().format('mm');
-    const displayHour = selectedHour || currentHour;
-    const displayMinute = selectedMinute || currentMinute;
 
     return (
       <div className={`${prefixCls}-right-panel`}>
-        <div className={`${prefixCls}-right-panel-header ${prefixCls}-header`}>
-          {displayHour}:{displayMinute}
-        </div>
         <div className={`${prefixCls}-right-panel-body`}>
-          <div className={`${prefixCls}-right-panel-col`} ref={this.hoursRef}>
-            <ul>
-              {this.hours.map((h) => {
-                const isSelected = selectedHour && h === selectedHour;
-                const isCurrent = !selectedHour && h === currentHour;
-                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
-                return (
-                  <li
-                    key={h}
-                    onClick={() => this.onSelectHour(h)}
-                    className={`${prefixCls}-right-panel-item`}
-                    title={h}
-                  >
-                    <span className={className}>
-                      {h}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+          <div className={`${prefixCls}-right-panel-col-wrap ${prefixCls}-right-panel-col-hour`}>
+            <div
+              className={`${prefixCls}-right-panel-col`}
+              ref={this.hoursRef}
+              onScroll={(event) => this.onTimeColumnScroll('hour', event.currentTarget)}
+            >
+              <div className={`${prefixCls}-right-panel-col-item`}>
+                <ul>
+                  {this.hours.map((h) => {
+                    const isSelected = selectedHour && h === selectedHour;
+                    const isCurrent = !selectedHour && h === currentHour;
+                    const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                    return (
+                      <li
+                        key={h}
+                        onClick={() => this.onSelectHour(h)}
+                        className={`${prefixCls}-right-panel-item`}
+                        title={h}
+                      >
+                        <span className={className}>
+                          {h}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+            {this.renderScrollbar('hour', prefixCls)}
           </div>
-          <div className={`${prefixCls}-right-panel-col`} ref={this.minutesRef}>
-            <ul>
-              {this.minutes.map((m) => {
-                const isSelected = selectedMinute && m === selectedMinute;
-                const isCurrent = !selectedMinute && m === currentMinute;
-                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
-                return (
-                  <li
-                    key={m}
-                    onClick={() => this.onSelectMinute(m)}
-                    className={`${prefixCls}-right-panel-item`}
-                    title={m}
-                  >
-                    <span className={className}>
-                      {m}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
+          <div className={`${prefixCls}-right-panel-col-wrap`}>
+            <div
+              className={`${prefixCls}-right-panel-col`}
+              ref={this.minutesRef}
+              onScroll={(event) => this.onTimeColumnScroll('minute', event.currentTarget)}
+            >
+              <div className={`${prefixCls}-right-panel-col-item`}>
+                <ul>
+                  {this.minutes.map((m) => {
+                    const isSelected = selectedMinute && m === selectedMinute;
+                    const isCurrent = !selectedMinute && m === currentMinute;
+                    const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                    return (
+                      <li
+                        key={m}
+                        onClick={() => this.onSelectMinute(m)}
+                        className={`${prefixCls}-right-panel-item`}
+                        title={m}
+                      >
+                        <span className={className}>
+                          {m}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+            {this.renderScrollbar('minute', prefixCls)}
           </div>
         </div>
       </div>

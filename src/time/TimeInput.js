@@ -78,8 +78,8 @@ class TimeInput extends React.Component {
   static getDerivedStateFromProps(nextProps, state) {
     let newState = null;
     if (!state.hasFocus) {
-      const base = nextProps.selectedValue || null;
-      newState = { str: base ? formatTime(base, nextProps.format) : '' };
+      const base = nextProps.selectedValue || dayjs();
+      newState = { str: formatTime(base, nextProps.format) };
     }
     return newState;
   }
