@@ -339,25 +339,13 @@ class Calendar extends React.Component {
     const showTimeControls = showHourAndMinute && mode === 'date';
 
     children.push(<div className={`${prefixCls}-panel`} key="panel">
-      <div className={`${prefixCls}-inputs`}>
-        <div className={`${prefixCls}-date-input-col`}>
-          <div className={`${prefixCls}-date-input`}>
-            {dateInputElement}
-          </div>
-        </div>
-        {showTimeControls && (
-          <div className={`${prefixCls}-time-input-col`}>
-            <div className={`${prefixCls}-time-input`}>
-              {timeInputTopElement}
-            </div>
-          </div>
-        )}
-      </div>
-      <div className={`${prefixCls}-date-panel-container`}>
       <div
         tabIndex={this.props.focusablePanel ? 0 : undefined}
         className={`${prefixCls}-date-panel`}
       >
+        <div className={`${prefixCls}-date-input`}>
+          {dateInputElement}
+        </div>
         <CalendarHeader
           locale={locale}
           mode={mode}
@@ -390,7 +378,6 @@ class Calendar extends React.Component {
             currentStatus={currentStatus}
           />
         </div>
-
       </div>
       {showTimeControls &&
         <CalendarRightPanel
@@ -402,37 +389,37 @@ class Calendar extends React.Component {
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
           format={inputFormat}
+          timeInput={timeInputTopElement}
         />
       }
-    </div>
-      <CalendarFooter
-        showOk={props.showOk}
-        mode={mode}
-        renderFooter={props.renderFooter}
-        locale={locale}
-        prefixCls={prefixCls}
-        showToday={props.showToday}
-        disabledTime={disabledTime}
-        showTimePicker={showTimePicker}
-        showDateInput={props.showDateInput}
-        timePicker={timePicker}
-        selectedValue={selectedValue}
-        value={value}
-        disabledDate={disabledDate}
-        okDisabled={
-          props.showOk !== false && (!selectedValue || !this.isAllowedDate(selectedValue))
-        }
-        onOk={this.onOk}
-        onSelect={this.onSelect}
-        onToday={this.onToday}
-        onOpenTimePicker={this.openTimePicker}
-        onCloseTimePicker={this.closeTimePicker}
-      />
     </div>);
+    children.push(<CalendarFooter
+      showOk={props.showOk}
+      mode={mode}
+      renderFooter={props.renderFooter}
+      locale={locale}
+      prefixCls={prefixCls}
+      showToday={props.showToday}
+      disabledTime={disabledTime}
+      showTimePicker={showTimePicker}
+      showDateInput={props.showDateInput}
+      timePicker={timePicker}
+      selectedValue={selectedValue}
+      value={value}
+      disabledDate={disabledDate}
+      okDisabled={
+        props.showOk !== false && (!selectedValue || !this.isAllowedDate(selectedValue))
+      }
+      onOk={this.onOk}
+      onSelect={this.onSelect}
+      onToday={this.onToday}
+      onOpenTimePicker={this.openTimePicker}
+      onCloseTimePicker={this.closeTimePicker}
+    />);
 
     return this.renderRoot({
       children,
-      className: `${props.showWeekNumber ? `${prefixCls}-week-number` : ''} ${showHourAndMinute ? `${prefixCls}-with-time-panel` : ''}`.trim(),
+      className: `${props.showWeekNumber ? `${prefixCls}-week-number` : ''} ${showTimeControls ? `${prefixCls}-with-time-panel` : ''}`.trim(),
     });
   }
 }

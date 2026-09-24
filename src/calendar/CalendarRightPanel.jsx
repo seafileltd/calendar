@@ -13,6 +13,7 @@ export default class CalendarRightPanel extends React.Component {
     locale: PropTypes.object,
     defaultMinutesTime: PropTypes.string,
     format: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
+    timeInput: PropTypes.node,
   }
 
   constructor(props) {
@@ -158,13 +159,10 @@ export default class CalendarRightPanel extends React.Component {
     const selectedMinute = this.getSelectedMinute();
     const currentHour = dayjs().format('HH');
     const currentMinute = dayjs().format('mm');
-    const displayHour = selectedHour || currentHour;
-    const displayMinute = selectedMinute || currentMinute;
-
     return (
       <div className={`${prefixCls}-right-panel`}>
-        <div className={`${prefixCls}-right-panel-header ${prefixCls}-header`}>
-          {displayHour}:{displayMinute}
+        <div className={`${prefixCls}-time-input`}>
+          {this.props.timeInput}
         </div>
         <div className={`${prefixCls}-right-panel-body`}>
           <div className={`${prefixCls}-right-panel-col`} ref={this.hoursRef}>
