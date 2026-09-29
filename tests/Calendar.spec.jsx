@@ -104,6 +104,20 @@ describe('Calendar', () => {
         expect(dateBtns.get(i).props.className).toEqual(expect.stringContaining(btnClassName));
       }
     });
+
+    it('keeps the time panel when switching to month or year panel', () => {
+      const wrapper = mount(<Calendar showHourAndMinute />);
+
+      expect(wrapper.find('.rc-calendar-right-panel').length).toBe(1);
+
+      wrapper.find('.rc-calendar-month-select').simulate('click');
+      expect(wrapper.find('.rc-calendar-month-panel').length).toBe(1);
+      expect(wrapper.find('.rc-calendar-right-panel').length).toBe(1);
+
+      wrapper.find('.rc-calendar-month-panel-year-select').simulate('click');
+      expect(wrapper.find('.rc-calendar-year-panel').length).toBe(1);
+      expect(wrapper.find('.rc-calendar-right-panel').length).toBe(1);
+    });
   });
 
   describe('controlled panels', () => {
