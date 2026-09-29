@@ -39,6 +39,7 @@
 
 .@{prefixClass}-decade-panel-century {
   color: var(--rc-calendar-body-color, #212529);
+  font-weight: 500;
 }
 
 .@{prefixClass}-decade-panel-prev-century-btn,
@@ -107,6 +108,18 @@
   &:hover {
     background: var(--rc-calendar-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
     cursor: pointer;
+  }
+}
+
+.@{prefixClass}-decade-panel-cell:first-child {
+  .@{prefixClass}-decade-panel-decade {
+    margin-left: 0;
+  }
+}
+
+.@{prefixClass}-decade-panel-cell:last-child {
+  .@{prefixClass}-decade-panel-decade {
+    margin-right: 0;
   }
 }
 

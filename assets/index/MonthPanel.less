@@ -124,6 +124,18 @@
     }
   }
 
+  &:first-child {
+    .@{prefixClass}-month-panel-month {
+      margin-left: 0;
+    }
+  }
+
+  &:last-child {
+    .@{prefixClass}-month-panel-month {
+      margin-right: 0;
+    }
+  }
+
   &-disabled {
     .@{prefixClass}-month-panel-month {
       color: var(--rc-calendar-disabled-color);
