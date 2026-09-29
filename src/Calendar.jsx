@@ -336,7 +336,7 @@ class Calendar extends React.Component {
       children.push(props.renderSidebar());
     }
 
-    const showTimeControls = showHourAndMinute && mode === 'date';
+    const showTimeControls = showHourAndMinute && mode !== 'time';
 
     children.push(<div className={`${prefixCls}-panel`} key="panel">
       <div

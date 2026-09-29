@@ -65,6 +65,11 @@ class Demo extends React.Component {
   static propTypes = {
     defaultValue: PropTypes.object,
     defaultCalendarValue: PropTypes.object,
+    showTime: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    showTime: true,
   }
 
   constructor(props) {
@@ -73,7 +78,7 @@ class Demo extends React.Component {
     this.calendarContainerRef = React.createRef();
 
     this.state = {
-      showTime: true,
+      showTime: props.showTime,
       showDateInput: true,
       disabled: false,
       open: false,
@@ -151,7 +156,7 @@ class Demo extends React.Component {
       showDateInput={state.showDateInput}
       disabledDate={disabledDate}
       focusablePanel={false}
-      showHourAndMinute
+      showHourAndMinute={state.showTime}
       onClickRightPanelTime={this.onClickRightPanelTime}
     />);
     return (<div style={{ width: 400, margin: 20 }}>
@@ -285,32 +290,58 @@ ReactDOM.render((<div
   }}
 >
   <div>
-    <div style={{ margin: 10 }}>
-      <Calendar
-        showWeekNumber={false}
-        locale={cn ? zhCN : enUS}
-        defaultValue={now}
-        disabledTime={disabledTime}
-        showToday
-        format={getFormat(true)}
-        showOk={false}
-        timePicker={timePickerElement}
-        onChange={onStandaloneChange}
-        disabledDate={disabledDate}
-        onSelect={onStandaloneSelect}
-        renderFooter={(mode) => (<span>{mode} extra footer</span>)}
-        showHourAndMinute={true}
-      />
+    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+      <div style={{ margin: 10, flex: 1 }}>
+        <h3>Calendar with time</h3>
+        <Calendar
+          showWeekNumber={false}
+          locale={cn ? zhCN : enUS}
+          defaultValue={now}
+          disabledTime={disabledTime}
+          showToday
+          format={getFormat(true)}
+          showOk={false}
+          timePicker={timePickerElement}
+          onChange={onStandaloneChange}
+          disabledDate={disabledDate}
+          onSelect={onStandaloneSelect}
+          renderFooter={(mode) => (<span>{mode} extra footer</span>)}
+          showHourAndMinute
+        />
+      </div>
+      <div style={{ margin: 10, flex: 1 }}>
+        <h3>Calendar without time</h3>
+        <Calendar
+          showWeekNumber={false}
+          locale={cn ? zhCN : enUS}
+          defaultValue={defaultCalendarValue}
+          showToday
+          format={getFormat(false)}
+          showOk={false}
+          onChange={onStandaloneChange}
+          disabledDate={disabledDate}
+          onSelect={onStandaloneSelect}
+          renderFooter={(mode) => (<span>{mode} extra footer</span>)}
+          showHourAndMinute={false}
+        />
+      </div>
     </div>
-    <div style={{ float: 'left', width: 300 }}>
-      <Demo defaultValue={now} />
+
+    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+      <div style={{ flex: 1 }}>
+        <h3>DatePicker with time</h3>
+        <Demo defaultValue={now} showTime />
+      </div>
+      <div style={{ flex: 1 }}>
+        <h3>DatePicker without time</h3>
+        <Demo
+          defaultValue={defaultCalendarValue}
+          defaultCalendarValue={defaultCalendarValue}
+          showTime={false}
+        />
+      </div>
     </div>
-    <div style={{ float: 'right', width: 300 }}>
-      <Demo defaultCalendarValue={defaultCalendarValue} />
-    </div>
-    <div style={{ clear: 'both' }}></div>
-    <div>
-      <DemoMultiFormat />
-    </div>
+
+    <DemoMultiFormat />
   </div>
 </div>), document.getElementById('__react-content'));
