@@ -71,6 +71,8 @@ export default class YearPanel extends React.Component {
         const classNameMap = {
           [`${prefixCls}-cell`]: 1,
           [`${prefixCls}-selected-cell`]: yearData.year === currentYear,
+          [`${prefixCls}-last-decade-cell`]: yearData.year < startYear,
+          [`${prefixCls}-next-decade-cell`]: yearData.year > endYear,
         };
         return (
           <td

@@ -37,6 +37,7 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
+    font-weight: 500;
   }
 }
 
@@ -88,7 +89,7 @@
 
 .@{prefixClass}-year-panel-body {
   flex: 1;
-  padding: 9px 10px 10px;
+  padding: 16px;
 }
 
 .@{prefixClass}-year-panel-footer {
@@ -123,6 +124,13 @@
     color: var(--rc-calendar-body-color, #212529);
     background: var(--rc-calendar-icon-btn-hover-bg-color, rgba(0, 0, 0, .04));
     cursor: pointer;
+  }
+}
+
+.@{prefixClass}-year-panel-last-decade-cell,
+.@{prefixClass}-year-panel-next-decade-cell {
+  .@{prefixClass}-year-panel-year {
+    color: var(--rc-calendar-out-range-color);
   }
 }
 

@@ -141,6 +141,41 @@ describe('RangeCalendar', () => {
       .toMatch('rc-calendar-month-panel-cell-disabled');
   });
 
+  it('marks years outside the header range without disabling them', () => {
+    const wrapper = mount(
+      <RangeCalendar
+        defaultValue={[dayjs('2020-03-01'), dayjs('2021-06-01')]}
+      />,
+    );
+
+    wrapper.find('.rc-calendar-range-left .rc-calendar-year-select').simulate('click');
+    wrapper.find('.rc-calendar-range-right .rc-calendar-year-select').simulate('click');
+
+    const leftPreviousYear = wrapper
+      .find('.rc-calendar-range-left .rc-calendar-year-panel-year')
+      .filterWhere(year => year.text() === '2019')
+      .parent();
+    const leftNextYear = wrapper
+      .find('.rc-calendar-range-left .rc-calendar-year-panel-year')
+      .filterWhere(year => year.text() === '2030')
+      .parent();
+    const rightPreviousYear = wrapper
+      .find('.rc-calendar-range-right .rc-calendar-year-panel-year')
+      .filterWhere(year => year.text() === '2019')
+      .parent();
+    const rightNextYear = wrapper
+      .find('.rc-calendar-range-right .rc-calendar-year-panel-year')
+      .filterWhere(year => year.text() === '2030')
+      .parent();
+
+    expect(leftPreviousYear.props().className).toMatch('rc-calendar-year-panel-last-decade-cell');
+    expect(leftNextYear.props().className).toMatch('rc-calendar-year-panel-next-decade-cell');
+    expect(rightPreviousYear.props().className).toMatch('rc-calendar-year-panel-last-decade-cell');
+    expect(rightNextYear.props().className).toMatch('rc-calendar-year-panel-next-decade-cell');
+    expect(leftPreviousYear.props().onClick).toEqual(expect.any(Function));
+    expect(leftNextYear.props().onClick).toEqual(expect.any(Function));
+  });
+
   it('onSelect works', () => {
     function onSelect(d) {
       expect(d[0].format(format)).toBe('2015-07-31');

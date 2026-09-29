@@ -63,7 +63,7 @@
     outline: none;
   }
   &-header {
-    padding: 0 18px;
+    padding: 0 12px;
     height: 48px;
     line-height: 24px;
     text-align: center;
@@ -79,7 +79,7 @@
     justify-content: center;
   }
   &-header > a {
-    font-weight: 600;
+    font-weight: 500;
     display: inline-block;
     padding: 0 5px;
     line-height: 40px;
@@ -326,8 +326,11 @@
   &-footer {
     border-top: 1px solid var(--rc-calendar-divider-color, #eee);
     padding: 8px 0;
-    text-align: center;
     position: relative;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   &-footer-show-ok {
     text-align: right;
