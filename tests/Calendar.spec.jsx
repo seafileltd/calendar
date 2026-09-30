@@ -491,7 +491,10 @@ describe('Calendar', () => {
       calendar.find('.rc-calendar-year-panel-decade-select').hostNodes().simulate('click');
 
       expect(calendar.find('.rc-calendar-decade-panel').hostNodes().length).toBe(1);
-      expect(calendar.find('.rc-calendar-decade-panel-decade').hostNodes().length).toBe(12);
+      const decadeCells = calendar.find('.rc-calendar-decade-panel-decade').hostNodes();
+      expect(decadeCells.length).toBe(10);
+      expect(decadeCells.at(0).text()).toBe('2000-2009');
+      expect(decadeCells.at(9).text()).toBe('2090-2099');
     });
 
     it('numeric keyboard works', () => {
