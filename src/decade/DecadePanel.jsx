@@ -37,15 +37,15 @@ export default class DecadePanel extends React.Component {
     const { locale, renderFooter, showHourAndMinute } = this.props;
     const currentYear = value.year();
     const startYear = parseInt(currentYear / 100, 10) * 100;
-    const preYear = startYear - 10;
+    const preYear = startYear;
     const endYear = startYear + 99;
     const decades = [];
     let index = 0;
     const prefixCls = this.prefixCls;
     const col = showHourAndMinute ? 3 : 2;
-    const row = showHourAndMinute ? 4 : 5;
+    const rowCount = showHourAndMinute ? 4 : 5;
 
-    for (let rowIndex = 0; rowIndex < row; rowIndex++) {
+    for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
       decades[rowIndex] = [];
       for (let colIndex = 0; colIndex < col; colIndex++) {
         const startDecade = preYear + index * 10;
