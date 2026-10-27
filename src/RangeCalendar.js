@@ -92,6 +92,7 @@ class RangeCalendar extends React.Component {
     timePicker: PropTypes.any,
     showOk: PropTypes.bool,
     showToday: PropTypes.bool,
+    firstDayOfWeek: PropTypes.string,
     defaultSelectedValue: PropTypes.array,
     selectedValue: PropTypes.array,
     onOk: PropTypes.func,
@@ -122,6 +123,7 @@ class RangeCalendar extends React.Component {
     disabledTime: noop,
     onInputSelect: noop,
     showToday: true,
+    firstDayOfWeek: 'Sunday',
     showDateInput: true,
   }
 

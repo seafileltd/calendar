@@ -14,6 +14,42 @@ describe('RangeCalendar', () => {
     expect(wrapper.find('.rc-calendar-cell').length).toBeGreaterThan(0);
   });
 
+  [
+    { firstDayOfWeek: 'Monday', header: 'Mon', dates: ['2026-09-28', '2026-10-26'] },
+    { firstDayOfWeek: 'Saturday', header: 'Sat', dates: ['2026-09-26', '2026-10-31'] },
+    { firstDayOfWeek: 'Sunday', header: 'Sun', dates: ['2026-09-27', '2026-11-01'] },
+    { firstDayOfWeek: undefined, header: 'Sun', dates: ['2026-09-27', '2026-11-01'] },
+  ].forEach(({ firstDayOfWeek, header, dates }) => {
+    it(`aligns both date panels with ${firstDayOfWeek || 'the default Sunday'}`, () => {
+      const onSelect = jest.fn();
+      const wrapper = mount(
+        <RangeCalendar
+          defaultValue={[dayjs('2026-10-01').locale('en'), dayjs('2026-11-01').locale('en')]}
+          firstDayOfWeek={firstDayOfWeek}
+          onSelect={onSelect}
+        />,
+      );
+
+      ['left', 'right'].forEach((direction, index) => {
+        const panel = wrapper.find(`.rc-calendar-range-${direction}`);
+        expect(panel.find('[role="columnheader"]').first().prop('title')).toBe(header);
+        expect(panel.find('[role="gridcell"]').first().prop('title'))
+          .toBe(dayjs(dates[index]).locale('en').format('LL'));
+      });
+
+      ['2026-10-07', '2026-11-04'].forEach((date, index) => {
+        const direction = index === 0 ? 'left' : 'right';
+        wrapper.find(`.rc-calendar-range-${direction} [role="gridcell"]`)
+          .filterWhere(cell => cell.prop('title') === dayjs(date).locale('en').format('LL'))
+          .simulate('click');
+      });
+      expect(onSelect).toHaveBeenCalledTimes(1);
+      expect(onSelect.mock.calls[0][0].map(date => date.format(format)))
+        .toEqual(['2026-10-07', '2026-11-04']);
+      wrapper.unmount();
+    });
+  });
+
   it('default sperator', () => {
     const wrapper = render(<RangeCalendar />);
     expect(wrapper.find('.rc-calendar-range-middle').text()).toBe('~');
@@ -649,23 +685,65 @@ describe('RangeCalendar', () => {
   });
 
   describe('onInputSelect', () => {
-    it('trigger when date is valid', () => {
-      const handleInputSelect = jest.fn();
-      const wrapper = mount(<RangeCalendar format={format} onInputSelect={handleInputSelect} />);
-      wrapper.find('input').first().simulate('change', { target: { value: '2013-01-01' } });
-      expect(
-        handleInputSelect.mock.calls[0][0].length
-      ).toBe(1);
-      expect(
-        handleInputSelect.mock.calls[0][0][0].isSame('2013-01-01')
-      ).toBe(true);
+    [
+      ['ISO string', format, '2013-01-01'],
+      ['ISO array', [format], '2013-01-01'],
+      ['US string', 'M/D/YYYY', '1/1/2013'],
+      ['US array', ['M/D/YYYY'], '1/1/2013'],
+    ].forEach(([name, inputFormat, inputValue]) => {
+      it(`selects a valid date using an ${name} format`, () => {
+        const handleInputSelect = jest.fn();
+        const wrapper = mount(<RangeCalendar format={inputFormat} onInputSelect={handleInputSelect} />);
+        wrapper.find('input').first().simulate('change', { target: { value: inputValue } });
+
+        expect(handleInputSelect).toHaveBeenCalledTimes(1);
+        expect(handleInputSelect.mock.calls[0][0]).toHaveLength(1);
+        expect(handleInputSelect.mock.calls[0][0][0].format(format)).toBe('2013-01-01');
+        wrapper.unmount();
+      });
     });
 
-    it('not trigger when date is not valid', () => {
+    it('normalizes an out-of-range day to the current date', () => {
       const handleInputSelect = jest.fn();
       const wrapper = mount(<RangeCalendar format={format} onInputSelect={handleInputSelect} />);
       wrapper.find('input').first().simulate('change', { target: { value: '2013-01-0' } });
-      expect(handleInputSelect).not.toBeCalled();
+
+      expect(handleInputSelect).toHaveBeenCalledTimes(1);
+      expect(handleInputSelect.mock.calls[0][0][0].format(format)).toBe('2017-03-29');
+      wrapper.unmount();
+    });
+
+    it('does not select a disabled date', () => {
+      const handleInputSelect = jest.fn();
+      const wrapper = mount(
+        <RangeCalendar
+          format={format}
+          disabledDate={date => date.isBefore('2014-01-01', 'day')}
+          onInputSelect={handleInputSelect}
+        />,
+      );
+      wrapper.find('input').first().simulate('change', { target: { value: '2013-01-01' } });
+
+      expect(handleInputSelect).not.toHaveBeenCalled();
+      wrapper.unmount();
+    });
+
+    it('can empty an input without an onClear callback', () => {
+      const handleInputSelect = jest.fn();
+      const wrapper = mount(
+        <RangeCalendar
+          format={format}
+          defaultSelectedValue={[dayjs('2013-01-01'), dayjs('2013-01-10')]}
+          onInputSelect={handleInputSelect}
+        />,
+      );
+      const input = wrapper.find('input').first();
+      input.simulate('focus');
+      input.simulate('change', { target: { value: '' } });
+
+      expect(input.getDOMNode().value).toBe('');
+      expect(handleInputSelect).not.toHaveBeenCalled();
+      wrapper.unmount();
     });
   });
 
