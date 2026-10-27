@@ -71,26 +71,31 @@ describe('Calendar', () => {
 
     it('use timePicker\'s time', () => {
       const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
-      const wrapper = mount(<Calendar timePicker={timePicker} />);
+      const onSelect = jest.fn();
+      const wrapper = mount(<Calendar timePicker={timePicker} onSelect={onSelect} />);
 
       wrapper.find('.rc-calendar-today').simulate('click');
       // use timePicker's defaultValue if users haven't select a time
       expect(
         wrapper.find('.rc-calendar-input').at(0).getDOMNode().value
-      ).toBe('3/29/2017 00:00:00');
+      ).toBe('3/29/2017');
+      expect(onSelect.mock.calls[0][0].format('YYYY-MM-DD HH:mm:ss')).toBe('2017-03-29 00:00:00');
 
       wrapper.find('.rc-calendar-time-picker-btn').simulate('click');
       wrapper.find('.rc-time-picker-panel-select ul').at(0).find('li').at(6).simulate('click');
       // update time to timePicker's time
       expect(
         wrapper.find('.rc-calendar-input').at(0).getDOMNode().value
-      ).toBe('3/29/2017 06:00:00');
+      ).toBe('3/29/2017');
+      expect(onSelect.mock.calls[1][0].format('YYYY-MM-DD HH:mm:ss')).toBe('2017-03-29 06:00:00');
 
       wrapper.find('.rc-calendar-cell').at(10).simulate('click');
       // still use timePicker's time
       expect(
         wrapper.find('.rc-calendar-input').at(0).getDOMNode().value
-      ).toBe('3/8/2017 06:00:00');
+      ).toBe('3/8/2017');
+      expect(onSelect.mock.calls[2][0].format('YYYY-MM-DD HH:mm:ss')).toBe('2017-03-08 06:00:00');
+      wrapper.unmount();
     });
     it('timePicker date have no changes when hover', () => {
       const timePicker = <TimePickerPanel defaultValue={dayjs('00:00:00', 'HH:mm:ss')} />;
@@ -197,193 +202,87 @@ describe('Calendar', () => {
       input = calendar.find('.rc-calendar-input').hostNodes().at(0);
     });
 
+    afterEach(() => {
+      calendar.unmount();
+    });
+
     describe('keyboard works', () => {
-      it('ignore event from input', () => {
-        const original = calendar.state().value;
-        const expected = original.clone();
+      it('ignores shortcut events from the date input', () => {
+        const onKeyDown = jest.fn();
+        const onSelect = jest.fn();
+        calendar.setProps({ onKeyDown, onSelect });
         input.simulate('keyDown', { keyCode: keyCode.LEFT });
-        expect(calendar.state().value.date()).toBe(expected.date());
-      });
 
-      it('triggers onKeyDown', () => {
-        const handleKeyDown = jest.fn();
-        calendar = mount(<Calendar showToday showWeekNumber onKeyDown={handleKeyDown} />);
-        const original = calendar.state().value;
-        const expected = original.clone();
-        calendar.simulate('keyDown', { keyCode: keyCode.A });
-        expect(calendar.state().value.date()).toBe(expected.date());
-        expect(handleKeyDown).toHaveBeenCalledWith(expect.anything());
-      });
-
-      it('left works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(-1, 'day');
-
-        calendar.simulate('keyDown', { keyCode: keyCode.LEFT });
-        expect(calendar.state().value.date()).toBe(expected.date());
+        expect(onKeyDown).not.toHaveBeenCalled();
+        expect(onSelect).not.toHaveBeenCalled();
         expect(input.getDOMNode().value).toBe('');
       });
 
+      [
+        ['left', keyCode.LEFT, false],
+        ['right', keyCode.RIGHT, false],
+        ['up', keyCode.UP, false],
+        ['down', keyCode.DOWN, false],
+        ['page down', keyCode.PAGE_DOWN, false],
+        ['page up', keyCode.PAGE_UP, false],
+        ['ctrl left', keyCode.LEFT, true],
+        ['ctrl right', keyCode.RIGHT, true],
+        ['home', keyCode.HOME, false],
+        ['end', keyCode.END, false],
+        ['letter', keyCode.A, false],
+      ].forEach(([name, code, ctrlKey]) => {
+        it(`delegates the ${name} shortcut without selecting a date`, () => {
+          const onKeyDown = jest.fn();
+          const onSelect = jest.fn();
+          const preventDefault = jest.fn();
+          const stopPropagation = jest.fn();
+          calendar.setProps({ onKeyDown, onSelect });
+          calendar.simulate('keyDown', {
+            keyCode: code,
+            ctrlKey,
+            preventDefault,
+            stopPropagation,
+          });
 
-      it('right works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(1, 'day');
-        calendar.simulate('keyDown', { keyCode: keyCode.RIGHT });
-        expect(calendar.state().value.date()).toBe(expected.date());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('up works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(-7, 'day');
-      });
-
-      it('left works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(-1, 'day');
-
-        calendar.simulate('keyDown', { keyCode: keyCode.LEFT });
-        expect(calendar.state().value.date()).toBe(expected.date());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-
-      it('right works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(1, 'day');
-        calendar.simulate('keyDown', { keyCode: keyCode.RIGHT });
-        expect(calendar.state().value.date()).toBe(expected.date());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('up works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(-7, 'day');
-        calendar.simulate('keyDown', { keyCode: keyCode.UP });
-        expect(calendar.state().value.date()).toBe(expected.date());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('down works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(7, 'day');
-        calendar.simulate('keyDown', { keyCode: keyCode.DOWN });
-        expect(calendar.state().value.date()).toBe(expected.date());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('pageDown works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(1, 'month');
-        calendar.simulate('keyDown', { keyCode: keyCode.PAGE_DOWN });
-        expect(calendar.state().value.month()).toBe(expected.month());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('pageUp works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(-1, 'month');
-        calendar.simulate('keyDown', { keyCode: keyCode.PAGE_UP });
-        expect(calendar.state().value.month()).toBe(expected.month());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('ctrl left works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(-1, 'year');
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.LEFT,
-          ctrlKey: 1,
+          expect(onKeyDown).toHaveBeenCalledTimes(1);
+          expect(onKeyDown).toHaveBeenCalledWith(
+            expect.objectContaining({ keyCode: code, ctrlKey })
+          );
+          expect(preventDefault).toHaveBeenCalled();
+          expect(stopPropagation).toHaveBeenCalled();
+          expect(onSelect).not.toHaveBeenCalled();
+          expect(input.getDOMNode().value).toBe('');
         });
-        expect(calendar.state().value.year()).toBe(expected.year());
-        expect(input.getDOMNode().value).toBe('');
       });
 
-      it('ctrl right works', () => {
-        const original = calendar.state().value;
-        let expected = original.clone();
-        expected = expected.add(1, 'year');
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.RIGHT,
-          ctrlKey: 1,
-        });
-        expect(calendar.state().value.year()).toBe(expected.year());
-        expect(input.getDOMNode().value).toBe('');
-      });
-
-      it('HOME works', () => {
-        const original = calendar.state().value;
-        const expected = original.clone().startOf('month');
-        calendar.setState({ value: original.add(2, 'day') });
-
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.HOME,
-        });
-        expect(calendar.state().value.date()).toBe(expected.date());
-      });
-
-      it('END works', () => {
-        const original = calendar.state().value;
-        const expected = original.clone().endOf('month');
-        calendar.setState({ value: original.add(2, 'day') });
-
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.END,
-        });
-        expect(calendar.state().value.date()).toBe(expected.date());
-      });
-
-      it('enter to select works', () => {
+      it('selects the displayed date with Enter', () => {
         const onSelect = jest.fn();
-        let today;
-        calendar = mount(
-          <Calendar onSelect={onSelect} />
-        );
-        today = calendar.state().value;
+        const preventDefault = jest.fn();
+        calendar.unmount();
+        calendar = mount(<Calendar defaultValue={dayjs('2017-03-29')} onSelect={onSelect} />);
+        calendar.simulate('keyDown', { keyCode: keyCode.ENTER, preventDefault });
 
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.ENTER,
-        });
-        expect(onSelect).toHaveBeenCalledWith(today, {
-          source: 'keyboard',
-        });
+        expect(onSelect).toHaveBeenCalledTimes(1);
+        expect(onSelect.mock.calls[0][0].format(format)).toBe('2017-03-29');
+        expect(onSelect.mock.calls[0][1]).toEqual({ source: 'keyboard' });
+        expect(calendar.find('.rc-calendar-input').getDOMNode().value).toBe('3/29/2017');
+        expect(preventDefault).toHaveBeenCalled();
       });
 
-      it('enter not to select disabled date', () => {
+      it('does not select a disabled date with Enter', () => {
         const onSelect = jest.fn();
-        function disabledDate(current) {
-          if (!current) {
-            return false;
-          }
-          let date = dayjs();
-          date = date.hour(0);
-          date = date.minute(0);
-          date = date.second(0);
-          return current.valueOf() < date.valueOf();
-        }
-
+        calendar.unmount();
         calendar = mount(
-          <Calendar onSelect={onSelect} disabledDate={disabledDate} />
+          <Calendar
+            defaultValue={dayjs('2017-03-28')}
+            onSelect={onSelect}
+            disabledDate={date => date.isBefore('2017-03-29', 'day')}
+          />
         );
-
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.LEFT,
-        });
-        calendar.simulate('keyDown', {
-          keyCode: keyCode.ENTER,
-        });
+        calendar.simulate('keyDown', { keyCode: keyCode.ENTER });
 
         expect(onSelect).not.toHaveBeenCalled();
+        expect(calendar.find('.rc-calendar-input').getDOMNode().value).toBe('');
       });
     });
 

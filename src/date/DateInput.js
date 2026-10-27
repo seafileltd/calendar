@@ -41,7 +41,7 @@ class DateInput extends React.Component {
       str: formatDate(selectedValue, this.props.format),
       hasFocus: false,
       isInputEmpty: false,
-      localFormat: this.props.format[0],
+      localFormat: Array.isArray(props.format) ? props.format[0] : props.format,
     };
   }
 
@@ -60,13 +60,15 @@ class DateInput extends React.Component {
 
   onClear = () => {
     this.setState({ str: '' });
-    this.props.onClear(null);
+    if (this.props.onClear) {
+      this.props.onClear(null);
+    }
   }
 
   onInputChange = (event) => {
     const str = event.target.value;
     const calendarStr = initializeStr(str, this.state.localFormat) || '';
-    const { disabledDate, format, onChange, selectedValue } = this.props;
+    const { disabledDate, onChange, selectedValue } = this.props;
 
     if (!str || !calendarStr) {
       this.setState({ isInputEmpty: true });
@@ -78,7 +80,7 @@ class DateInput extends React.Component {
       this.setState({ isInputEmpty: false });
     }
 
-    const parsed = dayjs(calendarStr, format[0]);
+    const parsed = dayjs(calendarStr, this.state.localFormat);
     let value = this.props.value.clone();
     value = value
       .year(parsed.year())

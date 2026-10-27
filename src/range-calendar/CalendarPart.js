@@ -28,6 +28,7 @@ export default class CalendarPart extends React.Component {
     clearIcon: PropTypes.node,
     dateRender: PropTypes.func,
     inputMode: PropTypes.string,
+    firstDayOfWeek: PropTypes.string,
   }
 
   render() {
@@ -112,6 +113,7 @@ export default class CalendarPart extends React.Component {
           <div className={`${prefixCls}-body`}>
             <DateTable
               {...newProps}
+              firstDayOfWeek={props.firstDayOfWeek}
               hoverValue={hoverValue}
               selectedValue={selectedValue}
               dateRender={props.dateRender}
