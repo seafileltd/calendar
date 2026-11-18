@@ -55,6 +55,7 @@ class Calendar extends React.Component {
     showToday: PropTypes.bool,
     showOk: PropTypes.bool,
     showHourAndMinute: PropTypes.bool,
+    showSecond: PropTypes.bool,
     defaultMinutesTime: PropTypes.string,
     onSelect: PropTypes.func,
     onOk: PropTypes.func,
@@ -83,6 +84,7 @@ class Calendar extends React.Component {
     showToday: true,
     showDateInput: true,
     showHourAndMinute: false,
+    showSecond: false,
     timePicker: null,
     onOk: noop,
     onPanelChange: noop,
@@ -156,32 +158,25 @@ class Calendar extends React.Component {
   }
 
   onDateInputChange = (value) => {
-    const now = dayjs();
-    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
-      value = value.hour(now.hour()).minute(now.minute()).second(now.second());
-    }
-    this.onSelect(value, {
+    this.onSelect(this.getDateWithSelectedTime(value), {
       source: 'dateInput',
     });
   }
 
   onDateInputSelect = (value) => {
-    const now = dayjs();
-    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
-      value = value.hour(now.hour()).minute(now.minute()).second(now.second());
-    }
-    this.onSelect(value, {
+    this.onSelect(this.getDateWithSelectedTime(value), {
       source: 'dateInputSelect',
     });
   }
 
   onDateTableSelect = (value) => {
     this.setState({ currentStatus: CALENDAR_STATUS.SPECIFIC_TIME });
-    const now = dayjs();
-    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
-      value = value.hour(now.hour()).minute(now.minute()).second(now.second());
-    }
-    this.onSelect(value);
+    this.onSelect(this.getDateWithSelectedTime(value));
+  }
+
+  onTimePanelSelect = (value, cause) => {
+    this.setState({ currentStatus: CALENDAR_STATUS.SPECIFIC_TIME });
+    this.onSelect(value, cause);
   }
 
   onToday = () => {
@@ -211,6 +206,17 @@ class Calendar extends React.Component {
     }, 0);
   }
 
+  onTimeInputChange = (value) => {
+    this.onSelect(value, { source: 'timeInputChange' });
+  }
+
+  onTimeInputSelect = (value) => {
+    this.onSelect(value, { source: 'timeInputSelect' });
+    if (this.props.showHourAndMinute && this.props.showSecond) {
+      this.props.onClickRightPanelTime();
+    }
+  }
+
   static getDerivedStateFromProps(nextProps, state) {
     const { value, selectedValue } = nextProps;
     let newState = {};
@@ -231,12 +237,18 @@ class Calendar extends React.Component {
     return newState;
   }
 
-  onTimeInputChange = (value) => {
-    this.onSelect(value, { source: 'timeInputChange' });
-  }
-
-  onTimeInputSelect = (value) => {
-    this.onSelect(value, { source: 'timeInputSelect' });
+  getDateWithSelectedTime = (value) => {
+    const { showHourAndMinute, showSecond } = this.props;
+    const { selectedValue } = this.state;
+    if (value && showHourAndMinute && showSecond && selectedValue) {
+      return value.hour(selectedValue.hour())
+        .minute(selectedValue.minute()).second(selectedValue.second());
+    }
+    const now = dayjs();
+    if (value && value.hour() === 0 && value.minute() === 0 && value.second() === 0) {
+      return value.hour(now.hour()).minute(now.minute()).second(now.second());
+    }
+    return value;
   }
 
   getRootDOMNode = () => {
@@ -263,7 +275,7 @@ class Calendar extends React.Component {
     const {
       locale, prefixCls, disabledDate,
       timePicker, onClickRightPanelTime,
-      disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute,
+      disabledTime, clearIcon, renderFooter, inputMode, showHourAndMinute, showSecond,
       firstDayOfWeek, showWeekNumber,
     } = props;
     const { value, selectedValue, mode, currentStatus } = state;
@@ -292,12 +304,15 @@ class Calendar extends React.Component {
       timePickerEle = React.cloneElement(timePicker, timePickerProps);
     }
 
-    const baseFormat = Array.isArray(this.getFormat()) ? this.getFormat()[0] : this.getFormat();
-    const headerDatePlaceholder = baseFormat.replace(/\s*HH:mm(?::ss)?\s*/,'').trim() || 'YYYY-MM-DD';
-    const inputFormat = Array.isArray(this.getFormat()) ? this.getFormat() : [this.getFormat()];
+    const format = this.getFormat();
+    const inputFormat = Array.isArray(format) ? format : [format];
     // For the date input, strip any time tokens from formats so date and time are shown separately
-    const stripTime = f => (typeof f === 'string' ? f.replace(/\s*HH:mm(?::ss)?\s*/, '').trim() : f);
-    const dateOnlyFormats = Array.isArray(this.getFormat()) ? this.getFormat().map(stripTime) : [stripTime(this.getFormat())];
+    const stripTime = f => (
+      typeof f === 'string' ? f.replace(/\s*HH:mm(?::ss)?\s*/, '').trim() : f
+    );
+    const dateOnlyFormats = inputFormat.map(stripTime);
+    const headerDatePlaceholder = dateOnlyFormats[0] || 'YYYY-MM-DD';
+    const timeFormat = showSecond ? 'HH:mm:ss' : 'HH:mm';
 
     const dateInputElement = props.showDateInput ? (
       <DateInput
@@ -328,6 +343,9 @@ class Calendar extends React.Component {
         onChange={this.onTimeInputChange}
         onSelect={this.onTimeInputSelect}
         inputMode="numeric"
+        showSecond={showSecond}
+        format={timeFormat}
+        placeholder={timeFormat}
       />
     );
 
@@ -385,11 +403,12 @@ class Calendar extends React.Component {
           value={value}
           selectedValue={selectedValue}
           locale={locale}
-          onSelect={this.onDateTableSelect}
+          onSelect={showSecond ? this.onTimePanelSelect : this.onDateTableSelect}
           onClickRightPanelTime={onClickRightPanelTime}
           defaultMinutesTime={this.props.defaultMinutesTime}
           format={inputFormat}
           timeInput={timeInputTopElement}
+          showSecond={showSecond}
         />
       }
     </div>);
@@ -419,7 +438,11 @@ class Calendar extends React.Component {
 
     return this.renderRoot({
       children,
-      className: `${props.showWeekNumber ? `${prefixCls}-week-number` : ''} ${showTimeControls ? `${prefixCls}-with-time-panel` : ''}`.trim(),
+      className: [
+        props.showWeekNumber ? `${prefixCls}-week-number` : '',
+        showTimeControls ? `${prefixCls}-with-time-panel` : '',
+        showTimeControls && showSecond ? `${prefixCls}-with-seconds` : '',
+      ].filter(Boolean).join(' '),
     });
   }
 }

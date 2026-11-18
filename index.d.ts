@@ -19,6 +19,9 @@ export interface Props {
   locale?: object;
   format?: string | string[];
   showDateInput?: boolean;
+  showHourAndMinute?: boolean;
+  showSecond?: boolean;
+  defaultMinutesTime?: string;
   showWeekNumber?: boolean;
   showToday?: boolean;
   showOk?: boolean;

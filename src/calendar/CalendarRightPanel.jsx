@@ -14,6 +14,7 @@ export default class CalendarRightPanel extends React.Component {
     defaultMinutesTime: PropTypes.string,
     format: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     timeInput: PropTypes.node,
+    showSecond: PropTypes.bool,
   }
 
   constructor(props) {
@@ -26,38 +27,35 @@ export default class CalendarRightPanel extends React.Component {
 
     this.hoursRef = React.createRef();
     this.minutesRef = React.createRef();
+    this.secondsRef = React.createRef();
     this.hours = this.getHours();
     this.minutes = this.getMinutes();
+    this.seconds = this.getMinutes();
 
     this.skipScrollUpdates = 0;
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.selectedValue) {
-      if (!prevState.highlightTime || !prevState.highlightTime.isSame(nextProps.selectedValue)) {
-        return { highlightTime: nextProps.selectedValue };
-      }
-    }
-    return null;
-  }
-
   componentDidMount() {
-    const { defaultMinutesTime, selectedValue } = this.props;
-    const baseTime = defaultMinutesTime || (selectedValue ? selectedValue.format('HH:mm') : dayjs().format('HH:mm'));
+    const { defaultMinutesTime, selectedValue, showSecond } = this.props;
+    const initialTime = selectedValue || dayjs();
+    const baseTime = defaultMinutesTime || initialTime.format('HH:mm:ss');
     const base = baseTime.split(':');
     const hIdx = this.hours.findIndex(h => h === base[0]);
     const mIdx = this.minutes.findIndex(m => m === base[1]);
     const hourIndex = hIdx > -1 ? hIdx : 0;
     const minuteIndex = mIdx > -1 ? mIdx : 0;
+    const secondIndex = parseInt(base[2] || initialTime.format('ss'), 10);
 
     if (typeof window !== 'undefined' && window.requestAnimationFrame) {
       window.requestAnimationFrame(() => {
         this.centerScroll(this.hoursRef.current, hourIndex);
         this.centerScroll(this.minutesRef.current, minuteIndex);
+        if (showSecond) this.centerScroll(this.secondsRef.current, secondIndex);
       });
     } else {
       this.centerScroll(this.hoursRef.current, hourIndex);
       this.centerScroll(this.minutesRef.current, minuteIndex);
+      if (showSecond) this.centerScroll(this.secondsRef.current, secondIndex);
     }
   }
 
@@ -69,6 +67,8 @@ export default class CalendarRightPanel extends React.Component {
     const prevM = prevV ? prevV.format('mm') : '00';
     const currH = currV ? currV.format('HH') : '00';
     const currM = currV ? currV.format('mm') : '00';
+    const prevS = prevV ? prevV.second() : 0;
+    const currS = currV ? currV.second() : 0;
 
     if (this.skipScrollUpdates > 0) {
       this.skipScrollUpdates -= 1;
@@ -77,7 +77,9 @@ export default class CalendarRightPanel extends React.Component {
 
     const hChanged = prevH !== currH;
     const mChanged = prevM !== currM;
-    if (hChanged || mChanged) {
+    const sChanged = this.props.showSecond &&
+      (prevS !== currS || prevProps.showSecond !== this.props.showSecond);
+    if (hChanged || mChanged || sChanged) {
       const scrollHours = () => {
         if (hChanged) {
           const hIdx = this.hours.findIndex(h => h === currH);
@@ -89,6 +91,7 @@ export default class CalendarRightPanel extends React.Component {
           const minuteIndex = mIdx > -1 ? mIdx : 0;
           this.centerScroll(this.minutesRef.current, minuteIndex);
         }
+        if (sChanged) this.centerScroll(this.secondsRef.current, currS);
       };
       if (typeof window !== 'undefined' && window.requestAnimationFrame) {
         window.requestAnimationFrame(scrollHours);
@@ -98,41 +101,58 @@ export default class CalendarRightPanel extends React.Component {
     }
   }
 
-  centerScroll = (container, index) => {
-    if (!container || index < 0) return;
-    const firstItem = container.querySelector('li');
-    const itemHeight = (firstItem && firstItem.offsetHeight) || 32;
-    const containerHeight = container.clientHeight || 0;
-    const maxScroll = Math.max(0, container.scrollHeight - containerHeight);
-    let target = index * itemHeight - (containerHeight / 2 - itemHeight / 2);
-    if (target < 0) target = 0;
-    if (target > maxScroll) target = maxScroll;
-    container.scrollTop = target;
-  }
-
   onSelectMinute = (minute) => {
-    const base = this.props.selectedValue || this.state.highlightTime || this.props.value || dayjs();
+    const base = this.props.selectedValue || this.state.highlightTime ||
+      this.props.value || dayjs();
     const selectedHour = this.getSelectedHour();
     const h = selectedHour !== null ? parseInt(selectedHour, 10) : dayjs().hour();
     const m = parseInt(minute, 10);
     const current = base.clone().hour(h).minute(m);
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
-    this.props.onSelect(current);
-    if (this.props.onClickRightPanelTime) {
+    if (this.props.showSecond) {
+      this.props.onSelect(current.millisecond(0), { source: 'timePanelChange' });
+    } else {
+      this.props.onSelect(current);
+    }
+    if (!this.props.showSecond && this.props.onClickRightPanelTime) {
       this.props.onClickRightPanelTime();
     }
   }
 
   onSelectHour = (hour) => {
-    const base = this.props.selectedValue || this.state.highlightTime || dayjs();
+    const base = this.props.selectedValue || this.state.highlightTime ||
+      (this.props.showSecond && this.props.value) || dayjs();
     const h = parseInt(hour, 10);
     const selectedMinute = this.getSelectedMinute();
     const m = selectedMinute !== null ? parseInt(selectedMinute, 10) : dayjs().minute();
     const current = base.clone().hour(h).minute(m);
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
-    this.props.onSelect(current);
+    if (this.props.showSecond) {
+      this.props.onSelect(current.millisecond(0), { source: 'timePanelChange' });
+    } else {
+      this.props.onSelect(current);
+    }
+  }
+
+  onSelectSecond = (second) => {
+    const base = this.props.selectedValue || this.state.highlightTime ||
+      this.props.value || dayjs();
+    const current = base.clone().second(parseInt(second, 10)).millisecond(0);
+    this.skipScrollUpdates = 2;
+    this.setState({ highlightTime: current });
+    this.props.onSelect(current, { source: 'timePanelSelect' });
+    if (this.props.onClickRightPanelTime) this.props.onClickRightPanelTime();
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.selectedValue) {
+      if (!prevState.highlightTime || !prevState.highlightTime.isSame(nextProps.selectedValue)) {
+        return { highlightTime: nextProps.selectedValue };
+      }
+    }
+    return null;
   }
 
   getHours = () => Array.from({ length: 24 }, (_, i) => String(i).padStart(2, '0'))
@@ -153,12 +173,34 @@ export default class CalendarRightPanel extends React.Component {
     return v ? v.format('mm') : null;
   }
 
+  getSelectedSecond = () => {
+    const v = this.state.highlightTime || this.props.selectedValue || null;
+    return v ? v.format('ss') : null;
+  }
+
+  centerScroll = (container, index) => {
+    if (!container || index < 0) return;
+    const firstItem = container.querySelector('li');
+    const itemHeight = (firstItem && firstItem.offsetHeight) || 32;
+    const item = container.querySelectorAll('li')[index];
+    const itemTop = (item && firstItem && item.offsetTop - firstItem.offsetTop) ||
+      index * itemHeight;
+    const containerHeight = container.clientHeight || 0;
+    const maxScroll = Math.max(0, container.scrollHeight - containerHeight);
+    let target = itemTop - (containerHeight / 2 - itemHeight / 2);
+    if (target < 0) target = 0;
+    if (target > maxScroll) target = maxScroll;
+    container.scrollTop = target;
+  }
+
   render() {
     const { prefixCls } = this.props;
     const selectedHour = this.getSelectedHour();
     const selectedMinute = this.getSelectedMinute();
+    const selectedSecond = this.getSelectedSecond();
     const currentHour = dayjs().format('HH');
     const currentMinute = dayjs().format('mm');
+    const currentSecond = dayjs().format('ss');
     return (
       <div className={`${prefixCls}-right-panel`}>
         <div className={`${prefixCls}-time-input`}>
@@ -170,7 +212,11 @@ export default class CalendarRightPanel extends React.Component {
               {this.hours.map((h) => {
                 const isSelected = selectedHour && h === selectedHour;
                 const isCurrent = !selectedHour && h === currentHour;
-                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                const className = [
+                  `${prefixCls}-right-panel-item-text`,
+                  isSelected ? `${prefixCls}-right-panel-item-selected` : '',
+                  isCurrent ? `${prefixCls}-right-panel-item-current` : '',
+                ].filter(Boolean).join(' ');
                 return (
                   <li
                     key={h}
@@ -191,7 +237,11 @@ export default class CalendarRightPanel extends React.Component {
               {this.minutes.map((m) => {
                 const isSelected = selectedMinute && m === selectedMinute;
                 const isCurrent = !selectedMinute && m === currentMinute;
-                const className = `${prefixCls}-right-panel-item-text ${isSelected ? `${prefixCls}-right-panel-item-selected` : ''} ${isCurrent ? `${prefixCls}-right-panel-item-current` : ''}`;
+                const className = [
+                  `${prefixCls}-right-panel-item-text`,
+                  isSelected ? `${prefixCls}-right-panel-item-selected` : '',
+                  isCurrent ? `${prefixCls}-right-panel-item-current` : '',
+                ].filter(Boolean).join(' ');
                 return (
                   <li
                     key={m}
@@ -207,6 +257,31 @@ export default class CalendarRightPanel extends React.Component {
               })}
             </ul>
           </div>
+          {this.props.showSecond && (
+            <div className={`${prefixCls}-right-panel-col`} ref={this.secondsRef}>
+              <ul>
+                {this.seconds.map((second) => {
+                  const isSelected = selectedSecond && second === selectedSecond;
+                  const isCurrent = !selectedSecond && second === currentSecond;
+                  const className = [
+                    `${prefixCls}-right-panel-item-text`,
+                    isSelected ? `${prefixCls}-right-panel-item-selected` : '',
+                    isCurrent ? `${prefixCls}-right-panel-item-current` : '',
+                  ].filter(Boolean).join(' ');
+                  return (
+                    <li
+                      key={second}
+                      onClick={() => this.onSelectSecond(second)}
+                      className={`${prefixCls}-right-panel-item`}
+                      title={second}
+                    >
+                      <span className={className}>{second}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     );
