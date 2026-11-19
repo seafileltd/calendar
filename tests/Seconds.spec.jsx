@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import MockDate from 'mockdate';
 import dayjs from '../src/util/dayjs';
 import Calendar from '../src/Calendar';
 import Picker from '../src/Picker';
@@ -68,6 +69,35 @@ describe('optional seconds panel', () => {
     expect(wrapper.find('#time-input').prop('value')).toBe('17:44:37');
     expect(wrapper.find('#time-input').prop('placeholder')).toBe('HH:mm:ss');
     expect(wrapper.find('.rc-calendar-with-seconds')).toHaveLength(1);
+  });
+
+  const units = ['hour', 'minute', 'second'];
+  [[0, 12, '12:39:28'], [1, 45, '13:45:28'], [2, 37, '13:39:37']].forEach(([index, item, expected]) => {
+    it(`keeps the other displayed time parts when first selecting a ${units[index]}`, () => {
+      const previousNow = new Date();
+      MockDate.set(new Date(2026, 10, 18, 13, 39, 28));
+      try {
+        const onSelect = jest.fn();
+        const onComplete = jest.fn();
+        wrapper = createCalendar({
+          defaultValue: value.clone().startOf('day'),
+          defaultSelectedValue: null,
+          onSelect,
+          onClickRightPanelTime: onComplete,
+        });
+        const columns = wrapper.find('.rc-calendar-right-panel-col');
+        expect(columns.map(column => (
+          column.find('.rc-calendar-right-panel-item-current').text()
+        ))).toEqual(['13', '39', '28']);
+        MockDate.set(new Date(2026, 10, 18, 13, 40, 10));
+        columns.at(index).find('li').at(item).simulate('click');
+        expect(onSelect.mock.calls[0][0].format('YYYY-MM-DD HH:mm:ss')).toBe(`2026-11-17 ${expected}`);
+        expect(wrapper.find('#time-input').prop('value')).toBe(expected);
+        expect(onComplete).toHaveBeenCalledTimes(index === 2 ? 1 : 0);
+      } finally {
+        MockDate.set(previousNow);
+      }
+    });
   });
 
   it('updates the time format and placeholder together when precision changes', () => {

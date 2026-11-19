@@ -25,6 +25,8 @@ export default class CalendarRightPanel extends React.Component {
       localeFormat: format,
     };
 
+    // Use the same time for the empty panel and the first selection.
+    this.initialTime = dayjs();
     this.hoursRef = React.createRef();
     this.minutesRef = React.createRef();
     this.secondsRef = React.createRef();
@@ -37,7 +39,7 @@ export default class CalendarRightPanel extends React.Component {
 
   componentDidMount() {
     const { defaultMinutesTime, selectedValue, showSecond } = this.props;
-    const initialTime = selectedValue || dayjs();
+    const initialTime = selectedValue || this.initialTime;
     const baseTime = defaultMinutesTime || initialTime.format('HH:mm:ss');
     const base = baseTime.split(':');
     const hIdx = this.hours.findIndex(h => h === base[0]);
@@ -60,8 +62,8 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const prevV = prevState.highlightTime || prevProps.selectedValue || dayjs();
-    const currV = this.state.highlightTime || this.props.selectedValue || dayjs();
+    const prevV = prevState.highlightTime || prevProps.selectedValue || this.initialTime;
+    const currV = this.state.highlightTime || this.props.selectedValue || this.initialTime;
 
     const prevH = prevV ? prevV.format('HH') : '00';
     const prevM = prevV ? prevV.format('mm') : '00';
@@ -102,48 +104,55 @@ export default class CalendarRightPanel extends React.Component {
   }
 
   onSelectMinute = (minute) => {
+    if (this.props.showSecond) {
+      this.selectTimeWithSeconds('minute', minute);
+      return;
+    }
     const base = this.props.selectedValue || this.state.highlightTime ||
       this.props.value || dayjs();
     const selectedHour = this.getSelectedHour();
-    const h = selectedHour !== null ? parseInt(selectedHour, 10) : dayjs().hour();
+    const h = selectedHour !== null ? parseInt(selectedHour, 10) : this.initialTime.hour();
     const m = parseInt(minute, 10);
     const current = base.clone().hour(h).minute(m);
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
-    if (this.props.showSecond) {
-      this.props.onSelect(current.millisecond(0), { source: 'timePanelChange' });
-    } else {
-      this.props.onSelect(current);
-    }
-    if (!this.props.showSecond && this.props.onClickRightPanelTime) {
+    this.props.onSelect(current);
+    if (this.props.onClickRightPanelTime) {
       this.props.onClickRightPanelTime();
     }
   }
 
   onSelectHour = (hour) => {
-    const base = this.props.selectedValue || this.state.highlightTime ||
-      (this.props.showSecond && this.props.value) || dayjs();
+    if (this.props.showSecond) {
+      this.selectTimeWithSeconds('hour', hour);
+      return;
+    }
+    const base = this.props.selectedValue || this.state.highlightTime || dayjs();
     const h = parseInt(hour, 10);
     const selectedMinute = this.getSelectedMinute();
-    const m = selectedMinute !== null ? parseInt(selectedMinute, 10) : dayjs().minute();
+    const m = selectedMinute !== null ? parseInt(selectedMinute, 10) : this.initialTime.minute();
     const current = base.clone().hour(h).minute(m);
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
-    if (this.props.showSecond) {
-      this.props.onSelect(current.millisecond(0), { source: 'timePanelChange' });
-    } else {
-      this.props.onSelect(current);
-    }
+    this.props.onSelect(current);
   }
 
   onSelectSecond = (second) => {
-    const base = this.props.selectedValue || this.state.highlightTime ||
-      this.props.value || dayjs();
-    const current = base.clone().second(parseInt(second, 10)).millisecond(0);
+    this.selectTimeWithSeconds('second', second);
+  }
+
+  selectTimeWithSeconds = (unit, value) => {
+    const selected = this.props.selectedValue || this.state.highlightTime;
+    const { initialTime } = this;
+    // Before a selection, keep the calendar's date and use the time shown in the columns.
+    const base = selected ? selected.clone() : (this.props.value || initialTime).clone()
+      .hour(initialTime.hour()).minute(initialTime.minute()).second(initialTime.second());
+    const current = base.set(unit, parseInt(value, 10)).millisecond(0);
+    const completed = unit === 'second';
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });
-    this.props.onSelect(current, { source: 'timePanelSelect' });
-    if (this.props.onClickRightPanelTime) this.props.onClickRightPanelTime();
+    this.props.onSelect(current, { source: completed ? 'timePanelSelect' : 'timePanelChange' });
+    if (completed && this.props.onClickRightPanelTime) this.props.onClickRightPanelTime();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -198,9 +207,10 @@ export default class CalendarRightPanel extends React.Component {
     const selectedHour = this.getSelectedHour();
     const selectedMinute = this.getSelectedMinute();
     const selectedSecond = this.getSelectedSecond();
-    const currentHour = dayjs().format('HH');
-    const currentMinute = dayjs().format('mm');
-    const currentSecond = dayjs().format('ss');
+    const { initialTime } = this;
+    const currentHour = initialTime.format('HH');
+    const currentMinute = initialTime.format('mm');
+    const currentSecond = initialTime.format('ss');
     return (
       <div className={`${prefixCls}-right-panel`}>
         <div className={`${prefixCls}-time-input`}>
