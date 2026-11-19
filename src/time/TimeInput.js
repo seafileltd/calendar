@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import dayjs from 'dayjs';
+import { setTimeWithSeconds } from '../util';
 
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -143,9 +144,12 @@ class TimeInput extends React.Component {
     const timeStr = initializeTime(str, showSecond);
     if (!timeStr) return null;
     const base = selectedValue || value || dayjs();
-    const parsed = dayjs(timeStr, showSecond ? 'HH:mm:ss' : 'HH:mm');
-    const next = base.clone().hour(parsed.hour()).minute(parsed.minute());
-    return showSecond ? next.second(parsed.second()).millisecond(0) : next;
+    if (showSecond) {
+      const [hour, minute, second] = timeStr.split(':').map(Number);
+      return setTimeWithSeconds(base, { hour, minute, second });
+    }
+    const parsed = dayjs(timeStr, 'HH:mm');
+    return base.clone().hour(parsed.hour()).minute(parsed.minute());
   }
 
   saveRef = (node) => {

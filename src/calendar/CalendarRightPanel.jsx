@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
+import { setTimeWithSeconds } from '../util';
 
 export default class CalendarRightPanel extends React.Component {
 
@@ -143,11 +144,15 @@ export default class CalendarRightPanel extends React.Component {
 
   selectTimeWithSeconds = (unit, value) => {
     const selected = this.props.selectedValue || this.state.highlightTime;
-    const { initialTime } = this;
+    const base = selected || this.props.value || this.initialTime;
     // Before a selection, keep the calendar's date and use the time shown in the columns.
-    const base = selected ? selected.clone() : (this.props.value || initialTime).clone()
-      .hour(initialTime.hour()).minute(initialTime.minute()).second(initialTime.second());
-    const current = base.set(unit, parseInt(value, 10)).millisecond(0);
+    const time = selected || this.initialTime;
+    const current = setTimeWithSeconds(base, {
+      hour: time.hour(),
+      minute: time.minute(),
+      second: time.second(),
+      [unit]: parseInt(value, 10),
+    });
     const completed = unit === 'second';
     this.skipScrollUpdates = 2;
     this.setState({ highlightTime: current });

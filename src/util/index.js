@@ -73,6 +73,17 @@ export function syncTime(from, to) {
   to = to.millisecond(from.millisecond());
 }
 
+export function setTimeWithSeconds(value, { hour, minute, second }) {
+  const delta = ((hour - value.hour()) * 3600 + (minute - value.minute()) * 60 +
+    second - value.second()) * 1000 - value.millisecond();
+  // Try the requested wall time with the original offset first. This keeps the
+  // same occurrence of a repeated hour when the clocks go back.
+  const candidate = value.clone().add(delta, 'millisecond');
+  if (candidate.utcOffset() === value.utcOffset()) return candidate;
+  // Across an offset change, resolve the requested wall time in local time.
+  return value.clone().hour(hour).minute(minute).second(second).millisecond(0);
+}
+
 export function getTimeConfig(value, disabledTime) {
   let disabledTimeConfig = disabledTime ? disabledTime(value) : {};
   disabledTimeConfig = {

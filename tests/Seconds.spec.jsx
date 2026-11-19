@@ -100,6 +100,26 @@ describe('optional seconds panel', () => {
     });
   });
 
+  // Run with TZ=America/New_York to exercise the second occurrence of 01:30.
+  ['seconds column', 'time input'].forEach((method) => {
+    it(`keeps the selected instant when changing seconds with the ${method}`, () => {
+      const selected = dayjs('2026-11-01T06:30:37.456Z');
+      const onSelect = jest.fn();
+      wrapper = createCalendar({ defaultValue: selected, defaultSelectedValue: selected, onSelect });
+      if (method === 'seconds column') {
+        wrapper.find('.rc-calendar-right-panel-col').at(2).find('li').at(38).simulate('click');
+      } else {
+        const input = wrapper.find('#time-input');
+        input.simulate('focus');
+        input.simulate('change', { target: { value: `${selected.format('HH:mm')}:38` } });
+        input.simulate('keyDown', { key: 'Enter', preventDefault() {} });
+      }
+      const calls = onSelect.mock.calls;
+      expect(calls[calls.length - 1][0].toISOString()).toBe('2026-11-01T06:30:38.000Z');
+      expect(selected.toISOString()).toBe('2026-11-01T06:30:37.456Z');
+    });
+  });
+
   it('updates the time format and placeholder together when precision changes', () => {
     wrapper = createCalendar();
     wrapper.setProps({ showSecond: false });
