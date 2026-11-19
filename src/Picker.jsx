@@ -27,6 +27,7 @@ class Picker extends React.Component {
     style: PropTypes.object,
     open: PropTypes.bool,
     defaultOpen: PropTypes.bool,
+    isRemainOpen: PropTypes.bool,
     prefixCls: PropTypes.string,
     placement: PropTypes.any,
     value: PropTypes.oneOfType([
@@ -91,19 +92,23 @@ class Picker extends React.Component {
 
   onCalendarSelect = (value, cause = {}) => {
     const props = this.props;
+    const calendarProps = props.calendar.props;
+    const completionSources = ['timePanelSelect', 'timeInputSelect', 'keyboard', 'todayButton'];
+    const isSecondsDraft = calendarProps.showHourAndMinute && calendarProps.showSecond &&
+      value && completionSources.indexOf(cause.source) === -1;
     if (!('value' in props)) {
       this.setState({
         value,
       });
     }
-    if (
+    if (!isSecondsDraft && (
       cause.source === 'keyboard' ||
       cause.source === 'dateInputSelect' ||
       (!props.calendar.props.timePicker && cause.source !== 'dateInput') ||
-      cause.source === 'todayButton') {
-        if (!this.props.isRemainOpen) {
-          this.close(this.focus);
-        }
+      cause.source === 'todayButton')) {
+      if (!this.props.isRemainOpen) {
+        this.close(this.focus);
+      }
     }
     props.onChange(value);
   }

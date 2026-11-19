@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { polyfill } from 'react-lifecycles-compat';
 import dayjs from 'dayjs';
+import { setTimeWithSeconds } from '../util';
 
 const customParseFormat = require('dayjs/plugin/customParseFormat');
 dayjs.extend(customParseFormat);
@@ -12,17 +13,34 @@ function formatTime(value, format) {
   return value.format(fmt);
 }
 
-// Convert a loose numeric/time string into HH:mm
+// Convert a loose numeric/time string into HH:mm, with optional seconds.
 // Rules (similar spirit to DateInput.initializeStr):
 // - Strip non-digits
 // - If len <= 2 => treat as hour
 // - If len > 2 => last two digits are minutes; preceding are hours
 // - Clamp hours to [0,23], minutes to [0,59]
 // - Return formatted HH:mm or '' when input is empty
-function initializeTime(str) {
+function initializeTime(str, showSecond) {
   if (typeof str !== 'string') return '';
   const digits = str.replace(/\D/g, '');
   if (!digits.length) return '';
+
+  if (showSecond) {
+    let parts;
+    if (str.indexOf(':') !== -1) {
+      parts = str.split(':');
+      if (parts.length > 3 || parts.some(part => !/^\d*$/.test(part))) return '';
+    } else if (digits.length <= 2) {
+      parts = [digits];
+    } else if (digits.length <= 4) {
+      parts = [digits.slice(0, -2), digits.slice(-2)];
+    } else {
+      parts = [digits.slice(0, -4), digits.slice(-4, -2), digits.slice(-2)];
+    }
+    return parts.concat(['0', '0', '0']).slice(0, 3).map((part, index) => (
+      String(Math.min(parseInt(part || '0', 10), index === 0 ? 23 : 59)).padStart(2, '0')
+    )).join(':');
+  }
 
   let hDigits = '';
   let mDigits = '';
@@ -60,11 +78,13 @@ class TimeInput extends React.Component {
     format: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]),
     disabled: PropTypes.bool,
     className: PropTypes.string,
+    showSecond: PropTypes.bool,
   };
 
   static defaultProps = {
     format: 'HH:mm',
     placeholder: 'HH:mm',
+    showSecond: false,
   };
 
   constructor(props) {
@@ -75,41 +95,20 @@ class TimeInput extends React.Component {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    let newState = null;
-    if (!state.hasFocus) {
-      const base = nextProps.selectedValue || null;
-      newState = { str: base ? formatTime(base, nextProps.format) : '' };
-    }
-    return newState;
-  }
-
   onInputChange = (event) => {
     const str = event.target.value;
-    const timeStr = initializeTime(str);
-
-    if (!str || !timeStr) {
-      this.setState({ str });
-      return;
-    }
-
-    const base = this.props.selectedValue || this.props.value || dayjs();
-    const parsed = dayjs(timeStr, 'HH:mm');
-    const next = base.clone().hour(parsed.hour()).minute(parsed.minute());
+    const next = this.getTimeValue(str);
 
     this.setState({ str });
-    if (this.props.onChange) {
+    if (next && this.props.onChange) {
       this.props.onChange(next);
     }
   }
 
   onKeyDown = (event) => {
     if (event.key === 'Enter' && this.props.onSelect) {
-      const timeStr = initializeTime(this.state.str);
-      if (!timeStr) return;
-      const base = this.props.selectedValue || this.props.value || dayjs();
-      const parsed = dayjs(timeStr, 'HH:mm');
-      const next = base.clone().hour(parsed.hour()).minute(parsed.minute());
+      const next = this.getTimeValue(this.state.str);
+      if (!next) return;
       this.props.onSelect(next);
       event.preventDefault();
     }
@@ -123,16 +122,38 @@ class TimeInput extends React.Component {
     const base = this.props.selectedValue ? this.props.selectedValue : (this.props.value || null);
     this.setState({
       hasFocus: false,
-      str: base ? formatTime(base, this.props.format) : '',
+      str: formatTime(base, this.props.format),
     });
-  }
-
-  saveRef = (node) => {
-    timeInputInstance = node;
   }
 
   static getInstance() {
     return timeInputInstance;
+  }
+
+  static getDerivedStateFromProps(nextProps, state) {
+    let newState = null;
+    if (!state.hasFocus) {
+      const base = nextProps.selectedValue || null;
+      newState = { str: formatTime(base, nextProps.format) };
+    }
+    return newState;
+  }
+
+  getTimeValue = (str) => {
+    const { selectedValue, value, showSecond } = this.props;
+    const timeStr = initializeTime(str, showSecond);
+    if (!timeStr) return null;
+    const base = selectedValue || value || dayjs();
+    if (showSecond) {
+      const [hour, minute, second] = timeStr.split(':').map(Number);
+      return setTimeWithSeconds(base, { hour, minute, second });
+    }
+    const parsed = dayjs(timeStr, 'HH:mm');
+    return base.clone().hour(parsed.hour()).minute(parsed.minute());
+  }
+
+  saveRef = (node) => {
+    timeInputInstance = node;
   }
 
   render() {

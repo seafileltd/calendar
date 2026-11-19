@@ -202,6 +202,12 @@ http://react-component.github.io/calendar/examples/index.html
           <td>whether has hour-minute chooser in the right panel(for dtable date column)</td>
         </tr>
         <tr>
+          <td>showSecond</td>
+          <td>Boolean</td>
+          <td>false</td>
+          <td>When showHourAndMinute is true, add a seconds column after minutes and use HH:mm:ss in the existing time input. Hours and minutes update the value; selecting a second completes the selection. Existing callers retain the two-column layout and minute selection behavior when omitted.</td>
+        </tr>
+        <tr>
           <td>timePicker</td>
           <td>React Element</td>
           <td></td>
@@ -235,7 +241,7 @@ http://react-component.github.io/calendar/examples/index.html
           <td>onClickRightPanelTime</td>
           <td>Function()</td>
           <td></td>
-          <td>called when right panel hour and minute is clicked, only prop showHourAndMinute is true</td>
+          <td>called when right-panel time selection completes: clicking a minute normally, or clicking a second / pressing Enter in the time input when showSecond is true. Requires showHourAndMinute.</td>
         </tr>
         <tr>
           <td>dateInputPlaceholder</td>
